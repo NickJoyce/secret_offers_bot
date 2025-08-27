@@ -1,7 +1,6 @@
 from aiogram import types, Router, F
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.filters import Command, CommandStart, StateFilter
-from app.conns.open_ai.sdk.accounts import async_client
 import logging.config
 from app.bot.modules.middlewares.clients import AuthMiddleware
 from app.database.queries.tg_clients import get_clients, update_client, create_clients
