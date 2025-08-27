@@ -59,7 +59,7 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
         # отправляем данные для инициации диалога в talk-me
         if not first_start_message.is_sent:
             async with session.post(
-                url="https://api.integracio.ru/json/anonymous/integration/event/telegram/czztou4j2x0dssirodytf0ie2vm9qutl",
+                url="https://api.integracio.ru/json/anonymous/integration/event/telegram/i78u22rqbxteoy5t8f5vr7ogfmkjbwyb",
                 json=first_start_message.message,
                 timeout=30
             ) as response:
@@ -70,7 +70,7 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
 
         
         async with session.post(
-            url="https://api.integracio.ru/json/anonymous/integration/event/telegram/czztou4j2x0dssirodytf0ie2vm9qutl",
+            url="https://api.integracio.ru/json/anonymous/integration/event/telegram/i78u22rqbxteoy5t8f5vr7ogfmkjbwyb",
             json=request_data,
             timeout=30
         ) as response:

@@ -6,7 +6,7 @@ def register_superuser(email, password, config):
     if TEST_ENV:
         url = "http://127.0.0.1:8000/users"
     else:
-        url = "https://marketing-bot.podrugeapi.ru/users"
+        url = "https://secret-offers-bot.podrugeapi.ru/users"
     headers = {'Authorization': f'{ADMIN_TOKEN}',
                'Content-Type': 'application/json'}
     data = {'email': email,
@@ -18,9 +18,9 @@ def register_superuser(email, password, config):
 if __name__ == "__main__":
 
 
-    print(register_superuser(email='',
-                             password='',
-                             config={"name": "",
+    print(register_superuser(email='smirnov.nikita@podruge.ru',
+                             password='tLyT3wWh',
+                             config={"name": "nikita",
                                      "avatar": "admin/avatar.jpeg",
                                      "company_logo_url": None,
                                      "roles": ["read", "create", "edit", "delete", "action_make_published"]}))
