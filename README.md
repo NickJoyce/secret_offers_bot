@@ -12,31 +12,31 @@
 
 
 ### nginx
-##### gpt-bot.endospherebeauty.com (fastapi)  
-/etc/nginx/sites-available/fastapi_gpt_bot
+##### secret-offers-bot.podrugeapi.ru 
+sudo nano /etc/nginx/sites-available/secret_offers_bot
 ```
 server {
     listen 80;
-    # server_name gpt-bot.endospherebeauty.com;
+    # server_name secret-offers-bot.podrugeapi.ru;
     return 301 https://$host:443$request_uri;
 }
 ```
-/etc/nginx/sites-available/fastapi_gpt_bot_ssl
+sudo nano /etc/nginx/sites-available/secret_offers_bot_ssl
 ```
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name gpt-bot.endospherebeauty.com;
+    server_name secret-offers-bot.podrugeapi.ru;
 
     #ssl on
-    ssl_certificate /etc/letsencrypt/live/gpt-bot.endospherebeauty.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/gpt-bot.endospherebeauty.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/secret-offers-bot.podrugeapi.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/secret-offers-bot.podrugeapi.ru/privkey.pem;
 
     # Обработка favicon.ico в корневой директории
     location = /favicon.ico {
         access_log off;
         log_not_found off;
-        alias /home/main/fastapi_gpt_bot/static/favicon.ico;
+        alias /home/main/secret_offers_bot/static/favicon.ico;
     }
 
 
@@ -54,30 +54,30 @@ server {
 ```
 
 ```console
-sudo ln -s /etc/nginx/sites-available/fastapi_gpt_bot /etc/nginx/sites-enabled
-sudo ln -s /etc/nginx/sites-available/fastapi_gpt_bot_ssl /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/secret_offers_bot /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/secret_offers_bot_ssl /etc/nginx/sites-enabled
 ```
 
-##### gpt-bot-supervisor.endospherebeauty.com(supervisor)  
-/etc/nginx/sites-available/gpt_bot_supervisor
+##### secret-offers-bot-supervisor.podrugeapi.ru (supervisor)  
+sudo nano /etc/nginx/sites-available/supervisor
 ```
 server {
     listen 80;
-    #server_name gpt-bot.endospherebeauty.com;
+    #server_name secret-offers-bot-supervisor.podrugeapi.ru;
     return 301 https://$host:443$request_uri;
 }
 
 ```
-/etc/nginx/sites-available/gpt_bot_supervisor_ssl
+sudo nano /etc/nginx/sites-available/supervisor_ssl
 ```
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name gpt-bot-supervisor.endospherebeauty.com;
+    server_name secret-offers-bot-supervisor.podrugeapi.ru;
 
     #ssl on
-    ssl_certificate /etc/letsencrypt/live/gpt-bot-supervisor.endospherebeauty.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/gpt-bot-supervisor.endospherebeauty.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/secret-offers-bot-supervisor.podrugeapi.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/secret-offers-bot-supervisor.podrugeapi.ru/privkey.pem;
 
     location / {
         proxy_pass http://127.0.0.1:9001/;
@@ -92,8 +92,8 @@ server {
 ```
 
 ```console
-sudo ln -s /etc/nginx/sites-available/gpt_bot_supervisor_ssl /etc/nginx/sites-enabled
-sudo ln -s /etc/nginx/sites-available/gpt_bot_supervisor /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/supervisor_ssl /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/supervisor /etc/nginx/sites-enabled
 ```
 
 ### supervisor

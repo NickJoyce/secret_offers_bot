@@ -41,8 +41,9 @@ ES_BASE_URL = 'https://elasticsearch.podrugeapi.ru'
 ES_USER = os.getenv('ES_USER')
 ES_PASSWORD = os.getenv('ES_PASSWORD')
 
-BASE_WEBHOOK_URL = "https://secret-offers-bot.podrugeapi.ru"
 
+
+BASE_WEBHOOK_URL = "https://secret-offers-bot.podrugeapi.ru"
 
 # tg webhook
 # Path to webhook route, on which Telegram will send requests
