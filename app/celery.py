@@ -7,12 +7,12 @@ celery_app = Celery("celery_worker",
                     broker_url="redis://127.0.0.1:6379/0", 
                     result_backend="redis://127.0.0.1:6379/0",)
 
-celery_app.conf.beat_schedule = {
-    "tg_channel_monitoring": {
-        "task": "app.tasks.monitoring.tg_channel",
-        "schedule": crontab(minute="*/1")
-    }
-}
+# celery_app.conf.beat_schedule = {
+#     "tg_channel_monitoring": {
+#         "task": "app.tasks.monitoring.tg_channel",
+#         "schedule": crontab(minute="*/1")
+#     }
+# }
 
 
 celery_app.conf.update(
@@ -24,7 +24,13 @@ celery_app.conf.update(
     broker_connection_retry_on_startup=True,
     task_acks_late=True,
     task_reject_on_worker_lost=True,
-    imports=("app.tasks.monitoring",)
+    imports=("app.tasks.monitoring",),
+    beat_schedule={
+    "tg_channel_monitoring": {
+        "task": "app.tasks.monitoring.tg_channel",
+        "schedule": crontab(minute="*/1")
+    }
+}
 )
 
 
