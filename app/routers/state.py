@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 import logging
 from fastapi.templating import Jinja2Templates
 from settings.base import TEMPLATES_DIR
-from app.tasks.monitoring import test_task
+from app.tasks.monitoring import tg_channel
 
 logger = logging.getLogger(__name__)
 
@@ -15,5 +15,5 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 @router.get("/state", include_in_schema=False)
 async def health_check(request: Request):
-    test_task.delay()
+    tg_channel.delay()
     return {"Status": "OK"}
