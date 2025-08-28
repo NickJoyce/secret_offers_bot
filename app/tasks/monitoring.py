@@ -5,10 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name='tg_channel',
-                 bind=True,
-                 max_retries=3, 
-                 default_retry_delay=5)
+@celery_app.task()
 def tg_channel(self):
     logger.info("Task started")
     time.sleep(2)

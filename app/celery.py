@@ -16,7 +16,7 @@ celery_app.conf.update(
     broker_connection_retry_on_startup=True,
     task_acks_late=True,
     task_reject_on_worker_lost=True,
-    imports=("app.tasks.monitoring.tg_channel",)
+    imports=("app.tasks.monitoring",)
 )
 
 
