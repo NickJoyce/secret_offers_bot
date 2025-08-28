@@ -23,7 +23,7 @@ celery_app.conf.update(
 
 celery_app.conf.beat_schedule = {
     "tg_channel_monitoring": {
-        "task": "app.tasks.monitoring.chat_member_check",
+        "task": "app.tasks.monitoring.is_subscriber",
         "schedule": crontab(minute="*/1")
     }
 }

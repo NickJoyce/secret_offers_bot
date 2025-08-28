@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 import logging
 from fastapi.templating import Jinja2Templates
 from settings.base import TEMPLATES_DIR
-from app.tasks.monitoring import tg_channel
+from app.tasks.monitoring import is_subscriber
 import traceback
 from app.bot.main import bot
 
@@ -15,8 +15,8 @@ router = APIRouter()
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
-@router.get("/chat-member-check", include_in_schema=False)
-async def chat_member_check(user_id: str, request: Request):
+@router.get("/is_subscriber", include_in_schema=False)
+async def is_subscriber(user_id: str, request: Request):
     try:
         chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id=user_id)
         status = dict(chat_member)['status']
