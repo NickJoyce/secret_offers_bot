@@ -21,12 +21,12 @@ celery_app.conf.update(
 
 
 
-celery_app.conf.beat_schedule = {
-    "tg_channel_monitoring": {
-        "task": "app.tasks.monitoring.is_subscriber",
-        "schedule": crontab(minute="*/1")
-    }
-}
+# celery_app.conf.beat_schedule = {
+#     "tg_channel_monitoring": {
+#         "task": "app.tasks.monitoring.is_subscriber",
+#         "schedule": crontab(minute="*/1")
+#     }
+# }
 
 
 celery_app.autodiscover_tasks()
