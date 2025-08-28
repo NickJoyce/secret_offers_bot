@@ -13,9 +13,6 @@ logger = logging.getLogger(__name__)
 def is_subscriber(self):
     user_id = '520704135'
     response = requests.get(f'https://secret-offers-bot.podrugeapi.ru/is_subscriber?user_id={user_id}')
-    logger.info(f"response: {response.json()}")
-    
-    
-    user_channel_status = bot.get_chat_member(chat_id='-1002525082412', user_id='1014983816')
-    logger.info(f"user_channel_status: {user_channel_status}")
+    logger.info(f"response: {str(response.json())}")
+
 
