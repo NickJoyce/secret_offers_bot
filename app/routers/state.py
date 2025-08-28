@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 from settings.base import TEMPLATES_DIR
 from app.tasks.monitoring import tg_channel
 import traceback
-
+from app.bot.main import bot
 
 logger = logging.getLogger(__name__)
 
