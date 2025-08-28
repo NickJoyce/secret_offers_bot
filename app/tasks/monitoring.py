@@ -1,11 +1,15 @@
 from app.celery import celery_app
 import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name='channel_monitoring',
+@celery_app.task(name='tg_channel',
                  bind=True,
                  max_retries=3, 
                  default_retry_delay=5)
-def test_task(self):
+def tg_channel(self):
+    logger.info("Task started")
     time.sleep(2)
-    print("Task completed")
+    logger.info("Task completed")
