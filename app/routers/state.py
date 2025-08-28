@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi import Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 import logging
 from fastapi.templating import Jinja2Templates
 from settings.base import TEMPLATES_DIR
@@ -21,13 +21,13 @@ async def chat_member_check(user_id: str, request: Request):
         chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id=user_id)
         status = dict(chat_member)['status']
         if status != 'left':
-            # return f'Участник {user_id} все еще в группе. status: {status}'.encode('utf-8')
-            return HTMLResponse(content=f'Участник {user_id} все еще в группе. status: {status}')
+            # return HTMLResponse(content=f'Участник {user_id} все еще в группе. status: {status}')
+            return JSONResponse({'is_subscriber': True})
         else:
-            # return f'Участник {user_id} покинул группу. status: {status}'.encode('utf-8')
-            return HTMLResponse(content=f'Участник {user_id} покинул группу. status: {status}')
+            # return HTMLResponse(content=f'Участник {user_id} покинул группу. status: {status}')
+            return JSONResponse({'is_subscriber': False})
         
     except Exception as e:
-        return f'Ошибка: {str(traceback.format_exc())}'
+        return JSONResponse({'is_subscriber': None})
 
     

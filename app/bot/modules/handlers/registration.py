@@ -14,7 +14,7 @@ from app.database.queries.talk_me_messages_from_client import get_client_id
 from asyncio import sleep
 from zoneinfo import ZoneInfo
 import pytz
-from app.tasks.monitoring import tg_channel
+from app.tasks.monitoring import chat_member_check
 
 
 
@@ -53,7 +53,6 @@ class RegistrationStates(StatesGroup):
 
 @router.message(CommandStart(), StateFilter(None))
 async def start_command_handler(msg: Message, state: FSMContext):
-    tg_channel.delay()
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
     if user:
