@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 import logging
 from fastapi.templating import Jinja2Templates
 from settings.base import TEMPLATES_DIR
-from app.tasks.monitoring import test_task
+from tasks.monitoring import test_task
 
 logger = logging.getLogger(__name__)
 
