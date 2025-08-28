@@ -7,6 +7,14 @@ celery_app = Celery("celery_worker",
                     broker_url="redis://127.0.0.1:6379/0", 
                     result_backend="redis://127.0.0.1:6379/0",)
 
+celery_app.conf.beat_schedule = {
+    "tg_channel_monitoring": {
+        "task": "app.tasks.monitoring.tg_channel",
+        "schedule": crontab(minute="*/1")
+    }
+}
+
+
 celery_app.conf.update(
     task_serializer='json',
     result_serializer='json',
@@ -21,12 +29,6 @@ celery_app.conf.update(
 
 
 
-celery_app.conf.beat_schedule = {
-    "tg_channel_monitoring": {
-        "task": "celery_app.tasks.monitoring.tg_channel",
-        "schedule": crontab(minute="*/1")
-    }
-}
 
 
 celery_app.autodiscover_tasks()
