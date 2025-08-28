@@ -1,6 +1,7 @@
 from app.celery import celery_app
 import time
 import logging
+from app.bot.main import bot
 
 logger = logging.getLogger(__name__)
 
@@ -9,6 +10,6 @@ logger = logging.getLogger(__name__)
                  max_retries=3, 
                  default_retry_delay=5)
 def tg_channel(self):
-    logger.info("Task started")
-    time.sleep(2)
-    logger.info("Task completed")
+    user_channel_status = await bot.get_chat_member(chat_id='-1002525082412', user_id='520704135')
+    logger.info(f"user_channel_status: {user_channel_status}")
+
