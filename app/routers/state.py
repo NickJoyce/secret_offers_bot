@@ -15,13 +15,15 @@ router = APIRouter()
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
-@router.get("/state", include_in_schema=False)
-async def health_check(request: Request):
+@router.get("/chat-member-check", include_in_schema=False)
+async def chat_member_check(user_id: str, request: Request):
     try:
-        chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id='520704135')
-        user_status = dict(chat_member)['status']
-        logger.info(user_status)
-        return user_status
+        chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id=user_id)
+        status = dict(chat_member)['status']
+        if status != 'left':
+            return 'Участник все еще в группе'
+        else:
+            return 'Участник покинул группу'
     except Exception as e:
         logger.error(f"Error: {traceback.format_exc()}")
         return str(traceback.format_exc())
