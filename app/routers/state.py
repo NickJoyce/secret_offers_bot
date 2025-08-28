@@ -19,7 +19,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 async def health_check(request: Request):
     try:
         chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id='520704135')
-        user_status = chat_member['status']
+        user_status = dict(chat_member)['status']
         logger.info(user_status)
         return user_status
     except Exception as e:
