@@ -5,7 +5,7 @@ import logging
 from fastapi.templating import Jinja2Templates
 from settings.base import TEMPLATES_DIR
 from app.tasks.monitoring import tg_channel
-from app.bot.main import bot
+
 
 
 logger = logging.getLogger(__name__)
@@ -19,4 +19,4 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 async def health_check(request: Request):
     user_channel_status = await bot.get_chat_member(chat_id='-1002525082412', user_id='520704135')
     logger.info(f"user_channel_status: {user_channel_status}")
-    return {"user_channel_status: user_channel_status}
+    return {"user_channel_status": user_channel_status}
