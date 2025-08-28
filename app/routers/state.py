@@ -22,10 +22,10 @@ async def chat_member_check(user_id: str, request: Request):
         status = dict(chat_member)['status']
         if status != 'left':
             # return f'Участник {user_id} все еще в группе. status: {status}'.encode('utf-8')
-            return HTMLResponse(content=f'Участник {user_id} все еще в группе. status: {status}', content_type='application/json; charset=utf-8')
+            return HTMLResponse(content=f'Участник {user_id} все еще в группе. status: {status}')
         else:
             # return f'Участник {user_id} покинул группу. status: {status}'.encode('utf-8')
-            return HTMLResponse(content=f'Участник {user_id} покинул группу. status: {status}', content_type='application/json; charset=utf-8')
+            return HTMLResponse(content=f'Участник {user_id} покинул группу. status: {status}')
         
     except Exception as e:
         return f'Ошибка: {str(traceback.format_exc())}'
