@@ -76,7 +76,7 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_UTC_ENABLE = True
 CELERY_TIMEZONE = 'Europe/Moscow'
-CELERY_IMPORTS = ("app.tasks.monitoring",)
+CELERY_IMPORTS = ("tasks.monitoring",)
 
 
 
