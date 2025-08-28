@@ -30,10 +30,14 @@ from settings.base import TEMPLATES_DIR
 from jinja2 import FileSystemLoader
 from fastapi.templating import Jinja2Templates
 from starlette_admin.views import CustomView
-
-
 import os
 import time
+
+from celery import Celery
+
+celery_app = Celery("celery_worker")
+celery_app.config_from_object("settings", namespace="CELERY")
+celery_app.autodiscover_tasks()
 
 
 logging.config.dictConfig(LOGGING)
