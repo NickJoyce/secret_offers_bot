@@ -14,7 +14,7 @@ from app.database.queries.talk_me_messages_from_client import get_client_id
 from asyncio import sleep
 from zoneinfo import ZoneInfo
 import pytz
-from app.tasks.monitoring import chat_member_check
+from app.tasks.monitoring import is_subscriber
 
 
 
