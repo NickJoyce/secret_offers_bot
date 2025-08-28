@@ -21,9 +21,12 @@ async def chat_member_check(user_id: str, request: Request):
         chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id=user_id)
         status = dict(chat_member)['status']
         if status != 'left':
-            return f'Участник {user_id} все еще в группе. status: {status}'.encode('utf-8')
+            # return f'Участник {user_id} все еще в группе. status: {status}'.encode('utf-8')
+        return HTMLResponse(content=f'Участник {user_id} покинул группу. status: {status}', content_type='application/json; charset=utf-8')
         else:
-            return f'Участник {user_id} покинул группу. status: {status}'.encode('utf-8')
+            # return f'Участник {user_id} покинул группу. status: {status}'.encode('utf-8')
+            return HTMLResponse(content=f'Участник {user_id} покинул группу. status: {status}', content_type='application/json; charset=utf-8')
+        
     except Exception as e:
         return f'Ошибка: {str(traceback.format_exc())}'
 
