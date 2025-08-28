@@ -23,9 +23,8 @@ async def chat_member_check(user_id: str, request: Request):
         if status != 'left':
             return f'Участник {user_id} все еще в группе. status: {status}'
         else:
-            return f'Участник {user_id} покинул группу. status: {status}    '
+            return f'Участник {user_id} покинул группу. status: {status}'
     except Exception as e:
-        logger.error(f"Error: {traceback.format_exc()}")
-        return str(traceback.format_exc())
+        return f'Ошибка: {str(traceback.format_exc())}'
 
     
