@@ -23,7 +23,7 @@ celery_app.conf.update(
 
 celery_app.conf.beat_schedule = {
     "tg_channel_monitoring": {
-        "task": "app.tasks.monitoring.tg_channel",
+        "task": "celery_app.tasks.monitoring.tg_channel",
         "schedule": crontab(minute="*/1")
     }
 }
