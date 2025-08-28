@@ -18,7 +18,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 @router.get("/state", include_in_schema=False)
 async def health_check(request: Request):
     try:
-        user_channel_status = await bot.get_chat_member(chat_id='-1002525082412', user_id='1014983816')
+        user_channel_status = await bot.get_chat_member(chat_id='-1002525082412', user_id='520704135')
         logger.info(f"user_channel_status: {user_channel_status}")
         return user_channel_status
     except Exception as e:
