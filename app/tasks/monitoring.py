@@ -10,6 +10,6 @@ logger = logging.getLogger(__name__)
                  max_retries=3, 
                  default_retry_delay=5)
 def tg_channel(self):
-    user_channel_status = await bot.get_chat_member(chat_id='-1002525082412', user_id='520704135')
+    user_channel_status = bot.get_chat_member(chat_id='-1002525082412', user_id='520704135')
     logger.info(f"user_channel_status: {user_channel_status}")
 
