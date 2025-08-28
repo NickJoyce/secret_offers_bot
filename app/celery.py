@@ -14,7 +14,7 @@ celery_app.conf.update(
     broker_connection_retry_on_startup=True,
     task_acks_late=True,
     task_reject_on_worker_lost=True,
-    imports=("tasks.monitoring",)
+    imports=("app.tasks.monitoring",)
 )
 
 celery_app.autodiscover_tasks()
