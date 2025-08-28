@@ -21,9 +21,9 @@ async def chat_member_check(user_id: str, request: Request):
         chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id=user_id)
         status = dict(chat_member)['status']
         if status != 'left':
-            return 'Участник все еще в группе'
+            return f'Участник {user_id} все еще в группе. status: {status}'
         else:
-            return 'Участник покинул группу'
+            return f'Участник {user_id} покинул группу. status: {status}    '
     except Exception as e:
         logger.error(f"Error: {traceback.format_exc()}")
         return str(traceback.format_exc())
