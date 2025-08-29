@@ -18,9 +18,9 @@ def register_superuser(email, password, config):
 if __name__ == "__main__":
 
 
-    print(register_superuser(email='smirnov.nikita@podruge.ru',
-                             password='tLyT3wWh',
-                             config={"name": "nikita",
+    print(register_superuser(email='',
+                             password='',
+                             config={"name": "",
                                      "avatar": "admin/avatar.jpeg",
                                      "company_logo_url": None,
                                      "roles": ["read", "create", "edit", "delete", "action_make_published"]}))
