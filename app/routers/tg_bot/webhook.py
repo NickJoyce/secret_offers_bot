@@ -31,6 +31,21 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
     
     logger.info(f"request_data: {request_data}")
     
+    
+    # игнорируем сообщения из канала
+    try:
+        tg_id = request_data['channel_post']
+        # обработка tg webhook
+        update = Update.model_validate(await request.json(), context={"bot": bot})
+        await dp.feed_update(bot, update)
+        logging.info("Update processed")
+        return
+        
+    except KeyError:
+        pass
+    
+    
+    
     # получаем tg_id из request_data
     try:
         tg_id = request_data['message']['from']['id']
