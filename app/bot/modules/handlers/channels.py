@@ -10,7 +10,4 @@ router = Router()
 
 @router.channel_post()
 async def on_channel_post(msg: Message):
-    # msg.chat.id — id канала, msg.message_id — id поста
-    text = msg.text
-    logger.info(f"Channel post: {text}")
-    # сохраните в БД и т.д.
+    logger.info(f"Channel post: {msg}")
