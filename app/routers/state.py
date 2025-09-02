@@ -23,6 +23,7 @@ async def is_subscriber(user_id: str, request: Request):
         
         
         
+        
 
         status = dict(chat_member)['status']
         if status != 'left':
