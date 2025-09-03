@@ -28,9 +28,8 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 async def bot_webhook(request: Request, session: ClientSession = Depends(get_http_session)) -> None:
     request_data = await request.json()
     logger.info(f"request_data: {request_data}")
-    # обработка tg webhook
     update = Update.model_validate(await request.json(), context={"bot": bot})
     await dp.feed_update(bot, update)
     logging.info("Update processed")
-    # return {"Status": "OK"}
+
     

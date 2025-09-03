@@ -116,11 +116,11 @@ async def process_phone(message: types.Message, state: FSMContext):
             
             
             # send to es index: marketing-bot-registration
-            try:
-                user['tg_id'] = str(user['tg_id'])
-                await es.create_document(index_name='marketing-bot-registration', document=user)
-            except Exception as e:
-                logger.error(f"Error creating document in Elasticsearch: {e}")
+            # try:
+            #     user['tg_id'] = str(user['tg_id'])
+            #     await es.create_document(index_name='marketing-bot-registration', document=user)
+            # except Exception as e:
+            #     logger.error(f"Error creating document in Elasticsearch: {e}")
                  
             
             
@@ -131,6 +131,24 @@ async def process_phone(message: types.Message, state: FSMContext):
             )
             # Сбрасываем состояние, завершая регистрацию
             await state.clear()
+            
+            
+            
+            await message.reply('<a href="https://vk.com/id41732290">VK</a>', parse_mode="HTML")
+            
+            # Отправляем сообщение и сслки на закрытый канал
+            await message.answer_photo(
+                photo="https://marketing-bot.podrugeapi.ru/static/img/b905423b-962b-4c78-95f0-96bdfe39b8cc.jpeg",
+                caption=escape_markdown_v2("""
+                Специально для вас мы подготовили несколько преветственных предложений! 
+                """),
+                parse_mode=ParseMode.MARKDOWN_V2,
+                reply_markup = await select_greeting_offer_callback()
+            )
+            
+            
+            await message.reply('<a href="https://vk.com/id41732290">VK</a>',parse_mode="HTML")
+            
             
             await message.answer_photo(
                 photo="https://marketing-bot.podrugeapi.ru/static/img/b905423b-962b-4c78-95f0-96bdfe39b8cc.jpeg",
