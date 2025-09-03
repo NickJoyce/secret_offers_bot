@@ -137,7 +137,8 @@ async def process_phone(message: types.Message, state: FSMContext):
                 # Убираем клавиатуру после завершения
                 reply_markup=types.ReplyKeyboardRemove() 
             )
-            Сбрасываем состояние, завершая регистрацию
+            
+            # Сбрасываем состояние, завершая регистрацию
             await state.clear()
             
             await message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
