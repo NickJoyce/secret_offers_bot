@@ -1,5 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardRemove
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 import logging.config
 from app.database.queries.greeting_offers import get_greeting_offers
@@ -37,7 +37,6 @@ async def select_greeting_offer_callback():
 
 link_kb = InlineKeyboardMarkup(
     inline_keyboard=[
-        [ReplyKeyboardRemove()],
         [InlineKeyboardButton(text="👉 Подписаться", url="https://www.google.com/")],
 
 ])
