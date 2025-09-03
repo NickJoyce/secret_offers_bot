@@ -37,6 +37,6 @@ async def select_greeting_offer_callback():
 
 link_kb = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="Перейти на сайт", url="https://www.google.com/")],
+        [InlineKeyboardButton(text="👉 Подписаться", url="https://www.google.com/")],
 
 ])

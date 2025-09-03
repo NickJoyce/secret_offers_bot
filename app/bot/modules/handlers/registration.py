@@ -132,35 +132,9 @@ async def process_phone(message: types.Message, state: FSMContext):
             # Сбрасываем состояние, завершая регистрацию
             await state.clear()
             
-            await message.answer("Нажмите на кнопку ниже:", reply_markup=link_kb)
+            await message.answer("intro post", reply_markup=link_kb)
             
-            await message.reply('<a href="https://vk.com/id41732290">VK</a>', parse_mode="HTML")
-            
-            # Отправляем сообщение и сслки на закрытый канал
-            await message.answer_photo(
-                photo="https://marketing-bot.podrugeapi.ru/static/img/b905423b-962b-4c78-95f0-96bdfe39b8cc.jpeg",
-                caption=escape_markdown_v2("""
-                Специально для вас мы подготовили несколько преветственных предложений! 
-                """),
-                parse_mode=ParseMode.MARKDOWN_V2,
-                reply_markup = await select_greeting_offer_callback()
-            )
-            
-            
-            await message.reply('<a href="https://vk.com/id41732290">VK</a>',parse_mode="HTML")
-            
-            
-            await message.answer_photo(
-                photo="https://marketing-bot.podrugeapi.ru/static/img/b905423b-962b-4c78-95f0-96bdfe39b8cc.jpeg",
-                caption=escape_markdown_v2("""
-                Специально для вас мы подготовили несколько преветственных предложений! 
-                """),
-                parse_mode=ParseMode.MARKDOWN_V2,
-                reply_markup = await select_greeting_offer_callback()
-            )
-            
-            # await message.answer(text="оформить заказ", reply_markup = await select_greeting_offer_callback())
-            
+
             
         else:
             await message.answer("Пожалуйста, поделитесь своим собственным номером телефона, нажав на кнопку")
