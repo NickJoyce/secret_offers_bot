@@ -6,7 +6,7 @@ from app.database.queries.tg_clients import get_client, update_client, create_cl
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.enums import ParseMode, ContentType
 from aiogram.fsm.context import FSMContext
-from app.bot.modules.keyboards.registration import request_contact_keyboard, select_greeting_offer_callback
+from app.bot.modules.keyboards.registration import request_contact_keyboard, select_greeting_offer_callback, link_kb
 from app.bot.modules.utils import escape_markdown_v2
 from app.database.queries.greeting_offers import get_greeting_offer
 from app.conns.talk_me.accounts import talk_me
@@ -132,7 +132,7 @@ async def process_phone(message: types.Message, state: FSMContext):
             # Сбрасываем состояние, завершая регистрацию
             await state.clear()
             
-            
+            await message.answer("Нажмите на кнопку ниже:", reply_markup=link_kb)
             
             await message.reply('<a href="https://vk.com/id41732290">VK</a>', parse_mode="HTML")
             

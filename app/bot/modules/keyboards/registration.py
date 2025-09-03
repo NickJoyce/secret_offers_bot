@@ -29,3 +29,8 @@ async def select_greeting_offer_callback():
         builder.add(InlineKeyboardButton(text=text, callback_data=f"greeting_offer_choice_{greeting_offer.id}"))
     builder.add(InlineKeyboardButton(text="Поговорить с менеджером", callback_data="greeting_offer_choice_manager"))
     return builder.adjust(1).as_markup()
+
+
+
+button_with_link = InlineKeyboardButton(text="Перейти на сайт", url="https://www.google.com/")
+link_kb = InlineKeyboardMarkup(row_width=1).add(button_with_link)
