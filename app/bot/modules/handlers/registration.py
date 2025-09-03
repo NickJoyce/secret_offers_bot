@@ -132,11 +132,11 @@ async def process_phone(message: types.Message, state: FSMContext):
                  
             
             
-            await message.answer(
-                f" ",
-                # Убираем клавиатуру после завершения
-                reply_markup=types.ReplyKeyboardRemove() 
-            )
+            # await message.answer(
+            #     f" ",
+            #     # Убираем клавиатуру после завершения
+            #     reply_markup=types.ReplyKeyboardRemove() 
+            # )
             # Сбрасываем состояние, завершая регистрацию
             await state.clear()
             
