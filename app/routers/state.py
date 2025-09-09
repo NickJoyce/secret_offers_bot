@@ -59,7 +59,6 @@ async def manage_channel_post(request: Request):
        
         message_body = 'test' 
         message = await bot.send_message(chat_id=chat_id,
-                                         parse_mode=ParseMode.HTML,
                                          text=message_body,
                                          reply_markup=post_keyboard, 
                                          disable_notification=True)
