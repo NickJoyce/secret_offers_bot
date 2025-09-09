@@ -7,6 +7,7 @@ from settings.base import TEMPLATES_DIR
 from app.tasks.monitoring import is_subscriber
 import traceback
 from app.bot.main import bot
+from traceback import format_exc
 
 logger = logging.getLogger(__name__)
 
@@ -54,4 +55,4 @@ async def manage_channel_post(request: Request):
   
 
     except Exception as e:
-        return JSONResponse({'error': e})
+        return JSONResponse({'error': format_exc()})
