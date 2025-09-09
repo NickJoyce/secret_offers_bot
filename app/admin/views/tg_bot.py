@@ -216,3 +216,14 @@ class MyCustomView(CustomView):
 
         )
 
+class ChannelPostView(ModelView):
+    label = 'Посты в канале'
+    name = 'Пост в канале'
+    fields = [
+        IntegerField("id", label="id"),
+        DateTimeField("created_at", label="Дата создания"),
+        StringField("caption", label="Подпись под картинкой"),
+        ImageField("photo", label="Фото"),
+        StringField("chat_id", label="ID чата"),
+        IntegerField("message_id", label="ID сообщения"),
+    ]

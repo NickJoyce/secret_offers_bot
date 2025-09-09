@@ -17,8 +17,8 @@ from starlette.middleware import Middleware
 from app.database.models.test import Test
 from app.admin.views.test_views import TestView
 
-from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, GreetingOffer, TalkMeMessageFromClient
-from app.admin.views.tg_bot import TgClientView, TgManagerView, TgNewsletterView, AssignmentView, MyCustomView, GreetingOfferView, TalkMeMessageFromClientView
+from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, GreetingOffer, TalkMeMessageFromClient, ChannelPost
+from app.admin.views.tg_bot import TgClientView, TgManagerView, TgNewsletterView, AssignmentView, MyCustomView, GreetingOfferView, TalkMeMessageFromClientView, ChannelPostView
 from app.admin.auth import auth_router
 from app.bot.main import bot, dp, start_bot, stop_bot
 from contextlib import asynccontextmanager
@@ -98,7 +98,9 @@ admin = Admin(
 
 # Add views
 # admin.add_view(TestView(Test))
+admin.add_view(ChannelPostView(ChannelPost, identity="channel_post"))
 admin.add_view(TgClientView(TgClient, identity="tg_client"))
+
 admin.add_view(TgManagerView(TgManager, identity="tg_manager"))
 admin.add_view(TgNewsletterView(Newsletter, identity="tg_newsletter"))
 admin.add_view(GreetingOfferView(GreetingOffer, identity="greeting_offer"))
