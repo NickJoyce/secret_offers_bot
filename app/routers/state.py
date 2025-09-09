@@ -75,21 +75,16 @@ async def manage_channel_post(request: Request):
                                        disable_notification=True)
         message_id = message.message_id
         
-  
-        
-        
-        
-        
         
         await sleep(3)
         
         
-        await bot.edit_message_text(
-            text='test',
+        await bot.edit_message_caption(
             chat_id=chat_id,
             message_id=message_id,
-            reply_markup=None
-    )
+            caption=message_body,
+            reply_markup= post_keyboard
+        )
         
         
         return JSONResponse({})
