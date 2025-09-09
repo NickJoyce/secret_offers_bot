@@ -54,4 +54,4 @@ async def manage_channel_post(request: Request):
   
 
     except Exception as e:
-        return JSONResponse({})
+        return JSONResponse({'error': e})
