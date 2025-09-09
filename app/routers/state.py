@@ -62,6 +62,16 @@ async def manage_channel_post(request: Request):
                                          text=message_body,
                                          reply_markup=post_keyboard, 
                                          disable_notification=True)
+        message_id = message.message_id
+        
+        
+        await bot.edit_message_text(
+            text='test222',
+            chat_id=chat_id,
+            message_id=message_id
+    )
+        
+        
         return JSONResponse({})
 
     except Exception as e:
