@@ -83,7 +83,7 @@ async def manage_channel_post(request: Request):
             chat_id=chat_id,
             message_id=message_id,
             caption=message_body,
-            reply_markup= post_keyboard
+            reply_markup= None
         )
         
         
