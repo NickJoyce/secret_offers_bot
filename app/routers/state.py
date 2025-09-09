@@ -63,7 +63,7 @@ async def manage_channel_post(request: Request):
                                          text=message_body,
                                          reply_markup=post_keyboard, 
                                          disable_notification=True)
-         return JSONResponse({})
+        return JSONResponse({})
 
     except Exception as e:
         return JSONResponse({'error': format_exc()})
