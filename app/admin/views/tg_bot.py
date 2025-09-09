@@ -223,7 +223,7 @@ class ChannelPostView(ModelView):
         IntegerField("id", label="id"),
         DateTimeField("created_at", label="Дата создания"),
         ImageField("photo", label="Фото"),
-        StringField("caption", label="Подпись под картинкой"),
+        TextAreaField("caption", label="Подпись под картинкой"),
         StringField("chat_id", label="ID чата"),
         IntegerField("message_id", label="ID сообщения"),
     ]
