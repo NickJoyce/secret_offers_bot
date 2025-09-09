@@ -9,6 +9,7 @@ import traceback
 from app.bot.main import bot
 from traceback import format_exc
 from app.bot.modules.keyboards.channels import post_keyboard
+from asyncio import sleep
 
 logger = logging.getLogger(__name__)
 
@@ -65,11 +66,14 @@ async def manage_channel_post(request: Request):
         message_id = message.message_id
         
         
+        await sleep(3)
+        
+        
         await bot.edit_message_text(
-            text='test222',
+            text='test',
             chat_id=chat_id,
             message_id=message_id,
-            disable_notification=True
+            reply_markup=None
     )
         
         
