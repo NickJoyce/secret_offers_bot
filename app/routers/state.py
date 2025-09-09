@@ -23,8 +23,6 @@ async def is_subscriber(user_id: str, request: Request):
         
         
         
-        
-
         status = dict(chat_member)['status']
         if status != 'left':
             # return HTMLResponse(content=f'Участник {user_id} все еще в группе. status: {status}')
@@ -36,4 +34,13 @@ async def is_subscriber(user_id: str, request: Request):
     except Exception as e:
         return JSONResponse({'is_subscriber': None})
 
+
+@router.get("/manage-channel-post", include_in_schema=False)
+async def manage_channel_post(request: Request):
+    try:
+        return JSONResponse({})
     
+  
+
+    except Exception as e:
+        return JSONResponse({})
