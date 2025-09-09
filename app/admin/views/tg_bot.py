@@ -222,8 +222,10 @@ class ChannelPostView(ModelView):
     fields = [
         IntegerField("id", label="id"),
         DateTimeField("created_at", label="Дата создания"),
-        StringField("caption", label="Подпись под картинкой"),
         ImageField("photo", label="Фото"),
+        StringField("caption", label="Подпись под картинкой"),
         StringField("chat_id", label="ID чата"),
         IntegerField("message_id", label="ID сообщения"),
-    ]
+    ]]
+    exclude_fields_from_create = ["id", "created_at", "chat_id", "message_id"]
+    exclude_fields_from_edit = ["id", "created_at", "chat_id", "message_id"]
