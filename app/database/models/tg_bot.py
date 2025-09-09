@@ -193,3 +193,16 @@ class FirstStartMessage(Base):
     
     
     
+class ChannelPost(Base):
+    __tablename__ = "channel_posts"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.timezone('Europe/Moscow', func.now()),
+                                                 nullable=False,
+                                                 comment='Дата создания')
+    caption: Mapped[str] = mapped_column(String(1200), comment="Подпись под картинкой")
+    photo: Mapped[ImageField] = mapped_column(ImageField(), nullable=True, comment="Фото")
+    chat_id: Mapped[str] = mapped_column(String(255), nullable=True, comment="ID чата")
+    message_id: Mapped[int] = mapped_column(BigInteger, nullable=True, comment="ID сообщения")
+

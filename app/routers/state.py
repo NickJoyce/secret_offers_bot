@@ -47,7 +47,7 @@ async def manage_channel_post(request: Request):
     try:
         
     
-        chat_id = '-1002985940817'
+        chat_id = '-1003007138318'
         message_id = 80
 
 
@@ -76,23 +76,18 @@ async def manage_channel_post(request: Request):
         message_id = message.message_id
         
         
-        await sleep(3)
+        # await sleep(3)
         
-        # редактируем сообщение: удаляем клавиатуру
-        await bot.edit_message_caption(
-            chat_id=chat_id,
-            message_id=message_id,
-            caption=message_body,
-            reply_markup= None
-        )
-        
-        await sleep(3)
-        
-        # удаляем сообщение
-        await bot.delete_message(chat_id=chat_id, message_id=message_id)
-        
-        
-        return JSONResponse({})
+        # # редактируем сообщение: удаляем клавиатуру
+        # await bot.edit_message_caption(
+        #     chat_id=chat_id,
+        #     message_id=message_id,
+        #     caption=message_body,
+        #     reply_markup= None
+        # )
+
+    
+        return JSONResponse({"message_id": message_id})
 
     except Exception as e:
         return JSONResponse({'error': format_exc()})

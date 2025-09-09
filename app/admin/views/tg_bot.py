@@ -1,7 +1,7 @@
 from starlette_admin.contrib.sqla import ModelView
 from starlette_admin.fields import StringField, BooleanField, IntegerField, DateTimeField, DecimalField, HasOne, HasMany, FileField, ImageField, TextAreaField
 from starlette_admin.fields import FloatField, JSONField
-from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment
+from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost
 from fastapi import Request
 from typing import Any
 from fastapi.templating import Jinja2Templates
