@@ -81,7 +81,7 @@ async def manage_channel_post(request: Request):
         # редактируем сообщение: удаляем клавиатуру
         await bot.edit_message_caption(
             chat_id=chat_id,
-            message_id=message_id,
+            message_id=80,
             caption=message_body,
             reply_markup= None
         )
