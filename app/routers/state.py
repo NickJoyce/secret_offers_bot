@@ -68,7 +68,8 @@ async def manage_channel_post(request: Request):
         await bot.edit_message_text(
             text='test222',
             chat_id=chat_id,
-            message_id=message_id
+            message_id=message_id,
+            disable_notification=True
     )
         
         
