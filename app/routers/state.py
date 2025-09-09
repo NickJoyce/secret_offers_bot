@@ -40,8 +40,8 @@ async def manage_channel_post(request: Request):
     try:
         
     
-        chat_id = -1002525082412
-        message_id = 80
+        chat_id = '-1002525082412'
+        message_id = '80'
 
 
         # Редактируем сообщение
