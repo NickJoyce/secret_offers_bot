@@ -40,3 +40,18 @@ link_kb = InlineKeyboardMarkup(
         [InlineKeyboardButton(text="👉 Подписаться", url="https://t.me/+uZjXQYiEkC9iMGFi")],
 
 ])
+
+# Клавиатура для записи в Telegram и WhatsApp
+registration_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="Записаться сейчас в TG", url="http://t.me/podruge_close_club_direct_bot")],
+        [InlineKeyboardButton(text="Записаться сейчас в WA", url="https://wa.me/79672121788")]
+    ]
+)
+
+# Альтернативная версия с использованием InlineKeyboardBuilder
+def create_registration_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.add(InlineKeyboardButton(text="Записаться сейчас в TG", url="http://t.me/podruge_close_club_direct_bot"))
+    builder.add(InlineKeyboardButton(text="Записаться сейчас в WA", url="https://wa.me/79672121788"))
+    return builder.adjust(1).as_markup()
