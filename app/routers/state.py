@@ -68,12 +68,9 @@ async def manage_channel_post(request: Request):
         await update_channel_post(last_channel_post)
         
     
-
-        await sleep(25)
-
-    
         # редактируем сообщение: удаляем клавиатуру
-
+        await sleep(25)
+        last_channel_post = await get_last_channel_post()
         await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
         
 
@@ -82,3 +79,19 @@ async def manage_channel_post(request: Request):
 
     except Exception as e:
         return JSONResponse({'error': format_exc()})
+    
+    
+@router.get("/link-gen", include_in_schema=False)
+async def link_gen(request: Request):
+    # получим текущих пользователей
+    clients = await get_clients()
+    for client in clients:
+        chat_id = "123456789"
+        expire_date = datetime.now() + timedelta(days=1)
+        link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
+        link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
+        await bot.send_message(client.tg_id, "Ссылка на канал 1: "+link_1.invite_link+"\nСсылка на канал 2: "+link_2.invite_link)
+        
+    
+    
+
