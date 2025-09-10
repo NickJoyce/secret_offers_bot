@@ -53,7 +53,7 @@ async def lifespan(app: FastAPI):
     await start_bot()
     await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
                           secret_token=WEBHOOK_SECRET, 
-                          allowed_updates=["message", "callback_query", "channel_post","edited_channel_post"],
+                          allowed_updates=["message", "callback_query", "channel_post","edited_channel_post", "chat_join_request"],
                           drop_pending_updates=True)
     logging.info(f"Webhook set to {BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
     yield
