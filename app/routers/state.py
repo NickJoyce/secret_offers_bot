@@ -26,6 +26,8 @@ router = APIRouter()
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
+
+
 @router.get("/is_subscriber", include_in_schema=False)
 async def is_subscriber(user_id: str, request: Request):
     try:
@@ -85,11 +87,11 @@ async def manage_channel_post(request: Request):
     
 @router.get("/link-gen", include_in_schema=False)
 async def link_gen(request: Request):
+    chat_id = '-1003007138318'
     try:
     # получим текущих пользователей
         clients = await get_clients()
         for client in clients:
-            chat_id = "123456789"
             expire_date = datetime.now() + timedelta(days=1)
             link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
             link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
