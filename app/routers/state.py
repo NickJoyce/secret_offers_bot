@@ -32,6 +32,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 async def is_subscriber(user_id: str, request: Request):
     try:
         chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id=user_id)
+        logger.info(dict(chat_member))
         status = dict(chat_member)['status']
         if status != 'left':
             # return HTMLResponse(content=f'Участник {user_id} все еще в группе. status: {status}')
@@ -93,7 +94,7 @@ async def link_gen(request: Request):
         clients = await get_clients()
         for client in clients:
             expire_date = datetime.now() + timedelta(days=1)
-            tags = f'?source=secret_offers_bot&client_id={client.id}'
+            tags = f'?source=secretoffersbot&client_id={client.tg_id}'
 
             
             link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
