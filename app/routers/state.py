@@ -97,9 +97,9 @@ async def link_gen(request: Request):
             tags = f'?source=secretoffersbot&client_id={client.tg_id}'
 
             
-            link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1, creates_join_request=True)
+            link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
             logger.info(link_1)
-            link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1, creates_join_request=True)
+            link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
             link_1 = link_1.invite_link
             link_2 = link_2.invite_link 
 
