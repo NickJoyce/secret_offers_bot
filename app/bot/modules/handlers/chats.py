@@ -18,8 +18,10 @@ router = Router()
 # Это работает для получения данных пользователя при проходе по ссылке
 @router.chat_join_request()
 async def on_user_leave(update: ChatJoinRequest): 
-    print(update.invite_link.invite_link, 'ССЫЛКА ПО КОТОРОЙ ПРОШЛИ')
-    print(update.invite_link)
+    logger.info(update.invite_link.invite_link, 'ССЫЛКА ПО КОТОРОЙ ПРОШЛИ')
+    logger.info(update.invite_link)
+    
+
 
 # # Срабатывает, когда отписывается пользователь
 # @router.chat_member(ChatMemberUpdatedFilter(IS_MEMBER >> IS_NOT_MEMBER))
