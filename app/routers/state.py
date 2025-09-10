@@ -69,7 +69,7 @@ async def manage_channel_post(request: Request):
         
     
         
-        await sleep(3)
+        await sleep(25)
         
     
         
