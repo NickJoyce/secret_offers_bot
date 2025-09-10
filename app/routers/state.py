@@ -12,6 +12,7 @@ from app.bot.modules.keyboards.channels import post_keyboard
 from asyncio import sleep
 from aiogram.types import FSInputFile
 from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post, update_channel_post
+from app.bot.modules.utils import ParseModes, escape_markdown_v2
 
 
 
@@ -78,9 +79,10 @@ async def manage_channel_post(request: Request):
         # отправляем сообщение c фото
         message = await bot.send_photo(chat_id=chat_id,
                                         photo=FSInputFile(photo_path),
-                                        caption=last_channel_post.caption,
+                                        caption=escape_markdown_v2(last_channel_post.caption),
                                         reply_markup=post_keyboard, 
-                                        disable_notification=True)
+                                        disable_notification=True,
+                                        parse_mode=ParseModes.MARKDOWN_V2)
         message_id = message.message_id
         
         last_channel_post.message_id = message_id
