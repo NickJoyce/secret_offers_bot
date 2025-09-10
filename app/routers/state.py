@@ -102,7 +102,7 @@ async def link_gen(request: Request):
             link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
 
 
-            await bot.send_message(f"ссылки: {link_1.invite_link}\n{link_2.invite_link}")
+            await bot.send_message(text=f"ссылки: {link_1.invite_link}\n{link_2.invite_link}")
         return JSONResponse({"message_id": "..."})
         
         
