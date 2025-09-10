@@ -11,7 +11,7 @@ from traceback import format_exc
 from app.bot.modules.keyboards.channels import post_keyboard
 from asyncio import sleep
 from aiogram.types import FSInputFile
-from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post
+from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post, update_channel_post
 
 
 
@@ -82,6 +82,12 @@ async def manage_channel_post(request: Request):
                                         reply_markup=post_keyboard, 
                                         disable_notification=True)
         message_id = message.message_id
+        
+        last_channel_post.message_id = message_id
+        last_channel_post.chat_id = chat_id
+        await update_channel_post(last_channel_post)
+        
+        
         
         
         # await sleep(3)
