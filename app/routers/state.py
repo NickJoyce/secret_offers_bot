@@ -95,8 +95,14 @@ async def link_gen(request: Request):
             expire_date = datetime.now() + timedelta(days=1)
             link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
             link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
+            
+            links ={
+                
+            }
+            
+            
             await bot.send_message(client.tg_id, "Ссылка на канал 1: "+link_1.invite_link+"\nСсылка на канал 2: "+link_2.invite_link)
-        return JSONResponse({"message_id": clients})
+        return JSONResponse({"message_id": "...")
         
         
     except Exception as e:

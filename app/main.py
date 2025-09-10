@@ -26,6 +26,8 @@ from app.bot.modules.handlers.registration import router as reg_router
 from app.bot.modules.handlers.managers import router as manager_router
 from app.bot.modules.handlers.clients import router as client_router
 from app.bot.modules.handlers.channels import router as channel_router
+from app.bot.modules.handlers.chats import router as chat_router
+
 from starlette_admin.views import Link
 from settings.base import TEMPLATES_DIR
 from jinja2 import FileSystemLoader
@@ -47,6 +49,7 @@ async def lifespan(app: FastAPI):
     dp.include_router(manager_router)
     dp.include_router(client_router)
     dp.include_router(channel_router)
+    dp.include_router(chat_router)
     await start_bot()
     await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
                           secret_token=WEBHOOK_SECRET, 
