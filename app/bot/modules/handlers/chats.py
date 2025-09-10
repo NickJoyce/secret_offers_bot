@@ -1,6 +1,8 @@
 from aiogram import Router
 from aiogram.types import Message
 import logging
+from aiogram.filters import ChatMemberUpdatedFilter
+from aiogram.types import ChatJoinRequest, ChatMemberUpdated
 
 
 logger = logging.getLogger(__name__)
