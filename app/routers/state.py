@@ -76,7 +76,7 @@ async def manage_channel_post(request: Request):
         # photo_file = FSInputFile(photo_path)
        
         # отправляем сообщение c фото
-         message = await bot.send_photo(chat_id=chat_id,
+        message = await bot.send_photo(chat_id=chat_id,
                                         photo=FSInputFile(photo_path),
                                         caption=last_channel_post.caption,
                                         reply_markup=post_keyboard, 
