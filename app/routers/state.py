@@ -69,17 +69,12 @@ async def manage_channel_post(request: Request):
         
     
         
-        await sleep(25)
+        await sleep(10)
         
     
-        
         # редактируем сообщение: удаляем клавиатуру
-        await bot.edit_message_caption(
-            chat_id=chat_id,
-            message_id=message_id,
-            caption=message.caption,
-            reply_markup= None
-        )
+        await message.edit_reply_markup(reply_markup=None)
+        
 
     
         return JSONResponse({"message_id": message_id})
