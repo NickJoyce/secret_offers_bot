@@ -70,11 +70,11 @@ async def manage_channel_post(request: Request):
     
 
         await sleep(25)
-        new_message = await bot.get_message(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id)
-        
+
     
         # редактируем сообщение: удаляем клавиатуру
-        await new_message.edit_reply_markup(reply_markup=None)
+
+        await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
         
 
     
