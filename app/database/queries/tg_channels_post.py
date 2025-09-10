@@ -1,6 +1,7 @@
 from app.database.conn import AsyncSessionLocal
 from app.database.models.tg_bot import ChannelPost
 from sqlalchemy import select, update, delete, insert
+from sqlalchemy import desc
 
 
 async def get_channel_post(id):
