@@ -93,12 +93,14 @@ async def link_gen(request: Request):
         clients = await get_clients()
         for client in clients:
             expire_date = datetime.now() + timedelta(days=1)
+            tags = f'?source=secret_offers_bot&client_id={client.id}'
+                 '
+            
             link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
             link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
-            
-            links ={
-                
-            }
+            link_1 = link_1.invite_link + tags
+            link_2 = link_2.invite_link + tags
+
             
             
             await bot.send_message(client.tg_id, "Ссылка на канал 1: "+link_1.invite_link+"\nСсылка на канал 2: "+link_2.invite_link)
