@@ -69,7 +69,7 @@ async def manage_channel_post(request: Request):
         
     
         
-        await sleep(10)
+        await sleep(25)
         
     
         # редактируем сообщение: удаляем клавиатуру
