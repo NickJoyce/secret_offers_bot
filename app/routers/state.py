@@ -103,7 +103,7 @@ async def link_gen(request: Request):
 
             
             
-            await bot.send_message(client.tg_id, "Ссылка на канал 1: "+link_1.invite_link+"\nСсылка на канал 2: "+link_2.invite_link)
+            await bot.send_message(client.tg_id, "Ссылка на канал 1: "+link_1+"\nСсылка на канал 2: "+link_2)
         return JSONResponse({"message_id": "..."})
         
         
