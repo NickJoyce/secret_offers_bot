@@ -79,7 +79,7 @@ async def manage_channel_post(request: Request):
         # отправляем сообщение c фото
         message = await bot.send_photo(chat_id=chat_id,
                                         photo=FSInputFile(photo_path),
-                                        caption=escape_markdown_v2(last_channel_post.caption),
+                                        caption='![👍](tg://emoji?id=5368324170671202286)'+escape_markdown_v2(last_channel_post.caption),
                                         reply_markup=post_keyboard, 
                                         disable_notification=True,
                                         parse_mode=ParseModes.MARKDOWN_V2)
