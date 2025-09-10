@@ -31,7 +31,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 @router.get("/is_subscriber", include_in_schema=False)
 async def is_subscriber(user_id: str, request: Request):
     try:
-        chat_member = await bot.get_chat_member(chat_id='-1002525082412', user_id=user_id)
+        chat_member = await bot.get_chat_member(chat_id='-1003007138318', user_id=user_id)
         logger.info(dict(chat_member))
         status = dict(chat_member)['status']
         if status != 'left':
