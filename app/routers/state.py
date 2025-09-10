@@ -94,7 +94,7 @@ async def link_gen(request: Request):
         for client in clients:
             expire_date = datetime.now() + timedelta(days=1)
             tags = f'?source=secret_offers_bot&client_id={client.id}'
-                 '
+
             
             link_1 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
             link_2 = await bot.create_chat_invite_link(chat_id=chat_id, expire_date=expire_date, member_limit=1)
