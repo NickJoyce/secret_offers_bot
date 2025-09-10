@@ -13,6 +13,8 @@ from asyncio import sleep
 from aiogram.types import FSInputFile
 from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post, update_channel_post
 from app.bot.modules.utils import ParseModes, escape_markdown_v2
+from app.database.queries.tg_clients import get_clients
+from datetime import datetime, timedelta
 
 
 
