@@ -36,6 +36,10 @@ TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
 TG_ADMIN_ID = os.getenv('TG_ADMIN_ID')
 WEBHOOK_SECRET = os.getenv('WEBHOOK_SECRET')
 
+# Канал Закрытый клуб "Подружки"
+TG_CHANNEL_ID = os.getenv('TG_CHANNEL_ID')
+
+
 # elasticsearch
 ES_BASE_URL = 'https://elasticsearch.podrugeapi.ru'
 ES_USER = os.getenv('ES_USER')
@@ -50,8 +54,6 @@ BASE_WEBHOOK_URL = "https://secret-offers-bot.podrugeapi.ru"
 WEBHOOK_PATH = "/webhook"
 # Secret key to validate requests from Telegram (optional)
 WEBHOOK_SECRET = os.getenv('WEBHOOK_SECRET')
-
-
 
 
 # talk-me webhook
