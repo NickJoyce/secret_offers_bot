@@ -74,9 +74,9 @@ async def manage_channel_post(request: Request):
         
     
         # редактируем сообщение: удаляем клавиатуру
-        await sleep(25)
-        last_channel_post = await get_last_channel_post()
-        await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
+        # await sleep(25)
+        # last_channel_post = await get_last_channel_post()
+        # await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
         
 
     
@@ -109,3 +109,18 @@ async def link_gen(request: Request):
         return JSONResponse({'error': format_exc()})   
     
 
+    
+@router.get("/delete-buttons", include_in_schema=False)
+async def delete_buttons(request: Request):
+    try:
+        last_channel_post = await get_last_channel_post()
+        logger.info(datetime.now())
+        logger.info(last_channel_post.buttons_expiration)
+        if last_channel_post.buttons_expiration and last_channel_post.buttons_expiration < datetime.now():
+            await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
+        return JSONResponse({"success": True})
+    except Exception as e:
+        return JSONResponse({"success": False})
+
+
+        

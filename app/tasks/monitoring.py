@@ -24,12 +24,7 @@ def is_subscriber(self):
                  max_retries=3,
                  default_retry_delay=5)
 def delete_buttons(self):
-    last_channel_post = await get_last_channel_post()
+    requests.get('https://secret-offers-bot.podrugeapi.ru/delete-buttons')
 
-    if last_channel_post.buttons_expiration and last_channel_post.buttons_expiration < datetime.now():
-        logger.info(datetime.now())
-        logger.info(last_channel_post.buttons_expiration)
-        ...
-    # await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
 
 
