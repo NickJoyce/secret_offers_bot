@@ -227,6 +227,7 @@ class ChannelPostView(ModelView):
         StringField("chat_id", label="ID чата"),
         IntegerField("message_id", label="ID сообщения"),
         DateTimeField("buttons_expiration", label="Дата истечения срока действия кнопок"),
+        BooleanField("is_buttons_deleted", label="Флаг удаления кнопок"),
     ]
     exclude_fields_from_list = ["id", "caption", "photo"]
     exclude_fields_from_create = ["id", "created_at", "chat_id", "message_id"]
