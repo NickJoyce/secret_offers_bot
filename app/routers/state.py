@@ -63,7 +63,7 @@ async def manage_channel_post(request: Request):
                                        parse_mode=ParseModes.MARKDOWN_V2)
         message_id = message.message_id
         last_channel_post.message_id = message_id
-        last_channel_post.chat_id = chat_id
+        last_channel_post.chat_id = TG_CHANNEL_ID
         await update_channel_post(last_channel_post)
         return JSONResponse({"message_id": message_id})
     except Exception as e:
