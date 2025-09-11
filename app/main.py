@@ -35,6 +35,7 @@ from fastapi.templating import Jinja2Templates
 from starlette_admin.views import CustomView
 import os
 import time
+from starlette_admin.timezone import TimezoneConfig
 
 
 # logging init
@@ -94,7 +95,7 @@ admin = Admin(
     i18n_config=I18nConfig(default_locale="ru"),
     middlewares=[Middleware(SessionMiddleware, secret_key=ADMIN_SECRET),],
     debug=os.getenv('ENV_TYPE') == 'dev'  # Debug только в dev режиме
-    timezone_config='Europe/Moscow'
+    timezone_config=TimezoneConfig(timezone='Europe/Moscow')
 )
 
 
