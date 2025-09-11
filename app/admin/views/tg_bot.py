@@ -226,6 +226,7 @@ class ChannelPostView(ModelView):
         TextAreaField("caption", label="Подпись под картинкой"),
         StringField("chat_id", label="ID чата"),
         IntegerField("message_id", label="ID сообщения"),
+        DateTimeField("buttons_expiration", label="Дата истечения срока действия кнопок"),
     ]
     exclude_fields_from_list = ["id", "caption", "photo"]
     exclude_fields_from_create = ["id", "created_at", "chat_id", "message_id"]
