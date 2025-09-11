@@ -23,8 +23,8 @@ async def get_last_channel_post():
     
 async def update_channel_post(channel_post):
     async with AsyncSessionLocal() as session:
-        channel_post = session.merge(channel_post)
-        session.commit()
+        channel_post = await session.merge(channel_post)
+        await session.commit()
 
 
 
