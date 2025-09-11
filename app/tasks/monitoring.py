@@ -24,7 +24,8 @@ def is_subscriber(self):
                  max_retries=3,
                  default_retry_delay=5)
 def delete_buttons(self):
-    requests.get('https://secret-offers-bot.podrugeapi.ru/delete-buttons')
+    response = requests.get('https://secret-offers-bot.podrugeapi.ru/delete-buttons')
+    logger.info(f"response: {str(response.json())}")
 
 
 
