@@ -205,7 +205,7 @@ class ChannelPost(Base):
     photo: Mapped[ImageField] = mapped_column(ImageField(), nullable=True, comment="Фото")
     chat_id: Mapped[str] = mapped_column(String(255), nullable=True, comment="ID чата")
     message_id: Mapped[int] = mapped_column(BigInteger, nullable=True, comment="ID сообщения")
-    buttons_expiration: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+    buttons_expiration: Mapped[datetime] = mapped_column(DateTime(),
                                                          nullable=True, 
                                                          comment="Дата истечения срока действия кнопок")
     
