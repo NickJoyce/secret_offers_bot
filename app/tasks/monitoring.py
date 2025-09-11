@@ -24,8 +24,9 @@ def is_subscriber(self):
                  max_retries=3,
                  default_retry_delay=5)
 def delete_buttons(self):
-    response = requests.get('https://secret-offers-bot.podrugeapi.ru/delete-buttons')
-    logger.info(f"response: {str(response.json())}")
+    "проверяет дату истечение кнопок и удаляет клавиатуру если она просрочена"
+    requests.get('https://secret-offers-bot.podrugeapi.ru/delete-buttons')
+
 
 
 

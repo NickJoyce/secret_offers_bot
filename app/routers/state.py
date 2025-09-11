@@ -15,6 +15,7 @@ from app.database.queries.tg_channels_post import get_channel_posts, get_last_ch
 from app.bot.modules.utils import ParseModes, escape_markdown_v2
 from app.database.queries.tg_clients import get_clients
 from datetime import datetime, timedelta
+import traceback
 
 
 
@@ -118,9 +119,9 @@ async def delete_buttons(request: Request):
         logger.info(last_channel_post.buttons_expiration)
         if last_channel_post.buttons_expiration and last_channel_post.buttons_expiration < datetime.now():
             await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
-        return JSONResponse({"success": True})
+            return JSONResponse({"result": "buttons deleted"})
     except Exception as e:
-        return JSONResponse({"success": False})
+        return JSONResponse({"error": format_exc()})
 
 
         
