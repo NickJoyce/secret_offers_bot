@@ -35,7 +35,7 @@ from fastapi.templating import Jinja2Templates
 from starlette_admin.views import CustomView
 import os
 import time
-from starlette_admin.base import timezone_config
+from starlette_admin import TimezoneConfig
 
 
 
@@ -85,7 +85,7 @@ app.mount("/static", StaticFiles(directory="static", check_dir=False), name="sta
 
 
 # Configure your timezone settings
-my_timezone_config = timezone_config.TimezoneConfig(
+my_timezone_config = TimezoneConfig(
     default_timezone="America/New_York",  
     convert_to_local=True,              
 )
