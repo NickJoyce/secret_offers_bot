@@ -208,7 +208,7 @@ class ChannelPost(Base):
     buttons_expiration: Mapped[datetime] = mapped_column(DateTime(),
                                                          nullable=True, 
                                                          comment="Дата истечения срока действия кнопок")
-    is_buttons_deleted: Mapped[bool] = mapped_column(Boolean, default=False, nullable=True, comment="Флаг удаления кнопок")
+    is_buttons_deleted: Mapped[bool] = mapped_column(Boolean, default=False, comment="Флаг удаления кнопок")
     
     
 
