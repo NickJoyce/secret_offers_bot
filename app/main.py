@@ -35,7 +35,7 @@ from fastapi.templating import Jinja2Templates
 from starlette_admin.views import CustomView
 import os
 import time
-from starlette_admin import TimezoneConfig
+
 
 
 
@@ -84,11 +84,6 @@ async def log_requests(request: Request, call_next, ):
 app.mount("/static", StaticFiles(directory="static", check_dir=False), name="static")
 
 
-# Configure your timezone settings
-my_timezone_config = TimezoneConfig(
-    default_timezone="America/New_York",  
-    convert_to_local=True,              
-)
 
 
 # Create admin
@@ -102,7 +97,6 @@ admin = Admin(
     auth_provider=MyAuthProvider(),
     i18n_config=I18nConfig(default_locale="ru"),
     middlewares=[Middleware(SessionMiddleware, secret_key=ADMIN_SECRET),],
-    timezone_config=my_timezone_config,
     debug=os.getenv('ENV_TYPE') == 'dev',  # Debug только в dev режиме
 )
 
