@@ -230,5 +230,5 @@ class ChannelPostView(ModelView):
         BooleanField("is_buttons_deleted", label="Флаг удаления кнопок"),
     ]
     exclude_fields_from_list = ["id", "caption", "photo"]
-    exclude_fields_from_create = ["id", "created_at", "chat_id", "message_id"]
-    exclude_fields_from_edit = ["id", "created_at", "chat_id", "message_id"]
+    exclude_fields_from_create = ["id", "created_at", "chat_id", "message_id", "is_buttons_deleted"]
+    exclude_fields_from_edit = ["id", "created_at", "chat_id", "message_id", "is_buttons_deleted"]
