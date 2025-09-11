@@ -115,7 +115,7 @@ async def link_gen(request: Request):
 async def delete_buttons(request: Request):
     try:
         last_channel_post = await get_last_channel_post()
-        if last_channel_post.buttons_expiration and last_channel_post.buttons_expiration < datetime.now():
+        if last_channel_post.buttons_expiration and not last_channel_post.is_buttons_deleted and last_channel_post.buttons_expiration < datetime.now():
             await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
             return JSONResponse({"result": "buttons deleted"})
     except Exception as e:
