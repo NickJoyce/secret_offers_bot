@@ -94,8 +94,8 @@ admin = Admin(
     auth_provider=MyAuthProvider(),
     i18n_config=I18nConfig(default_locale="ru"),
     middlewares=[Middleware(SessionMiddleware, secret_key=ADMIN_SECRET),],
-    debug=os.getenv('ENV_TYPE') == 'dev'  # Debug только в dev режиме
     timezone_config=TimezoneConfig(timezone='Europe/Moscow')
+    debug=os.getenv('ENV_TYPE') == 'dev',  # Debug только в dev режиме
 )
 
 
