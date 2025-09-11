@@ -118,6 +118,7 @@ async def delete_buttons(request: Request):
         if last_channel_post.buttons_expiration and not last_channel_post.is_buttons_deleted and last_channel_post.buttons_expiration < datetime.now():
             await bot.edit_message_reply_markup(chat_id=last_channel_post.chat_id, message_id=last_channel_post.message_id, reply_markup=None)
             last_channel_post.is_buttons_deleted = True
+            await update_channel_post(last_channel_post)
             return JSONResponse({"result": "buttons deleted"})
     except Exception as e:
         return JSONResponse({"error": format_exc()})
