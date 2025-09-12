@@ -93,7 +93,7 @@ async def link_gen(request: Request):
                     promocode =  {
                         "client_id": client.id,
                         "value": value,
-                        "link": link_1.invite_link,
+                        "link": link.invite_link,
                         "expire_date": expire_date,
                     }
                     promocodes.append(promocode)
