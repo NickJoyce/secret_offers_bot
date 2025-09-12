@@ -78,6 +78,7 @@ class PromocodeView(ModelView):
         DateTimeField("expire_date", label="Дата истечения промокода (ссылки на закрытый канал)"),
         IntegerField("subscriber_tg_id", label="tg id пользователя который подписался на закрытый канал"),
         DateTimeField("date_of_join", label="Дата присоеденения к закрытому каналу"),
+        HasMany("tg_client", label="Клиент", identity='tg_client', multiple=False)
     ]
     
     exclude_fields_from_list = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
