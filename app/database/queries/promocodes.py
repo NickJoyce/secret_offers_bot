@@ -8,6 +8,12 @@ async def get_promocode(promocode_id):
         promocode = await session.scalar(select(Promocode).where(Promocode.id == promocode_id))
         return promocode
 
+async def get_promocode_by_value(value: str):
+    async with AsyncSessionLocal() as session:
+        promocode = await session.scalar(select(Promocode).where(Promocode.value == value))
+        return promocode
+
+
 
 async def get_promocode():
     async with AsyncSessionLocal() as session:
