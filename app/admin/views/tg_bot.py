@@ -81,7 +81,7 @@ class PromocodeView(ModelView):
         HasMany("tg_client", label="Клиент", identity='tg_client', multiple=False)
     ]
     
-    exclude_fields_from_list = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
+    exclude_fields_from_list = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join", "tg_client"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
     exclude_fields_from_edit = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
     exclude_fields_from_detail = []
