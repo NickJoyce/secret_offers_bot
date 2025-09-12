@@ -8,5 +8,4 @@ def generate_promocode(length):
 
 
 if __name__ == "__main__":
-
     print(generate_promocode(length=10))
