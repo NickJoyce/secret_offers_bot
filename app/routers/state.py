@@ -14,7 +14,7 @@ from aiogram.types import FSInputFile
 from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post, update_channel_post
 from app.bot.modules.utils import ParseModes, escape_markdown_v2
 from app.database.queries.tg_clients import get_clients
-from app.database.queries.promocodes import create_promocodes
+from app.database.queries.promocodes import create_promocodes, get_promocode
 from datetime import datetime, timedelta
 import traceback
 import random
@@ -89,6 +89,14 @@ async def link_gen(request: Request):
                                            parse_mode=ParseModes.MARKDOWN_V2)
                 for i in range(2):
                     value = generate_promocode(length=10)
+                    
+                    is_unique = await get_promocode(value=value)
+                    await bot.send_message(text=escape_markdown_v2(str(is_unique)), 
+                                           chat_id=client.tg_id, 
+                                           parse_mode=ParseModes.MARKDOWN_V2)
+                    
+                    
+                    
                     link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
                     promocode =  {
                         "client_id": client.id,
