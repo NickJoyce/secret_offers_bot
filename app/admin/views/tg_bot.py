@@ -46,6 +46,7 @@ class TgClientView(ModelView):
         BooleanField("is_active", label="Активен ли клиент"),
         IntegerField("talk_me_search_id", label="Уникальный идентификатор из Cookies (talk-me)"),
         StringField("talk_me_client_id", label="Уникальный идентификатор посетителя для поиска (talk-me)"),
+        HasMany("promocodes", label="Промокоды", identity='promocode')
         ]
     exclude_fields_from_list = ["id", "updated_at", "talk_me_search_id", "talk_me_client_id"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "talk_me_search_id", "talk_me_client_id"]
@@ -77,7 +78,6 @@ class PromocodeView(ModelView):
         DateTimeField("expire_date", label="Дата истечения промокода (ссылки на закрытый канал)"),
         IntegerField("subscriber_tg_id", label="tg id пользователя который подписался на закрытый канал"),
         DateTimeField("date_of_join", label="Дата присоеденения к закрытому каналу"),
-        HasMany("promocodes", label="Промокоды", identity='promocode')
     ]
     
     exclude_fields_from_list = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
