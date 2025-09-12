@@ -83,8 +83,8 @@ class PromocodeView(ModelView):
     
     exclude_fields_from_list = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join", "tg_client"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
-    exclude_fields_from_edit = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
-    exclude_fields_from_detail = []
+    exclude_fields_from_edit = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join", "tg_client"]
+    exclude_fields_from_detail = ["tg_client", "tg_client"]
     # Ограничиваем количество записей на странице
     
     
