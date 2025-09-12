@@ -14,7 +14,7 @@ from aiogram.types import FSInputFile
 from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post, update_channel_post
 from app.bot.modules.utils import ParseModes, escape_markdown_v2
 from app.database.queries.tg_clients import get_clients
-from app.database.queries.promocodes import create_promocodes, get_promocode, get_promocode_by_value
+from app.database.queries.promocodes import create_promocodes, get_promocode
 from datetime import datetime, timedelta
 import traceback
 import random
@@ -82,19 +82,12 @@ async def link_gen(request: Request):
         clients = await get_clients()
         for client in clients:
             if client.is_active:
-                promocodes = []
                 expire_date = datetime.now() + timedelta(days=1)
                 await bot.send_message(text=escape_markdown_v2("Поделитесь ссылкой на закрытый канал"), 
                                            chat_id=client.tg_id, 
                                            parse_mode=ParseModes.MARKDOWN_V2)
                 for i in range(2):
-                    value = generate_promocode(length=10)
-                    
-                    is_unique = await get_promocode_by_value(value=value)
-                    logger.info(f"is_unique: {is_unique}")
-                    
-                    
-                    
+                    value = 'B5F3AI9150'
                     link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
                     promocode =  {
                         "client_id": client.id,
@@ -107,7 +100,10 @@ async def link_gen(request: Request):
                     await bot.send_message(text=escape_markdown_v2(text), 
                                            chat_id=client.tg_id, 
                                            parse_mode=ParseModes.MARKDOWN_V2)
-                await create_promocodes(promocodes)
+                    try:
+                        await create_promocodes([promocode])
+                    except Exception as e:
+                        logger.error(f"Error creating promocodes: {traceback.format_exc()}")
         return JSONResponse({"success": "Промокоды успешно созданы"})
     except Exception as e:
         return JSONResponse({'error': format_exc()})   
