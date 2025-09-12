@@ -97,13 +97,12 @@ async def link_gen(request: Request):
                         "expire_date": expire_date,
                     }
                     promocodes.append(promocode)
-                    text = f"Пройдите регистрацию в боте @secret_offers_bot и получите сслыку на закрытый канал с лучшими предложениями. \n Ваш индивидуальный промокод: {promocode['value']}" 
+                    text = f"Пройдите регистрацию в боте @secret_offers_bot и получите сслыку на закрытый канал с лучшими предложениями. \n Ваш индивидуальный промокод: `{promocode['value']}`" 
                     await bot.send_message(text=escape_markdown_v2(text), 
                                            chat_id=client.tg_id, 
                                            parse_mode=ParseModes.MARKDOWN_V2)
                 await create_promocodes(promocodes)
-                return JSONResponse({"success": "Промокоды успешно созданы"})
-            return JSONResponse({"success": "Промокоды не созданы: нет активных клиентов"})
+        return JSONResponse({"success": "Промокоды успешно созданы"})
     except Exception as e:
         return JSONResponse({'error': format_exc()})   
     
