@@ -91,9 +91,7 @@ async def link_gen(request: Request):
                     value = generate_promocode(length=10)
                     
                     is_unique = await get_promocode(value=value)
-                    await bot.send_message(text=escape_markdown_v2(str(is_unique)), 
-                                           chat_id=client.tg_id, 
-                                           parse_mode=ParseModes.MARKDOWN_V2)
+                    logger.info(f"is_unique: {is_unique}")
                     
                     
                     
