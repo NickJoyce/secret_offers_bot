@@ -75,10 +75,41 @@ class TgClient(Base):
     
     talk_me_search_id: Mapped[int] = mapped_column(BigInteger, nullable=True,comment="Уникальный идентификатор из Cookies (talk-me)")
     talk_me_client_id: Mapped[str] = mapped_column(String(255), nullable=True, comment="Уникальный идентификатор посетителя для поиска (talk-me)")
+    promocodes: Mapped[List["Promocode"]] = relationship(back_populates="tg_client")
 
 
     def __str__(self):
         return self.reg_name
+
+
+
+class Promocode(Base):
+    __tablename__ = 'promocodes'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.now(),
+                                                 nullable=False,
+                                                 comment='Дата создания')
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.now(),
+                                                 onupdate=func.now(),
+                                                 nullable=False,
+                                                 comment='Дата обновления')
+    client_id: Mapped[int] = mapped_column(ForeignKey("tg_clients.id", ondelete="CASCADE"), comment="Пользователь которуму присылается ссылки на бот и промокоды")
+    tg_client: Mapped["TgClient"] = relationship(back_populates="promocodes")
+    value: Mapped[str] = mapped_column(String(255), comment="Промокод")
+    link: Mapped[str] = mapped_column(String(255), comment="Ссылка на закрытый канал")
+    expire_date: Mapped[datetime] = mapped_column(DateTime(), comment="Дата истечения промокода (ссылки на закрытый канал)")
+    subscriber_tg_id: Mapped[int] = mapped_column(BigInteger, nullable=True, comment="tg id пользователя который подписался на закрытый канал")
+    date_of_join: Mapped[datetime] = mapped_column(DateTime(), nullable=True, comment="Дата присоеденения к закрытому каналу")
+    
+    
+    
+
+
+
+
 
 
 class TgManager(Base):

@@ -1,7 +1,7 @@
 from starlette_admin.contrib.sqla import ModelView
 from starlette_admin.fields import StringField, BooleanField, IntegerField, DateTimeField, DecimalField, HasOne, HasMany, FileField, ImageField, TextAreaField
 from starlette_admin.fields import FloatField, JSONField
-from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost
+from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost, Promocode
 from fastapi import Request
 from typing import Any
 from fastapi.templating import Jinja2Templates
@@ -63,6 +63,35 @@ class TgClientView(ModelView):
         query = super().get_list_query(request)
         # Можно добавить фильтр по умолчанию если нужно
         return query
+    
+class PromocodeView(ModelView):
+    label = 'Промокоды'
+    name = 'Промокод'
+    fields = [
+        IntegerField("id", label="id"), 
+        DateTimeField("created_at", label="Дата создания"),
+        DateTimeField("updated_at", label="Дата обновления"),
+        IntegerField("client_id", label="ID клиента"),
+        StringField("value", label="Промокод"),
+        StringField("link", label="Ссылка на закрытый канал"),
+        DateTimeField("expire_date", label="Дата истечения промокода (ссылки на закрытый канал)"),
+        IntegerField("subscriber_tg_id", label="tg id пользователя который подписался на закрытый канал"),
+        DateTimeField("date_of_join", label="Дата присоеденения к закрытому каналу"),
+        HasMany("promocodes", label="Промокоды", identity='promocode')
+    ]
+    
+    exclude_fields_from_list = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
+    exclude_fields_from_create = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
+    exclude_fields_from_edit = ["id", "created_at", "updated_at", "subscriber_tg_id", "date_of_join"]
+    exclude_fields_from_detail = []
+    # Ограничиваем количество записей на странице
+    
+    
+    
+    
+    
+    
+    
     
 class TgManagerView(ModelView):
     label = 'Менежеры'
