@@ -14,8 +14,13 @@ from aiogram.types import FSInputFile
 from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post, update_channel_post
 from app.bot.modules.utils import ParseModes, escape_markdown_v2
 from app.database.queries.tg_clients import get_clients
+from app.database.queries.promocodes import create_promocodes
 from datetime import datetime, timedelta
 import traceback
+import random
+import string
+from app.utils.main import generate_promocode
+
 
 
 logger = logging.getLogger(__name__)
@@ -72,17 +77,33 @@ async def manage_channel_post(request: Request):
     
 @router.get("/link-gen", include_in_schema=False)
 async def link_gen(request: Request):
-    chat_id = '-1003007138318'
     try:
     # получим текущих пользователей
         clients = await get_clients()
         for client in clients:
-            expire_date = datetime.now() + timedelta(days=1)
-            tags = f'?source=secretoffersbot&client_id={client.tg_id}'
-            link_1 = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
-            link_2 = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
-            await bot.send_message(text=escape_markdown_v2(f"ссылки: {link_1.invite_link+tags}\n{link_2.invite_link+tags}"), chat_id=client.tg_id, parse_mode=ParseModes.MARKDOWN_V2)
-        return JSONResponse({"message_id": "..."})
+            if client.is_active:
+                promocodes = []
+                expire_date = datetime.now() + timedelta(days=1)
+                await bot.send_message(text=escape_markdown_v2("Поделитесь ссылкой на закрытый канал"), 
+                                           chat_id=client.tg_id, 
+                                           parse_mode=ParseModes.MARKDOWN_V2)
+                for i in range(2):
+                    value = generate_promocode(length=10)
+                    link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
+                    promocode =  {
+                        "client_id": client.id,
+                        "value": value,
+                        "link": link_1.invite_link,
+                        "expire_date": expire_date,
+                    }
+                    promocodes.append(promocode)
+                    text = f"Пройдите регистрацию в боте @secret_offers_bot и получите сслыку на закрытый канал с лучшими предложениями. \n Ваш индивидуальный промокод: {promocode['value']}" 
+                    await bot.send_message(text=escape_markdown_v2(text), 
+                                           chat_id=client.tg_id, 
+                                           parse_mode=ParseModes.MARKDOWN_V2)
+                await create_promocodes(promocodes)
+                return JSONResponse({"success": "Промокоды успешно созданы"})
+            return JSONResponse({"success": "Промокоды не созданы: нет активных клиентов"})
     except Exception as e:
         return JSONResponse({'error': format_exc()})   
     
