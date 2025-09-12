@@ -98,7 +98,7 @@ class Promocode(Base):
                                                  comment='Дата обновления')
     client_id: Mapped[int] = mapped_column(ForeignKey("tg_clients.id", ondelete="CASCADE"), comment="Пользователь которуму присылается ссылки на бот и промокоды")
     tg_client: Mapped["TgClient"] = relationship(back_populates="promocodes")
-    value: Mapped[str] = mapped_column(String(255), comment="Промокод")
+    value: Mapped[str] = mapped_column(String(255), comment="Промокод", unique=True)
     link: Mapped[str] = mapped_column(String(255), comment="Ссылка на закрытый канал")
     expire_date: Mapped[datetime] = mapped_column(DateTime(), comment="Дата истечения промокода (ссылки на закрытый канал)")
     subscriber_tg_id: Mapped[int] = mapped_column(BigInteger, nullable=True, comment="tg id пользователя который подписался на закрытый канал")
