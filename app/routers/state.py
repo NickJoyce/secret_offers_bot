@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 import traceback
 import random
 import string
-from app.utils.main import generate_promocode
+from app.utils.main import get_unique_promocode
 
 
 
@@ -82,36 +82,29 @@ async def link_gen(request: Request):
         clients = await get_clients()
         for client in clients:
             if client.tg_id in [520704135, 310767881]:
-                promocodes = []
                 expire_date = datetime.now() + timedelta(days=1)
                 await bot.send_message(text=escape_markdown_v2("Поделитесь ссылкой на закрытый канал"), 
                                            chat_id=client.tg_id, 
                                            parse_mode=ParseModes.MARKDOWN_V2)
                 for i in range(2):
-                    # value = generate_promocode(length=10)
-                    value = "AHH8KXKDG2"
-                    existing = await get_promocode_by_value(value)
-                    
-                    logger.info(f"existing: {existing}")
-                    
-                    if existing:
-                        continue
-                    
-
-                    link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
-                    
-                    promocode =  {
-                        "client_id": client.id,
-                        "value": value,
-                        "link": link.invite_link,
-                        "expire_date": expire_date,
-                    }
-                    promocodes.append(promocode)
-                    text = f"Пройдите регистрацию в боте @secret_offers_bot и получите сслыку на закрытый канал с лучшими предложениями. \n Ваш индивидуальный промокод: `{promocode['value']}`" 
-                    await bot.send_message(text=escape_markdown_v2(text), 
-                                           chat_id=client.tg_id, 
-                                           parse_mode=ParseModes.MARKDOWN_V2)
-                # await create_promocodes(promocodes)
+  
+                    # генерируем промокод проверяем на уникальность
+                    value = await get_unique_promocode(length=10)
+                    if value:
+                        link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
+                        promocode =  {
+                            "client_id": client.id,
+                            "value": value,
+                            "link": link.invite_link,
+                            "expire_date": expire_date,
+                        }
+                        text = f"Пройдите регистрацию в боте @secret_offers_bot и получите сслыку на закрытый канал с лучшими предложениями. \n Ваш индивидуальный промокод: `{promocode['value']}`" 
+                        await bot.send_message(text=escape_markdown_v2(text), 
+                                            chat_id=client.tg_id, 
+                                            parse_mode=ParseModes.MARKDOWN_V2)
+                        await create_promocodes([promocode])
+                    else:
+                        logger.error(f"Не удалось создать уникальный промокод")
         return JSONResponse({"success": "Промокоды успешно созданы"})
     except Exception as e:
         return JSONResponse({'error': format_exc()})   
