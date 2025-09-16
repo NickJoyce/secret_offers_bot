@@ -88,10 +88,14 @@ async def link_gen(request: Request):
                                            chat_id=client.tg_id, 
                                            parse_mode=ParseModes.MARKDOWN_V2)
                 for i in range(2):
-                    value = generate_promocode(length=10)
+                    # value = generate_promocode(length=10)
+                    value = "AHH8KXKDG2"
                     existing = await get_promocode_by_value(value)
                     
                     logger.info(f"existing: {existing}")
+                    
+                    if existing:
+                        continue
                     
 
                     link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
