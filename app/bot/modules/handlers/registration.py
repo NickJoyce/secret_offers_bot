@@ -41,7 +41,6 @@ router = Router(name=__name__)
 
 
 class RegistrationStates(StatesGroup):
-    promocode = State()
     tg_id = State()
     reg_name = State()  
     reg_phone = State()
@@ -66,7 +65,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
                 "Ваш аккаунт заблокирован. Пожалуйста, обратитесь к администратору",
             )
     else:
-        await state.set_state(RegistrationStates.promocode)
+        await state.set_state(RegistrationStates.reg_name)
         await msg.answer(
             """👋 Добро пожаловать в ЗАКРЫТЫЙ КЛУБ «ПОДРУЖКИ»
 
@@ -74,36 +73,26 @@ async def start_command_handler(msg: Message, state: FSMContext):
 
 Только здесь ты сможешь записаться на RF-лифтинг,  лазерную эпиляцию и самую желанную процедуру 2025 года BBL Forever Young со скидками до 70%!  
 
-👉 Чтобы продолжить и получить доступ к каналу, нужно ввести промокод и зарегистрироваться.
+👉 Чтобы продолжить и получить доступ к каналу, нужно зарегистрироваться.
 
-Введи промокод:""",
+Напиши, как тебя зовут:""",
         )
     
    
 
 
 # --- Обработчик для получения промокода---
-@router.message(RegistrationStates.promocode)
-async def process_promocode(message: types.Message, state: FSMContext):
-    promocode = message.text
-    # выполняем проверку промокода
+# @router.message(RegistrationStates.promocode)
+# async def process_promocode(message: types.Message, state: FSMContext):
+#     promocode = message.text
+#     # выполняем проверку промокода
+#     # Сохраняем промокод в контекст FSM
+#     await state.update_data(promocode=promocode)
+#     # Переходим к следующему состоянию
+#     await state.set_state(RegistrationStates.reg_name)
     
-    
-    
-    
-    
-    
-    # Сохраняем промокод в контекст FSM
-    await state.update_data(promocode=promocode)
-    # Переходим к следующему состоянию
-    await state.set_state(RegistrationStates.reg_name)
-    
-    await message.answer(
-        f"Промокод принят! Напиши, как тебя зовут:",
-    )
-
-
-
+#     await message.answer(
+#         f"Промокод принят! Напиши, как тебя зовут:",
 
 
 
