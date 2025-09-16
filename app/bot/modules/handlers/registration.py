@@ -66,7 +66,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
                 "Ваш аккаунт заблокирован. Пожалуйста, обратитесь к администратору",
             )
     else:
-        await state.set_state(RegistrationStates.reg_name)
+        await state.set_state(RegistrationStates.promocode)
         await msg.answer(
             """👋 Добро пожаловать в ЗАКРЫТЫЙ КЛУБ «ПОДРУЖКИ»
 
