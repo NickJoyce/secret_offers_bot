@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 def generate_promocode(length):
     characters = string.ascii_uppercase + string.digits  
     promocode = ''.join(random.choices(characters, k=length))
+    return promocode
 
 
 
