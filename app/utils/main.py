@@ -1,7 +1,11 @@
 import random
 import string
 from app.database.queries.promocodes import get_promocode_by_value
+import logging
 
+
+
+logger = logging.getLogger(__name__)
 
 
 
