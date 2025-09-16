@@ -111,7 +111,7 @@ async def link_gen(request: Request):
                     await bot.send_message(text=escape_markdown_v2(text), 
                                            chat_id=client.tg_id, 
                                            parse_mode=ParseModes.MARKDOWN_V2)
-                await create_promocodes(promocodes)
+                # await create_promocodes(promocodes)
         return JSONResponse({"success": "Промокоды успешно созданы"})
     except Exception as e:
         return JSONResponse({'error': format_exc()})   
