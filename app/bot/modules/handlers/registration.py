@@ -96,7 +96,7 @@ async def process_promocode(message: types.Message, state: FSMContext):
     # Сохраняем промокод в контекст FSM
     await state.update_data(promocode=promocode)
     # Переходим к следующему состоянию
-    await state.set_state(RegistrationStates.promocode)
+    await state.set_state(RegistrationStates.reg_name)
     
     await message.answer(
         f"Промокод принят! Напиши, как тебя зовут:",
