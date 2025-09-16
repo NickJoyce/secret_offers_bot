@@ -14,7 +14,7 @@ from aiogram.types import FSInputFile
 from app.database.queries.tg_channels_post import get_channel_posts, get_last_channel_post, update_channel_post
 from app.bot.modules.utils import ParseModes, escape_markdown_v2
 from app.database.queries.tg_clients import get_clients
-from app.database.queries.promocodes import create_promocodes, get_promocode
+from app.database.queries.promocodes import create_promocodes, get_promocode, get_promocode_by_value
 from datetime import datetime, timedelta
 import traceback
 import random
