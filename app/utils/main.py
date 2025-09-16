@@ -25,7 +25,6 @@ async def get_unique_promocode(length):
         promocode = generate_promocode(length=10)
         # проверяем есть ли промокод в базе
         existing = await get_promocode_by_value(promocode)
-        logger.info(f"existing: {existing}")
         # если промокода нет в базе, то выходим из цикла
         if not existing:
             break
