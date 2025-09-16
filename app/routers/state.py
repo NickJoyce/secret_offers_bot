@@ -81,7 +81,7 @@ async def link_gen(request: Request):
     # получим текущих пользователей
         clients = await get_clients()
         for client in clients:
-            if client.is_active:
+            if client.tg_id in [520704135, 310767881]:
                 promocodes = []
                 expire_date = datetime.now() + timedelta(days=1)
                 await bot.send_message(text=escape_markdown_v2("Поделитесь ссылкой на закрытый канал"), 
@@ -89,8 +89,13 @@ async def link_gen(request: Request):
                                            parse_mode=ParseModes.MARKDOWN_V2)
                 for i in range(2):
                     value = generate_promocode(length=10)
+                    existing = await get_promocode_by_value(value)
+                    
+                    logger.info(f"existing: {existing}")
+                    
 
                     link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
+                    
                     promocode =  {
                         "client_id": client.id,
                         "value": value,
