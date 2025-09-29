@@ -133,7 +133,7 @@ async def delete_buttons(request: Request):
 @router.get("/link", include_in_schema=False)
 async def link(request: Request):
     expire_date = datetime(2025, 10, 5, 23, 59, 59)
-    if datetime.now() > expire_date:
+    if datetime.now() < expire_date:
         return JSONResponse({"error": "Ссылка истекла"})
     else:
         return RedirectResponse(url="https://t.me/secret_offers_bot")
