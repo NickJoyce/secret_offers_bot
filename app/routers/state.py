@@ -73,7 +73,11 @@ async def manage_channel_post(request: Request):
         return JSONResponse({"message_id": message_id})
     except Exception as e:
         return JSONResponse({'error': format_exc()})
-    
+
+
+
+
+
     
 @router.get("/link-gen", include_in_schema=False)
 async def link_gen(request: Request):
@@ -81,8 +85,8 @@ async def link_gen(request: Request):
     # получим текущих пользователей
         clients = await get_clients()
         for client in clients:
-            if client.tg_id in [520704135, 310767881]:
-                expire_date = datetime.now() + timedelta(days=1)
+            if client.tg_id in [520704135]:
+                expire_date = datetime.now() + timedelta(days=7)
                 await bot.send_message(text=escape_markdown_v2("Поделитесь ссылкой на закрытый канал"), 
                                            chat_id=client.tg_id, 
                                            parse_mode=ParseModes.MARKDOWN_V2)
@@ -91,7 +95,8 @@ async def link_gen(request: Request):
                     # генерируем промокод проверяем на уникальность
                     value = await get_unique_promocode(length=10)
                     if value:
-                        link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=1)
+                        link = await bot.create_chat_invite_link(chat_id=TG_CHANNEL_ID, expire_date=expire_date, member_limit=10000)
+                        logger.info(f"link: {link.invite_link}")
                         promocode =  {
                             "client_id": client.id,
                             "value": value,

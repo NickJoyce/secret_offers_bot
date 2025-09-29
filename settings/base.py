@@ -40,6 +40,7 @@ WEBHOOK_SECRET = os.getenv('WEBHOOK_SECRET')
 TG_CHANNEL_ID = os.getenv('TG_CHANNEL_ID')
 
 
+
 # elasticsearch
 ES_BASE_URL = 'https://elasticsearch.podrugeapi.ru'
 ES_USER = os.getenv('ES_USER')
