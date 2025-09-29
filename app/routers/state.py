@@ -136,4 +136,4 @@ async def link(request: Request):
     if datetime.now() > expire_date:
         return JSONResponse({"error": "Ссылка истекла"})
     else:
-        return RedirectResponse(url="https://t.me/+uZjXQYiEkC9iMGFi")
+        return RedirectResponse(url="https://t.me/secret_offers_bot")
