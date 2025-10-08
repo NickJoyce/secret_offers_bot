@@ -130,9 +130,9 @@ async def delete_buttons(request: Request):
         return JSONResponse({"error": format_exc()})
 
 
-@router.get("/link", include_in_schema=False)
+@router.get("/link101302", include_in_schema=False)
 async def link(request: Request):
-    expire_date = datetime(2025, 11, 8, 23, 59, 59)
+    expire_date = datetime(2025, 12, 8, 23, 59, 59)
     if datetime.now() > expire_date:
         return JSONResponse({"error": "Ссылка истекла"})
     else:
