@@ -148,8 +148,12 @@ async def catalog(callback: CallbackQuery):
     letter = callback.data.split('_')[2]
     # получим список городов начинающихся на букву letter
     cities = [city for city in CITIES if city.startswith(letter)]
-    await callback.answer(f"Выберите город из списка:",
-                          markup=await cities_list(cities))
+    
+    await callback.answer()
+    await callback.message.edit_text(text=f"Выберите город из списка:",
+                                     reply_markup = await cities_list(cities))
+    
+
 
 
 
