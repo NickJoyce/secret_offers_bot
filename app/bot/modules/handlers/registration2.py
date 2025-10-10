@@ -165,7 +165,33 @@ async def process_first_letter(callback: CallbackQuery):
 async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     city = callback.data.split('_')[2]
     await state.update_data(city=city)
-    await callback.answer(text=f"data {await state.get_data()}", show_alert=False)
+    # await callback.answer(text=f"data {await state.get_data()}", show_alert=False)
+                # Получаем все собранные данные
+    user_data = await state.get_data()
+    user = {
+        "timestamp": datetime.now(ZoneInfo("Europe/Moscow")).isoformat(timespec='seconds'),
+        'tg_id': user_data.get('tg_id'),
+        'reg_name': user_data.get('reg_name') if user_data.get('reg_name') else '',
+        'reg_phone': user_data.get('reg_phone') if user_data.get('reg_phone') else '',
+        'tg_username': user_data.get('tg_username') if user_data.get('tg_username') else '',
+        'tg_first_name': user_data.get('tg_first_name') if user_data.get('tg_first_name') else '',
+        'tg_last_name': user_data.get('tg_last_name') if user_data.get('tg_last_name') else '',
+        'city': user_data.get('city') if user_data.get('city') else '',
+    }
+    # Записываем в базу данных
+    await create_clients([user])
+    
+    await state.clear()
+        
+    await callback.message.edit_text(text=f"🩷 Регистрация прошла успешно!",
+                                     reply_markup = None)
+    
+    await callback.answer("""Вот твоя персональная ссылка-приглашение в канал: 
+
+Подписывайся, не пропускай публикации и добро пожаловать в КЛУБ 💘"""
+                                , reply_markup=link_kb)
+    
+    
 
 
 
