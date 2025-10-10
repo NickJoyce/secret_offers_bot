@@ -134,8 +134,19 @@ async def process_phone(message: types.Message, state: FSMContext):
     else:
         await message.answer("Не удалось получить номер телефона. Пожалуйста, используйте кнопку ниже")
         return      
-    # Переходим к следующему состоянию
+    await message.answer(
+            f"🩷 Регистрация прошла успешно!",
+            # Убираем клавиатуру после завершения
+            reply_markup=types.ReplyKeyboardRemove() 
+        )
     await state.set_state(RegistrationStates.city)
+    
+    
+    await message.answer(
+            f"",
+            # Убираем клавиатуру после завершения
+            reply_markup=types.ReplyKeyboardRemove() 
+        )
     
     await message.answer(
         f"Укажите первую букву названия города в котором планируется посещение 👇",
