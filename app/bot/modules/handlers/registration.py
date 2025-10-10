@@ -6,7 +6,7 @@ from app.database.queries.tg_clients import get_client, update_client, create_cl
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.enums import ParseMode, ContentType
 from aiogram.fsm.context import FSMContext
-from app.bot.modules.keyboards.registration import request_contact_keyboard, select_greeting_offer_callback, link_kb
+from app.bot.modules.keyboards.registration import request_contact_keyboard, select_greeting_offer_callback, link_kb, create_first_letter_keyboard
 from app.bot.modules.utils import escape_markdown_v2
 from app.database.queries.greeting_offers import get_greeting_offer
 from app.conns.talk_me.accounts import talk_me
@@ -47,6 +47,7 @@ class RegistrationStates(StatesGroup):
     tg_username = State()
     tg_first_name = State()
     tg_last_name = State()
+    city = State()
 
     
 
@@ -112,6 +113,11 @@ async def process_name(message: types.Message, state: FSMContext):
     )
     
 
+
+
+
+
+
 @router.message(RegistrationStates.reg_phone)
 async def process_phone(message: types.Message, state: FSMContext):
     if message.content_type == ContentType.CONTACT:
@@ -123,55 +129,91 @@ async def process_phone(message: types.Message, state: FSMContext):
             await state.update_data(tg_username=message.from_user.username)
             await state.update_data(tg_first_name=message.from_user.first_name)
             await state.update_data(tg_last_name=message.from_user.last_name)
+
+
+    # Переходим к следующему состоянию
+    await state.set_state(RegistrationStates.city)
     
-            # Получаем все собранные данные
-            user_data = await state.get_data()
-            user = {
-                "timestamp": datetime.now(ZoneInfo("Europe/Moscow")).isoformat(timespec='seconds'),
-                'tg_id': user_data.get('tg_id'),
-                'reg_name': user_data.get('reg_name') if user_data.get('reg_name') else '',
-                'reg_phone': user_data.get('reg_phone') if user_data.get('reg_phone') else '',
-                'tg_username': user_data.get('tg_username') if user_data.get('tg_username') else '',
-                'tg_first_name': user_data.get('tg_first_name') if user_data.get('tg_first_name') else '',
-                'tg_last_name': user_data.get('tg_last_name') if user_data.get('tg_last_name') else '',
-            }
-            # Записываем в базу данных
-            await create_clients([user])
+    await message.answer(
+        f"Выбери букву на которую начинается город в котором планируется посещение 👇",
+        reply_markup=create_first_letter_keyboard
+    )
+
+
+
+
+
+
+
+#             # Получаем все собранные данные
+#             user_data = await state.get_data()
+#             user = {
+#                 "timestamp": datetime.now(ZoneInfo("Europe/Moscow")).isoformat(timespec='seconds'),
+#                 'tg_id': user_data.get('tg_id'),
+#                 'reg_name': user_data.get('reg_name') if user_data.get('reg_name') else '',
+#                 'reg_phone': user_data.get('reg_phone') if user_data.get('reg_phone') else '',
+#                 'tg_username': user_data.get('tg_username') if user_data.get('tg_username') else '',
+#                 'tg_first_name': user_data.get('tg_first_name') if user_data.get('tg_first_name') else '',
+#                 'tg_last_name': user_data.get('tg_last_name') if user_data.get('tg_last_name') else '',
+#             }
+#             # Записываем в базу данных
+#             await create_clients([user])
             
             
-            # send to es index: marketing-bot-registration
-            # try:
-            #     user['tg_id'] = str(user['tg_id'])
-            #     await es.create_document(index_name='marketing-bot-registration', document=user)
-            # except Exception as e:
-            #     logger.error(f"Error creating document in Elasticsearch: {e}")
+#             # send to es index: marketing-bot-registration
+#             # try:
+#             #     user['tg_id'] = str(user['tg_id'])
+#             #     await es.create_document(index_name='marketing-bot-registration', document=user)
+#             # except Exception as e:
+#             #     logger.error(f"Error creating document in Elasticsearch: {e}")
                  
             
             
-            await message.answer(
-                f"🩷 Регистрация прошла успешно!",
-                # Убираем клавиатуру после завершения
-                reply_markup=types.ReplyKeyboardRemove() 
-            )
+#             await message.answer(
+#                 f"🩷 Регистрация прошла успешно!",
+#                 # Убираем клавиатуру после завершения
+#                 reply_markup=types.ReplyKeyboardRemove() 
+#             )
             
-            # Сбрасываем состояние, завершая регистрацию
-            await state.clear()
+#             # Сбрасываем состояние, завершая регистрацию
+#             await state.clear()
             
-            await message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
+#             await message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
 
-Подписывайся, не пропускай публикации и добро пожаловать в КЛУБ 💘"""
-                                 , reply_markup=link_kb)
+# Подписывайся, не пропускай публикации и добро пожаловать в КЛУБ 💘"""
+#                                  , reply_markup=link_kb)
             
 
             
-        else:
-            await message.answer("Пожалуйста, поделитесь своим собственным номером телефона, нажав на кнопку")
-            return
-    else:
-        await message.answer("Не удалось получить номер телефона. Пожалуйста, используйте кнопку ниже")
-        return
+#         else:
+#             await message.answer("Пожалуйста, поделитесь своим собственным номером телефона, нажав на кнопку")
+#             return
+#     else:
+#         await message.answer("Не удалось получить номер телефона. Пожалуйста, используйте кнопку ниже")
+#         return
         
 
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
         
 @router.callback_query(F.data.startswith("greeting_offer_choice_"))
 async def get_selected_greeting_offer(callback: CallbackQuery):

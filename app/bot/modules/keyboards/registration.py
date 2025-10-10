@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 import logging.config
 from app.database.queries.greeting_offers import get_greeting_offers
-
+from app.bot.modules.utils import unique_first_letters
 
 logger = logging.getLogger(__name__)
 
@@ -55,3 +55,10 @@ def create_registration_keyboard():
     builder.add(InlineKeyboardButton(text="Записаться сейчас в TG", url="http://t.me/podruge_close_club_direct_bot"))
     builder.add(InlineKeyboardButton(text="Записаться сейчас в WA", url="https://wa.me/79672121788"))
     return builder.adjust(1).as_markup()
+
+
+def create_first_letter_keyboard():
+    builder = InlineKeyboardBuilder()
+    for letter in unique_first_letters:
+        builder.add(InlineKeyboardButton(text=letter, callback_data=f"first_letter_{letter}"))
+    return builder.adjust(6).as_markup()
