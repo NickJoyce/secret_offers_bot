@@ -6,7 +6,7 @@ from app.database.queries.tg_clients import get_client, update_client, create_cl
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.enums import ParseMode, ContentType
 from aiogram.fsm.context import FSMContext
-from app.bot.modules.keyboards.registration import request_contact_keyboard, select_greeting_offer_callback, link_kb, create_first_letter_keyboard
+from app.bot.modules.keyboards.registration import request_contact_keyboard, select_greeting_offer_callback, link_kb, first_letters
 from app.bot.modules.utils import escape_markdown_v2
 from app.database.queries.greeting_offers import get_greeting_offer
 from app.conns.talk_me.accounts import talk_me
@@ -133,7 +133,7 @@ async def process_phone(message: types.Message, state: FSMContext):
     
     await message.answer(
         f"Укажите первую букву названия города в котором планируется посещение 👇",
-        reply_markup=create_first_letter_keyboard
+        reply_markup=await first_letters()
     )
 
 

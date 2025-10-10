@@ -57,8 +57,10 @@ def create_registration_keyboard():
     return builder.adjust(1).as_markup()
 
 
-def create_first_letter_keyboard():
+
+
+async def first_letters():
     builder = InlineKeyboardBuilder()
     for letter in unique_first_letters:
         builder.add(InlineKeyboardButton(text=letter, callback_data=f"first_letter_{letter}"))
-    return builder.adjust(6).as_markup()
+    return builder.adjust(2).as_markup()
