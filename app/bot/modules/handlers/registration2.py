@@ -137,13 +137,6 @@ async def process_phone(message: types.Message, state: FSMContext):
 
     await state.set_state(RegistrationStates.city)
     
-
-    await message.answer(
-            f"✅",
-            # Убираем клавиатуру после завершения
-            reply_markup=types.ReplyKeyboardRemove() 
-        )
-    
     await message.answer(
         f"Укажите первую букву названия города в котором планируется посещение 👇",
         reply_markup=await first_letters()
@@ -180,10 +173,11 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     }
     # Записываем в базу данных
     await create_clients([user])
-    
+    # сбрасываем состояние
     await state.clear()
         
-    await callback.message.answer(text=f"🩷 Регистрация прошла успешно!")
+    await callback.message.answer(text=f"🩷 Регистрация прошла успешно!",
+                                  reply_markup = types.ReplyKeyboardRemove())
     
     await callback.message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
 
