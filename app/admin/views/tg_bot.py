@@ -28,6 +28,9 @@ class MyCustomField(StringField):
     async def parse_obj(self, request: Request, obj: Any) -> Any:
         return f"{obj.surname} {obj.name}"  # Returns the full name of the user
 
+class CityField(StringField):
+    async def parse_obj(self, request: Request, obj: Any) -> Any:
+        return f"{obj.city}" if obj.city else "-"  # Returns the full name of the user
 
   
 class TgClientView(ModelView):
@@ -44,7 +47,7 @@ class TgClientView(ModelView):
         StringField("tg_first_name", label="Имя (tg)"),
         StringField("tg_last_name", label="Фамилия (tg)"),
         BooleanField("is_active", label="Активен ли клиент"),
-        # StringField("city", label="Город"),
+        CityField("city", label="Город"),
         IntegerField("talk_me_search_id", label="Уникальный идентификатор из Cookies (talk-me)"),
         StringField("talk_me_client_id", label="Уникальный идентификатор посетителя для поиска (talk-me)"),
         HasMany("promocodes", label="Промокоды", identity='promocode')
