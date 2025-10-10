@@ -138,7 +138,7 @@ async def process_phone(message: types.Message, state: FSMContext):
     await state.set_state(RegistrationStates.city)
     
     await message.answer(
-        f"Укажи первую букву названия города в котором планируется посещение 👇",
+        f"Укажи первую букву названия города, в котором планируется посещение 👇",
         reply_markup=await first_letters()
     )
 
