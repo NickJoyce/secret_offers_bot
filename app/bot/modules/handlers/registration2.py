@@ -144,7 +144,7 @@ async def process_phone(message: types.Message, state: FSMContext):
 
 
 @router.callback_query(F.data.startswith('first_letter_'))
-async def catalog(callback: CallbackQuery):
+async def process_first_letter(callback: CallbackQuery):
     letter = callback.data.split('_')[2]
     # получим список городов начинающихся на букву letter
     cities = [city for city in CITIES if city.startswith(letter)]
@@ -153,6 +153,13 @@ async def catalog(callback: CallbackQuery):
     await callback.message.edit_text(text=f"Выберите город из списка:",
                                      reply_markup = await cities_list(cities))
     
+
+@router.callback_query(F.data.startswith('selected_city_'), RegistrationStates.city)
+async def process_selected_city(callback: CallbackQuery, state: FSMContext):
+    city = callback.data.split('_')[2]
+    await state.update_data(city=city)
+    await callback.answer(text=f"Вы выбрали город {city}", show_alert=False)
+
 
 
 
