@@ -15,7 +15,7 @@ from asyncio import sleep
 from zoneinfo import ZoneInfo
 import pytz
 from app.tasks.monitoring import is_subscriber
-from app.bot.modules.utils import unique_first_letters
+from app.bot.modules.utils import unique_first_letters, CITIES
 
 
 
@@ -141,7 +141,9 @@ async def process_phone(message: types.Message, state: FSMContext):
 @router.callback_query(F.data.startswith('first_letter_'))
 async def catalog(callback: CallbackQuery):
     letter = callback.data.split('_')[2]
-    await callback.answer(f"Вы выбрали букву {letter}", show_alert=True)
+    # получим список городов начинающихся на букву letter
+    cities = [city for city in CITIES if city.startswith(letter)]
+    await callback.answer(f"Города начинающиеся на букву {letter}: \n{'\n'.join(cities)}", show_alert=True)
 
 
 
