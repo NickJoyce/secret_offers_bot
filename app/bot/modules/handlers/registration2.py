@@ -128,7 +128,12 @@ async def process_phone(message: types.Message, state: FSMContext):
             await state.update_data(tg_first_name=message.from_user.first_name)
             await state.update_data(tg_last_name=message.from_user.last_name)
     
-           
+        else:
+            await message.answer("Пожалуйста, поделитесь своим собственным номером телефона, нажав на кнопку")
+            return    
+    else:
+        await message.answer("Не удалось получить номер телефона. Пожалуйста, используйте кнопку ниже")
+        return      
     # Переходим к следующему состоянию
     await state.set_state(RegistrationStates.city)
     
