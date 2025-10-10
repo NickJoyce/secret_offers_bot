@@ -63,4 +63,4 @@ async def first_letters():
     builder = InlineKeyboardBuilder()
     for letter in unique_first_letters:
         builder.add(InlineKeyboardButton(text=letter, callback_data=f"first_letter_{letter}"))
-    return builder.adjust(2).as_markup()
+    return builder.adjust(5).as_markup()
