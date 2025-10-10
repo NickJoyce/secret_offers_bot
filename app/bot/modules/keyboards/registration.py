@@ -64,3 +64,10 @@ async def first_letters():
     for letter in unique_first_letters:
         builder.add(InlineKeyboardButton(text=letter, callback_data=f"first_letter_{letter}"))
     return builder.adjust(5).as_markup()
+
+
+async def cities_list(cities):
+    builder = InlineKeyboardBuilder()
+    for city in cities:
+        builder.add(InlineKeyboardButton(text=city, callback_data=f"city_{city}"))
+    return builder.adjust(2).as_markup()
