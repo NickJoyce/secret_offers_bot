@@ -183,10 +183,9 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     
     await state.clear()
         
-    await callback.message.edit_text(text=f"🩷 Регистрация прошла успешно!",
-                                     reply_markup = None)
+    await callback.message.answer(text=f"🩷 Регистрация прошла успешно!")
     
-    await callback.answer("""Вот твоя персональная ссылка-приглашение в канал: 
+    await callback.message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
 
 Подписывайся, не пропускай публикации и добро пожаловать в КЛУБ 💘"""
                                 , reply_markup=link_kb)
