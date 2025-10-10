@@ -66,6 +66,7 @@ class TgClient(Base):
     tg_username: Mapped[str] = mapped_column(String(255), default="", nullable=True, comment="Имя пользователя в Telegram")
     tg_first_name: Mapped[str] = mapped_column(String(255), default="", nullable=True, comment="Имя (tg)")
     tg_last_name: Mapped[str] = mapped_column(String(255), default="", nullable=True, comment="Фамилия (tg)")
+    city: Mapped[str] = mapped_column(String(255), default="", nullable=True, comment="Город")
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, comment="Флаг активности")
     newsletters = relationship(
        "Newsletter",
