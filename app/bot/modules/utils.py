@@ -110,4 +110,5 @@ CITIES = [
 ]
 
 
-unique_first_letters = list(set([city[0].upper() for city in CITIES])).sort()
+unique_first_letters = sorted(list(set([city[0].upper() for city in CITIES])))
+
