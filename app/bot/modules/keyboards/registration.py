@@ -70,4 +70,5 @@ async def cities_list(cities):
     builder = InlineKeyboardBuilder()
     for city in cities:
         builder.add(InlineKeyboardButton(text=city, callback_data=f"selected_city_{city}"))
+    
     return builder.adjust(2).as_markup()
