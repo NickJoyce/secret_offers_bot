@@ -44,7 +44,7 @@ class TgClientView(ModelView):
         StringField("tg_first_name", label="Имя (tg)"),
         StringField("tg_last_name", label="Фамилия (tg)"),
         BooleanField("is_active", label="Активен ли клиент"),
-        # StringField("city", label="Город"),
+        StringField("city", label="Город"),
         IntegerField("talk_me_search_id", label="Уникальный идентификатор из Cookies (talk-me)"),
         StringField("talk_me_client_id", label="Уникальный идентификатор посетителя для поиска (talk-me)"),
         HasMany("promocodes", label="Промокоды", identity='promocode')
@@ -56,9 +56,9 @@ class TgClientView(ModelView):
     # Ограничиваем количество записей на странице
     list_per_page = 50  
     # Добавляем поиск
-    searchable_fields = ["tg_id", "reg_name", "reg_phone",  "tg_username", "tg_first_name", "tg_last_name"]  
+    searchable_fields = ["tg_id", "reg_name", "reg_phone",  "tg_username", "tg_first_name", "tg_last_name", "city"]  
     # Добавляем сортировку
-    sortable_fields = ["tg_id", "reg_name", "reg_phone",  "tg_username", "tg_first_name", "tg_last_name"]  
+    sortable_fields = ["tg_id", "reg_name", "reg_phone",  "tg_username", "tg_first_name", "tg_last_name", "city"]  
     
     # Оптимизация: показываем только активных пользователей по умолчанию
     def get_list_query(self, request: Request):
