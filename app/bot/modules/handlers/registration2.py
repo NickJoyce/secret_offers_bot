@@ -138,7 +138,7 @@ async def process_phone(message: types.Message, state: FSMContext):
     await state.set_state(RegistrationStates.city)
     
     await message.answer(
-        f"Укажите первую букву названия города в котором планируется посещение 👇",
+        f"Укажи первую букву названия города в котором планируется посещение 👇",
         reply_markup=await first_letters()
     )
 
@@ -150,7 +150,7 @@ async def process_first_letter(callback: CallbackQuery):
     cities = [city for city in CITIES if city.startswith(letter)]
     
     await callback.answer()
-    await callback.message.edit_text(text=f"Выберите город из списка:",
+    await callback.message.edit_text(text=f"Выбери город из списка:",
                                      reply_markup = await cities_list(cities))
     
 
