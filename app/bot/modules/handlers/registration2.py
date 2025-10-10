@@ -15,6 +15,7 @@ from asyncio import sleep
 from zoneinfo import ZoneInfo
 import pytz
 from app.tasks.monitoring import is_subscriber
+from app.bot.modules.utils import unique_first_letters
 
 
 
@@ -135,6 +136,12 @@ async def process_phone(message: types.Message, state: FSMContext):
         f"Укажите первую букву названия города в котором планируется посещение 👇",
         reply_markup=await first_letters()
     )
+
+
+@router.callback_query(F.data in [f"first_letter_{letter}" for letter in unique_first_letters])
+async def catalog(callback: CallbackQuery):
+    await callback.answer("Вы выбрали кталог", show_alert=True)
+
 
 
 
