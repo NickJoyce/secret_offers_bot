@@ -20,7 +20,6 @@ from app.bot.modules.utils import unique_first_letters
 
 
 
-
 from app.conns.es.accounts import es
 from datetime import datetime, timezone, date, time
 
@@ -139,7 +138,7 @@ async def process_phone(message: types.Message, state: FSMContext):
     )
 
 
-@router.callback_query(F.data in [f"first_letter_{letter}" for letter in unique_first_letters])
+@router.callback_query(F.data == f"first_letter_A")
 async def catalog(callback: CallbackQuery):
     await callback.answer("Вы выбрали кталог", show_alert=True)
 
