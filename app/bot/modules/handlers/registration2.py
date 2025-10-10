@@ -140,7 +140,7 @@ async def process_phone(message: types.Message, state: FSMContext):
 
 @router.callback_query(F.data.startswith('first_letter_'))
 async def catalog(callback: CallbackQuery):
-    letter = callback.data.split('_')[1]
+    letter = callback.data.split('_')[2]
     await callback.answer(f"Вы выбрали букву {letter}", show_alert=True)
 
 
