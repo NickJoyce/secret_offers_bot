@@ -22,8 +22,12 @@ from app.admin.views.tg_bot import TgClientView, TgManagerView, TgNewsletterView
 from app.admin.auth import auth_router
 from app.bot.main import bot, dp, start_bot, stop_bot
 from contextlib import asynccontextmanager
-from app.bot.modules.handlers.registration import router as reg_router
+
+
+from app.bot.modules.handlers.registration2 import router as reg_router
 from app.bot.modules.handlers.managers import router as manager_router
+
+
 from app.bot.modules.handlers.clients import router as client_router
 from app.bot.modules.handlers.channels import router as channel_router
 from app.bot.modules.handlers.chats import router as chat_router
