@@ -138,7 +138,7 @@ async def process_phone(message: types.Message, state: FSMContext):
     )
 
 
-@router.callback_query(F.data == f"first_letter_A")
+@router.callback_query(F.data == f"first_letter_Б")
 async def catalog(callback: CallbackQuery):
     await callback.answer("Вы выбрали кталог", show_alert=True)
 
