@@ -44,7 +44,7 @@ class TgClientView(ModelView):
         StringField("tg_first_name", label="Имя (tg)"),
         StringField("tg_last_name", label="Фамилия (tg)"),
         BooleanField("is_active", label="Активен ли клиент"),
-        StringField("city", label="Город"),
+        # StringField("city", label="Город"),
         IntegerField("talk_me_search_id", label="Уникальный идентификатор из Cookies (talk-me)"),
         StringField("talk_me_client_id", label="Уникальный идентификатор посетителя для поиска (talk-me)"),
         HasMany("promocodes", label="Промокоды", identity='promocode')
