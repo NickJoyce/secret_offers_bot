@@ -66,7 +66,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
         )
         else:
             await msg.answer(
-                "Ваш аккаунт заблокирован. Пожалуйста, обратитесь к администратору",
+                "Ошибка подключения к боту. Пожалуйста, обратитесь к администратору",
             )
     else:
         await state.set_state(RegistrationStates.reg_name)
