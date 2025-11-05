@@ -18,7 +18,7 @@ from app.tasks.monitoring import is_subscriber
 from app.bot.modules.utils import unique_first_letters, CITIES
 from aiogram.utils.markdown import link, hlink
 from app.bot.modules.utils import escape_markdown_v2
-from app.bot.modules.middlewares.clients import BlackListMiddleware
+from app.bot.modules.middlewares.clients import BlackListMiddleware, AuthMiddleware
 
 
 
@@ -40,6 +40,9 @@ logger = logging.getLogger(__name__)
 router = Router(name=__name__)
 
 
+
+if IS_AUTH:
+    router.message.middleware(AuthMiddleware())
 
 if IS_BLACK_LIST:
     router.message.middleware(BlackListMiddleware())
