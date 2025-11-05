@@ -16,7 +16,8 @@ from zoneinfo import ZoneInfo
 import pytz
 from app.tasks.monitoring import is_subscriber
 from app.bot.modules.utils import unique_first_letters, CITIES
-from aiogram.utils.markdown import link
+from aiogram.utils.markdown import link, hlink
+
 
 
 
@@ -71,7 +72,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
             )
     else:
         await state.set_state(RegistrationStates.reg_name)
-        privacy_policy_link = link('персональных данных', PRIVACY_POLICY_URL)
+        privacy_policy_link = hlink('персональных данных', PRIVACY_POLICY_URL)
         await msg.answer(
             f"""👋 Добро пожаловать в ЗАКРЫТЫЙ КЛУБ «ПОДРУЖКИ»
 
