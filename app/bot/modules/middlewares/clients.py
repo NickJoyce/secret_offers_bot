@@ -15,23 +15,24 @@ class AuthMiddleware(BaseMiddleware):
                        event: TelegramObject,
                        data: Dict[str, Any]) -> Any:
         # Логика, которая выполняется ДО вызова обработчика
-        logger.info(f"--- Universal Middleware: Processing event of type {type(event).__name__} ---")
-        # Список ID пользователей, которым разрешен доступ из бд
-        user = await get_client(tg_id=event.from_user.id)
-        if not user or not user.is_active:
+        logger.info(f"--- Black List Middleware: Processing event of type {type(event).__name__} ---")
+        black_list = await get_black_list()
+        ids = [user.tg_id for user in black_list if user.tg_id is not None]
+        usernames = [user.tg_username for user in black_list if user.tg_username is not None]
+        
+        if event.from_user.id in ids or event.from_user.username in usernames:
             # Если пользователь не разрешен, отправляем сообщение и прерываем цепочку
             if isinstance(event, Message):
-                await event.reply(f"Доступ для пользователя (id: {event.from_user.id}) запрещен\n\n"
-                                    f"Пожалуйста зарегестрируйтесь, выполнив команду /start")
+                await event.reply(f"Ошибка подключения к боту (error code: blmw)")
             elif isinstance(event, CallbackQuery):
-                await event.answer(f"Доступ для пользователя (id: {event.from_user.id}) запрещен\n\n"
-                                    f"Пожалуйста зарегестрируйтесь, выполнив команду /start", show_alert=True)
+                await event.answer(f"Ошибка подключения к боту (error code: blmw)", show_alert=True)
             return # Прерываем дальнейшую обработку 
+        
         # Вызываем следующий обработчик в цепочке (это может быть другой middleware или конечный хендлер)
         result = await handler(event, data)
         # Логика, которая выполняется ПОСЛЕ вызова обработчика
-        logger.info(f"--- Universal Middleware: Finished processing event of type {type(event).__name__} ---")
-        return result
+        logger.info(f"--- Black List Middleware: Finished processing event of type {type(event).__name__} ---")
+        return result  
 
 
 class BlackListMiddleware(BaseMiddleware):
@@ -41,11 +42,11 @@ class BlackListMiddleware(BaseMiddleware):
                        data: Dict[str, Any]) -> Any:
             # Логика, которая выполняется ДО вызова обработчика
             logger.info(f"--- Black List Middleware: Processing event of type {type(event).__name__} ---")
-            # black_list = await get_black_list()
-            # ids = [user.tg_id for user in black_list if user.tg_id is not None]
-            # usernames = [user.tg_username for user in black_list if user.tg_username is not None]
+            black_list = await get_black_list()
+            ids = [user.tg_id for user in black_list if user.tg_id is not None]
+            usernames = [user.tg_username for user in black_list if user.tg_username is not None]
             
-            if True:
+            if event.from_user.id in ids or event.from_user.username in usernames:
                 # Если пользователь не разрешен, отправляем сообщение и прерываем цепочку
                 if isinstance(event, Message):
                     await event.reply(f"Ошибка подключения к боту (error code: blmw)")
