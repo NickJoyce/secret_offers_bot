@@ -45,7 +45,7 @@ async def test(user_id: str, request: Request):
         logger.info(f"usernames: {usernames}")
         return JSONResponse({"ids": ids, "usernames": usernames})
     except Exception as e:
-        return JSONResponse({'{error': traceback.format_exc()}})
+        return JSONResponse({'{error': traceback.format_exc()})
     
 
 
