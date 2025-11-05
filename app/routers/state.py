@@ -39,11 +39,12 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 async def test(user_id: str, request: Request):
     try:
         black_list = await get_black_list()
-        ids = [user.tg_id for user in black_list if user.tg_id is not None]
-        usernames = [user.tg_username for user in black_list if user.tg_username is not None]
-        logger.info(f"ids: {ids}")
-        logger.info(f"usernames: {usernames}")
-        return JSONResponse({"ids": ids, "usernames": usernames})
+        # ids = [user.tg_id for user in black_list if user.tg_id is not None]
+        # usernames = [user.tg_username for user in black_list if user.tg_username is not None]
+        logger.info(f"black_list: {black_list}")
+        # logger.info(f"ids: {ids}")
+        # logger.info(f"usernames: {usernames}")
+        return JSONResponse({"ids": black_list, "usernames": black_list})
     except Exception as e:
         return JSONResponse({'{error': traceback.format_exc()})
     
