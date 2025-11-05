@@ -21,6 +21,7 @@ import random
 import string
 from app.utils.main import get_unique_promocode
 from fastapi.responses import RedirectResponse
+from app.database.queries.balck_list import get_black_list
 
 
 
@@ -29,6 +30,23 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
+
+
+           
+
+
+@router.get("/test", include_in_schema=False)
+async def test(user_id: str, request: Request):
+    try:
+        black_list = await get_black_list()
+        ids = [user.tg_id for user in black_list if user.tg_id is not None]
+        usernames = [user.tg_username for user in black_list if user.tg_username is not None]
+        logger.info(f"ids: {ids}")
+        logger.info(f"usernames: {usernames}")
+        return JSONResponse({"ids": ids, "usernames": usernames})
+    except Exception as e:
+        return JSONResponse({'error': str(e)})
+    
 
 
 
