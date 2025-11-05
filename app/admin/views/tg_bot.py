@@ -1,7 +1,7 @@
 from starlette_admin.contrib.sqla import ModelView
 from starlette_admin.fields import StringField, BooleanField, IntegerField, DateTimeField, DecimalField, HasOne, HasMany, FileField, ImageField, TextAreaField
 from starlette_admin.fields import FloatField, JSONField
-from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost, Promocode
+from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost, Promocode, BlackList
 from fastapi import Request
 from typing import Any
 from fastapi.templating import Jinja2Templates
@@ -266,3 +266,16 @@ class ChannelPostView(ModelView):
     exclude_fields_from_list = ["id", "caption", "photo"]
     exclude_fields_from_create = ["id", "created_at", "chat_id", "message_id", "is_buttons_deleted"]
     exclude_fields_from_edit = ["id", "created_at", "chat_id", "message_id", "is_buttons_deleted"]
+    
+class BlackListView(ModelView):
+    label = 'Черный список'
+    name = 'Черный список'
+    fields = [
+        IntegerField("id", label="id"),
+        DateTimeField("created_at", label="Дата создания"),
+        DateTimeField("updated_at", label="Дата обновления"),
+        IntegerField("tg_id", label="ID пользователя в Telegram"),
+        StringField("tg_username", label="Имя пользователя в Telegram"),
+        TextAreaField("reason", label="Причина добавления в черный список"),
+        BooleanField("is_active", label="Добавлен в черный список?")
+    ]
