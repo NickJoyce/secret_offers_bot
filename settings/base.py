@@ -75,3 +75,7 @@ IS_AUTH = True
 # talk-me API
 TALK_ME_BASE_URL = os.getenv('TALK_ME_BASE_URL', 'https://api.talk-me.com')
 TALK_ME_API_KEY = os.getenv('TALK_ME_API_KEY')
+
+
+# privacy policy
+PRIVACY_POLICY_URL = "https://podruge.ru/polzovatelskoe-soglashenie/"
