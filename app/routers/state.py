@@ -44,7 +44,9 @@ async def test(request: Request):
         logger.info(f"black_list: {black_list}")
         # logger.info(f"ids: {ids}")
         # logger.info(f"usernames: {usernames}")
-        return JSONResponse({"ids": black_list, "usernames": black_list})
+        for user in black_list:
+            logger.info(f"user: {user.tg_id} {user.tg_username}")
+        return JSONResponse({"success": True})
     except Exception as e:
         return JSONResponse({'{error': traceback.format_exc()})
     
