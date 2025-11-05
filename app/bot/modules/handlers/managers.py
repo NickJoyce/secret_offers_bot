@@ -2,7 +2,7 @@ from aiogram import types, Router, F
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove, FSInputFile, InputMediaPhoto, InputMediaDocument
 from aiogram.filters import Command, CommandStart, StateFilter
 import logging.config
-from app.bot.modules.middlewares.managers import AuthMiddleware
+from app.bot.modules.middlewares.managers import AuthMiddleware, BlackListMiddleware
 from app.database.queries.tg_managers import get_managers, update_manager, create_managers
 from app.database.queries.tg_clients import get_clients
 from app.database.queries.tg_newsletters import get_newsletter
@@ -35,7 +35,9 @@ router = Router(name=__name__)
 
 if IS_AUTH:
     router.message.middleware(AuthMiddleware())
-    
+   
+if IS_BLACK_LIST:
+    router.message.middleware(BlackListMiddleware()) 
     
 # Настройки пользователя
 @router.message(Command('settings'))
