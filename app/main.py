@@ -59,7 +59,7 @@ async def lifespan(app: FastAPI):
     
     # Black List Middleware
     if IS_BLACK_LIST:
-        dp.middleware.register(BlackListMiddleware())
+        dp.middleware.register(BlackListMiddleware)
 
     
     await start_bot()
