@@ -71,6 +71,8 @@ TALK_ME_API_TOKEN = os.getenv('TALK_ME_API_TOKEN')
 
 # authentication
 IS_AUTH = True
+IS_BLACK_LIST = True
+
 
 # talk-me API
 TALK_ME_BASE_URL = os.getenv('TALK_ME_BASE_URL', 'https://api.talk-me.com')

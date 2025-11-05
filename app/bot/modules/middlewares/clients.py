@@ -33,7 +33,8 @@ class AuthMiddleware(BaseMiddleware):
         return result
 
 
-
+class BlackListMiddleware(BaseMiddleware):
+    ...
 
 
 

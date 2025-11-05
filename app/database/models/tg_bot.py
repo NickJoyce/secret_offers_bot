@@ -244,3 +244,21 @@ class ChannelPost(Base):
     
     
 
+class BlackList(Base):
+    __tablename__ = "bot_black_list"
+    
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.timezone('Europe/Moscow', func.now()),
+                                                 nullable=False,
+                                                 comment='Дата создания')
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.timezone('Europe/Moscow', func.now()),
+                                                 onupdate=func.now(),
+                                                 nullable=False,
+                                                 comment='Дата обновления')
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    tg_id: Mapped[int] = mapped_column(BigInteger, nullable=True, comment="ID пользователя в Telegram")
+    tg_username: Mapped[str] = mapped_column(String(255),  nullable=True, comment="Имя пользователя в Telegram")
+    reason: Mapped[str] = mapped_column(String(1000), default="", nullable=True, comment="Причина добавления в черный список")
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, comment="Добавлен в черный список?")
