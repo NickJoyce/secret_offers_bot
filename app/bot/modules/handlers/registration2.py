@@ -40,11 +40,10 @@ logger = logging.getLogger(__name__)
 router = Router(name=__name__)
 
 
-# if IS_AUTH:
-#     router.message.middleware(AuthMiddleware())
 
 if IS_BLACK_LIST:
     router.message.middleware(BlackListMiddleware())
+
 
 class RegistrationStates(StatesGroup):
     tg_id = State()
