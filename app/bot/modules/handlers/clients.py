@@ -26,8 +26,8 @@ router = Router(name=__name__)
 if IS_BLACK_LIST:
     router.message.middleware(BlackListMiddleware())
 
-if IS_AUTH:
-    router.message.middleware(AuthMiddleware())
+# if IS_AUTH:
+#     router.message.middleware(AuthMiddleware())
 
 
     
