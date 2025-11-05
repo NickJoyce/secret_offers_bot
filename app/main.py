@@ -16,9 +16,8 @@ from starlette_admin.i18n import I18nConfig
 from starlette.middleware import Middleware
 from app.database.models.test import Test
 from app.admin.views.test_views import TestView
-
-from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, GreetingOffer, TalkMeMessageFromClient, ChannelPost, Promocode
-from app.admin.views.tg_bot import TgClientView, TgManagerView, TgNewsletterView, AssignmentView, MyCustomView, GreetingOfferView, TalkMeMessageFromClientView, ChannelPostView, PromocodeView
+from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, GreetingOffer, TalkMeMessageFromClient, ChannelPost, Promocode, BlackList
+from app.admin.views.tg_bot import TgClientView, TgManagerView, TgNewsletterView, AssignmentView, MyCustomView, GreetingOfferView, TalkMeMessageFromClientView, ChannelPostView, PromocodeView, BlackListView
 from app.admin.auth import auth_router
 from app.bot.main import bot, dp, start_bot, stop_bot
 from contextlib import asynccontextmanager
@@ -112,6 +111,7 @@ admin = Admin(
 admin.add_view(ChannelPostView(ChannelPost, identity="channel_post"))
 admin.add_view(PromocodeView(Promocode, identity="promocode"))
 admin.add_view(TgClientView(TgClient, identity="tg_client"))
+admin.add_view(BlackListView(BlackList, identity="black_list"))
 
 admin.add_view(TgManagerView(TgManager, identity="tg_manager"))
 admin.add_view(TgNewsletterView(Newsletter, identity="tg_newsletter"))
