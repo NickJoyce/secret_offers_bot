@@ -39,6 +39,8 @@ class BlackListMiddleware(BaseMiddleware):
                        handler: Callable[ [TelegramObject, Dict[str, Any]], Awaitable[Any] ],
                        event: TelegramObject,
                        data: Dict[str, Any]) -> Any:
+            # Логика, которая выполняется ДО вызова обработчика
+            logger.info(f"--- Black List Middleware: Processing event of type {type(event).__name__} ---")
             black_list = await get_black_list()
             ids = [user.tg_id for user in black_list if user.tg_id is not None]
             usernames = [user.tg_username for user in black_list if user.tg_username is not None]
@@ -54,7 +56,7 @@ class BlackListMiddleware(BaseMiddleware):
             # Вызываем следующий обработчик в цепочке (это может быть другой middleware или конечный хендлер)
             result = await handler(event, data)
             # Логика, которая выполняется ПОСЛЕ вызова обработчика
-            logger.info(f"--- Universal Middleware: Finished processing event of type {type(event).__name__} ---")
+            logger.info(f"--- Black List Middleware: Finished processing event of type {type(event).__name__} ---")
             return result               
         
         
