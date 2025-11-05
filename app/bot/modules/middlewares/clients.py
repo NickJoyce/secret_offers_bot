@@ -41,11 +41,11 @@ class BlackListMiddleware(BaseMiddleware):
                        data: Dict[str, Any]) -> Any:
             # Логика, которая выполняется ДО вызова обработчика
             logger.info(f"--- Black List Middleware: Processing event of type {type(event).__name__} ---")
-            black_list = await get_black_list()
-            ids = [user.tg_id for user in black_list if user.tg_id is not None]
-            usernames = [user.tg_username for user in black_list if user.tg_username is not None]
+            # black_list = await get_black_list()
+            # ids = [user.tg_id for user in black_list if user.tg_id is not None]
+            # usernames = [user.tg_username for user in black_list if user.tg_username is not None]
             
-            if event.from_user.id in ids or event.from_user.username in usernames:
+            if True:
                 # Если пользователь не разрешен, отправляем сообщение и прерываем цепочку
                 if isinstance(event, Message):
                     await event.reply(f"Ошибка подключения к боту (error code: blmw)")
