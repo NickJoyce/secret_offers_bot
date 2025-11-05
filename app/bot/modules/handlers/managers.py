@@ -23,7 +23,7 @@ from datetime import datetime, timezone, date
 
 
 import os
-from settings import BASE_DIR, IS_AUTH
+from settings import BASE_DIR, IS_AUTH, IS_BLACK_LIST
 
 from app.database.conn import AsyncSessionLocal
 from app.bot.main import bot
