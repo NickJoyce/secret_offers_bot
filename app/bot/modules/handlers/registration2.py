@@ -17,6 +17,7 @@ import pytz
 from app.tasks.monitoring import is_subscriber
 from app.bot.modules.utils import unique_first_letters, CITIES
 from aiogram.utils.markdown import link, hlink
+from app.bot.modules.utils import escape_markdown_v2
 
 
 
@@ -72,10 +73,9 @@ async def start_command_handler(msg: Message, state: FSMContext):
             )
     else:
         await state.set_state(RegistrationStates.reg_name)
-        privacy_policy_link = hlink('персональных данных', PRIVACY_POLICY_URL)
+        privacy_policy_link = link('персональных данных', PRIVACY_POLICY_URL)
         # privacy_policy_link = link('[персональных данных]({PRIVACY_POLICY_URL})', PRIVACY_POLICY_URL)
-        await msg.answer(
-            f"""👋 Добро пожаловать в ЗАКРЫТЫЙ КЛУБ «ПОДРУЖКИ»
+        text = f"""👋 Добро пожаловать в ЗАКРЫТЫЙ КЛУБ «ПОДРУЖКИ»
 
 Это закрытый Telegram-канал от крупнейшей сети клиник лазерной эпиляции и косметологии Подружки, в котором мы делимся секретными скидками на самые популярные услуги сети
 
@@ -83,7 +83,8 @@ async def start_command_handler(msg: Message, state: FSMContext):
 
 👉 Чтобы продолжить и получить доступ к каналу, нужно зарегистрироваться. Отправляя форму ты даешь согласие на обработку {privacy_policy_link}. 
 
-Напиши, как тебя зовут:""", parse_mode=ParseMode.HTML)
+Напиши, как тебя зовут:"""
+        await msg.answer(text=escape_markdown_v2(text), parse_mode=ParseMode.MARKDOWN_V2)
         
     
    
