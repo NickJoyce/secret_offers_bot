@@ -32,12 +32,13 @@ from app.bot.modules.handlers.channels import router as channel_router
 from app.bot.modules.handlers.chats import router as chat_router
 
 from starlette_admin.views import Link
-from settings.base import TEMPLATES_DIR
+from settings.base import TEMPLATES_DIR, IS_BLACK_LIST
 from jinja2 import FileSystemLoader
 from fastapi.templating import Jinja2Templates
 from starlette_admin.views import CustomView
 import os
 import time
+from app.bot.modules.middlewares.clients import BlackListMiddleware
 
 
 
@@ -55,6 +56,11 @@ async def lifespan(app: FastAPI):
     dp.include_router(client_router)
     dp.include_router(channel_router)
     dp.include_router(chat_router)
+    
+    # Black List Middleware
+    if IS_BLACK_LIST:
+        dp.update.middleware(BlackListMiddleware())
+    
     await start_bot()
     await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
                           secret_token=WEBHOOK_SECRET, 
