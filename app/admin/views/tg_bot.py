@@ -280,5 +280,6 @@ class BlackListView(ModelView):
         BooleanField("is_active", label="Добавлен в черный список?")
     ]
     
+    exclude_fields_from_list = ["id", "created_at", "updated_at"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "is_active"]
     exclude_fields_from_edit = ["id", "created_at", "updated_at"]
