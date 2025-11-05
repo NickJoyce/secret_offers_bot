@@ -36,7 +36,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
 @router.get("/test", include_in_schema=False)
-async def test(user_id: str, request: Request):
+async def test(request: Request):
     try:
         black_list = await get_black_list()
         # ids = [user.tg_id for user in black_list if user.tg_id is not None]
