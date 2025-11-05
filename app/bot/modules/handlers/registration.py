@@ -15,6 +15,7 @@ from asyncio import sleep
 from zoneinfo import ZoneInfo
 import pytz
 from app.tasks.monitoring import is_subscriber
+from app.bot.modules.middlewares.clients import BlackListMiddleware
 
 
 
@@ -24,7 +25,7 @@ from datetime import datetime, timezone, date, time
 
 
 import os
-from settings import BASE_DIR, IS_AUTH, PRIVACY_POLICY_URL
+from settings import BASE_DIR, IS_AUTH, IS_BLACK_LIST, PRIVACY_POLICY_URL
 
 from app.database.conn import AsyncSessionLocal
 from app.bot.main import bot
@@ -36,8 +37,9 @@ logger = logging.getLogger(__name__)
 router = Router(name=__name__)
 
 
-# if IS_AUTH:
-#     router.message.middleware(AuthMiddleware())
+
+if IS_BLACK_LIST:
+    router.message.middleware(BlackListMiddleware())
 
 
 
