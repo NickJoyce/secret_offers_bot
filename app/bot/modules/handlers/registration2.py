@@ -84,7 +84,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
 👉 Чтобы продолжить и получить доступ к каналу, нужно зарегистрироваться. Отправляя форму ты даешь согласие на обработку <a href="{PRIVACY_POLICY_URL}">персональных данных</a>. 
 
 Напиши, как тебя зовут:"""
-        await msg.answer(text=text, parse_mode=ParseMode.HTML)
+        await msg.answer(text=text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
         
     
    
