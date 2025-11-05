@@ -18,7 +18,7 @@ from app.tasks.monitoring import is_subscriber
 from app.bot.modules.utils import unique_first_letters, CITIES
 from aiogram.utils.markdown import link, hlink
 from app.bot.modules.utils import escape_markdown_v2
-from app.bot.modules.middlewares.clients import BlackListMiddleware
+
 
 
 
@@ -29,7 +29,7 @@ from datetime import datetime, timezone, date, time
 
 
 import os
-from settings import BASE_DIR, IS_AUTH, IS_BLACK_LIST, PRIVACY_POLICY_URL
+from settings import BASE_DIR, IS_AUTH,  PRIVACY_POLICY_URL
 
 from app.database.conn import AsyncSessionLocal
 from app.bot.main import bot
@@ -41,9 +41,6 @@ router = Router(name=__name__)
 
 
 
-
-# if IS_BLACK_LIST:
-#     router.message.middleware(BlackListMiddleware())
 
 
 class RegistrationStates(StatesGroup):
