@@ -38,7 +38,7 @@ from fastapi.templating import Jinja2Templates
 from starlette_admin.views import CustomView
 import os
 import time
-from app.bot.modules.middlewares.clients import BlackListMiddleware
+from app.bot.modules.middlewares.general import BlackListMiddleware
 
 
 
