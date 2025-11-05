@@ -72,7 +72,8 @@ async def start_command_handler(msg: Message, state: FSMContext):
             )
     else:
         await state.set_state(RegistrationStates.reg_name)
-        privacy_policy_link = hlink('персональных данных', PRIVACY_POLICY_URL)
+        privacy_policy_link = link('персональных данных', PRIVACY_POLICY_URL)
+        # privacy_policy_link = link('[персональных данных]({PRIVACY_POLICY_URL})', PRIVACY_POLICY_URL)
         await msg.answer(
             f"""👋 Добро пожаловать в ЗАКРЫТЫЙ КЛУБ «ПОДРУЖКИ»
 
@@ -82,7 +83,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
 
 👉 Чтобы продолжить и получить доступ к каналу, нужно зарегистрироваться. Отправляя форму ты даешь согласие на обработку {privacy_policy_link}. 
 
-Напиши, как тебя зовут:""",
+Напиши, как тебя зовут:""", parse_mode=ParseMode.MARKDOWN_V2)
         )
     
    
