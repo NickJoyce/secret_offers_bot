@@ -23,3 +23,6 @@ async def create_clients(items: list[dict]):
     async with AsyncSessionLocal() as session:
         await session.execute(insert(TgClient), items)
         await session.commit()
+        
+        
+        
