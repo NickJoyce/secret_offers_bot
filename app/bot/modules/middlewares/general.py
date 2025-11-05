@@ -21,8 +21,8 @@ class BlackListMiddleware(BaseMiddleware):
             # Логика, которая выполняется ДО вызова обработчика
             logger.info(f"--- Black List Middleware: Processing event of type {type(event).__name__} ---")
             black_list = await get_black_list()
-            ids = [user.tg_id for user in black_list if user.tg_id is not None]
-            usernames = [user.tg_username for user in black_list if user.tg_username is not None]
+            ids = [user.tg_id for user in black_list if user.tg_id is not None and user.is_active is True]
+            usernames = [user.tg_username for user in black_list if user.tg_username is not None and user.is_active is True]
             
             if event.from_user.id in ids or event.from_user.username in usernames:
                 # Если пользователь не разрешен, отправляем сообщение и прерываем цепочку
