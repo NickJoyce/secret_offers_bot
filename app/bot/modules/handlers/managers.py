@@ -66,6 +66,10 @@ async def select_bot_newsletter(callback: CallbackQuery):
                                      reply_markup = await create_bot_newsletter_callback())
 
 
+@router.callback_query(F.data.startswith("create_bot_newsletter"))
+async def get_selected_newsletter(callback: CallbackQuery):
+    await callback.answer('Создайте пост')
+    
 
 
 
@@ -74,8 +78,7 @@ async def select_bot_newsletter(callback: CallbackQuery):
 
 
 
-
-@router.callback_query(F.data.startswith("newsletter_choice_"))
+@router.callback_query(F.data.startswith("create_bot_newsletter"))
 async def get_selected_newsletter(callback: CallbackQuery):
     clients = await get_clients()
     selected_newsletter_id = int(callback.data.split('_')[2])
