@@ -82,10 +82,10 @@ async def get_selected_newsletter(callback: CallbackQuery, state: FSMContext):
 # --- Обработчик для получения данных для поста ---
 @router.message(PostCreateStates.post_data)
 async def process_post_data(message: types.Message, state: FSMContext, ):
-    text = message.text
+    caption = message.caption
     photo = message.photo
     logger.info(f"message: {message}")
-    logger.info(f"text: {text}")
+    logger.info(f"caption: {caption}")
     logger.info(f"photo: {photo}")
     
     # сбрасываем состояние
