@@ -14,6 +14,8 @@ from aiogram.exceptions import TelegramBadRequest
 import asyncio
 from app.bot.modules.utils import escape_markdown_v2
 import pandas as pd
+from aiogram.types.message_entity import MessageEntity
+
 
 
 
@@ -94,13 +96,13 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
         
         entities = message.entities
         
-        custom_emoji_ids = []
-        for entity in entities:
-            if entity.type == 'custom_emoji':
-                custom_emoji_ids.append(entity.custom_emoji_id)
+        # custom_emoji_ids = []
+        # for entity in entities:
+        #     if entity.type == 'custom_emoji':
+        #         custom_emoji_ids.append(entity.custom_emoji_id)
                 
         
-        await message.answer(f"{text} {custom_emoji_ids}", entities=entities)
+        await message.answer(f"{text}", entities=entities)
         await state.clear()
         return
     
