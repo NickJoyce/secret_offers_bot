@@ -37,6 +37,12 @@ if IS_AUTH:
     router.message.middleware(AuthMiddleware())
     
     
+class PostCreateStates(StatesGroup):
+    post_data = State()
+   
+    
+    
+    
 # Настройки пользователя
 @router.message(Command('settings'))
 async def settings_command_handler(msg: Message):
@@ -66,10 +72,17 @@ async def select_bot_newsletter(callback: CallbackQuery):
                                      reply_markup = await create_bot_newsletter_callback())
 
 
-@router.callback_query(F.data.startswith("create_bot_newsletter"))
-async def get_selected_newsletter(callback: CallbackQuery):
-    await callback.answer('Создайте пост')
+@router.callback_query(F.data.startswith("create_bot_newsletter"), StateFilter(None))
+async def get_selected_newsletter(callback: CallbackQuery, state: FSMContext):
+    await callback.answer()
+    await state.set_state(PostCreateStates.post_data)
     await callback.message.answer(text=f"Создайте пост")
+    
+
+# --- Обработчик для получения данных для поста ---
+@router.message(PostCreateStates.post_data)
+async def process_post_data(message: types.Message, state: FSMContext):
+    logger.info(f"message: {message.text}")
     
 
 
