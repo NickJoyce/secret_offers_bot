@@ -258,6 +258,7 @@ class BlackList(Base):
                                                  comment='Дата обновления')
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), default="", nullable=True, comment="Призвольное имя")
     tg_id: Mapped[int] = mapped_column(BigInteger, default=None, nullable=True, comment="ID пользователя в Telegram")
     tg_username: Mapped[str] = mapped_column(String(255), default=None, nullable=True, comment="Имя пользователя в Telegram")
     reason: Mapped[str] = mapped_column(String(1000), default="", nullable=True, comment="Причина добавления в черный список")
