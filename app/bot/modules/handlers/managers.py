@@ -100,7 +100,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
                 custom_emoji_id.append(entity.custom_emoji_id)
                 
         
-        await message.answer(f"{text}", entities=message.entities)
+        await message.answer(f"{text}", entities=entities)
         await state.clear()
         return
     
