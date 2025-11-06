@@ -8,6 +8,10 @@ import logging.config
 logger = logging.getLogger(__name__)
 
 
+
+
+
+
 settings_menu = [
     ('Рассылка в канале', 'newsletters'),
     ('Рассылка в боте', 'bot_newsletters'),
