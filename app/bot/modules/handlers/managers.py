@@ -50,12 +50,28 @@ async def select_model(callback: CallbackQuery):
                                      reply_markup = await settings_menu_callback())
     
     
-# Настройки пользователя -> Расссылки
+# Настройки пользователя -> Расссылки в канале
 @router.callback_query(F.data == 'newsletters')
 async def select_newsletter(callback: CallbackQuery):
     await callback.answer()
     await callback.message.edit_text(text=f"Выберете рассылку",
                                      reply_markup = await select_newsletter_callback())
+
+
+# Настройки пользователя -> Расссылки в боте
+@router.callback_query(F.data == 'bot_newsletters')
+async def select_bot_newsletter(callback: CallbackQuery):
+    await callback.answer()
+    await callback.message.edit_text(text=f"Создать рассылку")
+
+
+
+
+
+
+
+
+
 
 
 @router.callback_query(F.data.startswith("newsletter_choice_"))
