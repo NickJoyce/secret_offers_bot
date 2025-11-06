@@ -8,7 +8,10 @@ import logging.config
 logger = logging.getLogger(__name__)
 
 
-settings_menu = [('~Рассылки~', 'newsletters')]
+settings_menu = [
+    ('Рассылка в канале', 'newsletters'),
+    ('Рассылка в боте', 'bot_newsletters'),
+]
 
 
 async def settings_menu_callback():
