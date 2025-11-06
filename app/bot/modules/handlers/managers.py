@@ -84,37 +84,48 @@ async def get_selected_newsletter(callback: CallbackQuery, state: FSMContext):
 async def process_post_data(message: types.Message, state: FSMContext, ):
     text = message.text
     caption = message.caption
-    photos = message.photo
+    photo = message.photo
     logger.info(f"message: {message}")
     logger.info(f"caption: {caption}")
-    logger.info(f"photos: {photos}")
+    logger.info(f"photo: {photo}")
     
     
     if text:
-        await message.answer(
-        f"{text}",
-    )
+        await message.answer(f"{text}")
+        await state.clear()
+        return
     
     
-    # если фото много есть параметр media_group_id, то нужно его использовать
-    if message.media_group_id:
-        ...
-    
-    
-    
-    # формируем медиа группу
-    media_group = []
-    if photos:
-        photo_ids = [p.file_id for p in photos][:1]
-        logger.info(f"photo_ids: {photo_ids}")
-        for n, photo_id in enumerate(photo_ids):
-            if n == 0:
-                media_group.append(InputMediaPhoto(media=photo_id, caption=caption))
-            else:
-                media_group.append(InputMediaPhoto(media=photo_id))
 
-    if media_group:
-        await message.answer_media_group(media=media_group)
+    # если фото много
+    if message.media_group_id:
+        # получаем фото из media_group_id
+        ...
+    else:
+        if photo:
+            await message.answer_photo(photo=photo[0].file_id, caption=caption)
+            await state.clear()
+            return
+    
+
+        
+        
+    
+    
+
+    # формируем медиа группу
+    # media_group = []
+    # if photos:
+    #     photo_ids = [p.file_id for p in photos][:1]
+    #     logger.info(f"photo_ids: {photo_ids}")
+    #     for n, photo_id in enumerate(photo_ids):
+    #         if n == 0:
+    #             media_group.append(InputMediaPhoto(media=photo_id, caption=caption))
+    #         else:
+    #             media_group.append(InputMediaPhoto(media=photo_id))
+
+    # if media_group:
+    #     await message.answer_media_group(media=media_group)
     
     
     # await message.answer_photo(photo=photo, caption=caption)
