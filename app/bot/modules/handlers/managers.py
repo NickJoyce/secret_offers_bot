@@ -91,7 +91,9 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     # формируем медиа группу
     media_group = []
     if photos:
-        for n, photo_id in enumerate(list(set([p.file_id for p in photos]))):
+        photo_ids = list(set([p.file_id for p in photos]))
+        logger.info(f"photo_ids: {photo_ids}")
+        for n, photo_id in enumerate(photo_ids):
             if n == 0:
                 media_group.append(InputMediaPhoto(media=photo_id, caption=caption))
             else:
