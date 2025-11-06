@@ -69,6 +69,7 @@ async def select_bot_newsletter(callback: CallbackQuery):
 @router.callback_query(F.data.startswith("create_bot_newsletter"))
 async def get_selected_newsletter(callback: CallbackQuery):
     await callback.answer('Создайте пост')
+    await callback.message.answer(text=f"Создайте пост")
     
 
 
