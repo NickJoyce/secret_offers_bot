@@ -274,6 +274,7 @@ class BlackListView(ModelView):
         IntegerField("id", label="id"),
         DateTimeField("created_at", label="Дата создания"),
         DateTimeField("updated_at", label="Дата обновления"),
+        StringField("name", label="Призвольное имя"),
         IntegerField("tg_id", label="ID пользователя в Telegram"),
         StringField("tg_username", label="Имя пользователя в Telegram"),
         TextAreaField("reason", label="Причина добавления в черный список"),
