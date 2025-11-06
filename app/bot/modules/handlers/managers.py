@@ -14,7 +14,7 @@ from aiogram.exceptions import TelegramBadRequest
 import asyncio
 from app.bot.modules.utils import escape_markdown_v2
 import pandas as pd
-from app.bot.modules.utils import escape_markdown_v2
+
 
 
 from app.conns.es.accounts import es
@@ -40,13 +40,13 @@ if IS_AUTH:
 # Настройки пользователя
 @router.message(Command('settings'))
 async def settings_command_handler(msg: Message):
-    await msg.answer(text="Настройки", reply_markup = await settings_menu_callback())
+    await msg.answer(text="~~Настройки~~", reply_markup = await settings_menu_callback())
 
 
 @router.callback_query(F.data == 'settings')
 async def select_model(callback: CallbackQuery):
     await callback.answer()
-    await callback.message.edit_text(text="Настройки",
+    await callback.message.edit_text(text="~~Настройки~~",
                                      reply_markup = await settings_menu_callback())
     
     
