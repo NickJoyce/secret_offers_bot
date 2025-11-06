@@ -30,3 +30,9 @@ async def select_newsletter_callback():
         builder.add(InlineKeyboardButton(text=text, callback_data=f"newsletter_choice_{newsletter.id}"))
     builder.add(InlineKeyboardButton(text='<< Настройки', callback_data='settings'))
     return builder.adjust(2).as_markup()
+
+async def create_bot_newsletter_callback():
+    builder = InlineKeyboardBuilder()
+    builder.add(InlineKeyboardButton(text='Создать рассылку', callback_data='create_bot_newsletter'))
+    builder.add(InlineKeyboardButton(text='<< Настройки', callback_data='settings'))
+    return builder.adjust(1).as_markup()
