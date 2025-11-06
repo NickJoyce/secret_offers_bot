@@ -83,10 +83,22 @@ async def get_selected_newsletter(callback: CallbackQuery, state: FSMContext):
 @router.message(PostCreateStates.post_data)
 async def process_post_data(message: types.Message, state: FSMContext, ):
     caption = message.caption
-    photo = message.photo
+    photos = message.photo
     logger.info(f"message: {message}")
     logger.info(f"caption: {caption}")
-    logger.info(f"photo: {photo}")
+    logger.info(f"photos: {photos}")
+    
+    # формируем медиа группу
+    media_group = []
+    if photos:
+        for photo in list(set([p.file_id for p in photos])):
+            media_group.append(InputMediaPhoto(media=photo.file_id))
+
+    
+    
+    await message.answer_photo(photo=photo, caption=caption)
+    
+    
     
     # сбрасываем состояние
     await state.clear()
