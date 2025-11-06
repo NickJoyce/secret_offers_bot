@@ -94,15 +94,14 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     
     if text:
         
-        entities = message.entities
-        
         # custom_emoji_ids = []
         # for entity in entities:
         #     if entity.type == 'custom_emoji':
         #         custom_emoji_ids.append(entity.custom_emoji_id)
                 
         
-        await message.answer(f"{text}", entities=entities)
+        sent_message = await message.answer(f"{text}", entities=message.entities)
+        logger.info(f"sent_message: {sent_message}")
         await state.clear()
         return
     
