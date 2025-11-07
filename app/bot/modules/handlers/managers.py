@@ -16,6 +16,7 @@ from app.bot.modules.utils import escape_markdown_v2
 import pandas as pd
 from aiogram.types.message_entity import MessageEntity
 from app.bot.modules.keyboards.registration import first_letters, cities_list
+from app.bot.modules.keyboards.managers import yes_no_callback
 from app.bot.modules.utils import CITIES, unique_first_letters
 
 
@@ -159,6 +160,13 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     await state.update_data(city=city)
     data = await state.get_data()
     logger.info(f"data: {data}")
+    
+    await callback.message.answer(
+    "Запустить рассылку?",
+        reply_markup=await yes_no_callback()
+    ) 
+    
+    
     state.clear()
     
     

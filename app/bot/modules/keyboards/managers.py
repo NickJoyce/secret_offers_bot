@@ -44,3 +44,8 @@ async def create_bot_newsletter_callback():
     return builder.adjust(1).as_markup()
 
 
+async def yes_no_callback():
+    builder = InlineKeyboardBuilder()
+    builder.add(InlineKeyboardButton(text='Да', callback_data='yes'))
+    builder.add(InlineKeyboardButton(text='Нет', callback_data='no'))
+    return builder.adjust(1).as_markup()
