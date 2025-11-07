@@ -15,6 +15,7 @@ import asyncio
 from app.bot.modules.utils import escape_markdown_v2
 import pandas as pd
 from aiogram.types.message_entity import MessageEntity
+from app.bot.modules.keyboards.registration import first_letters
 
 
 
@@ -40,7 +41,12 @@ if IS_AUTH:
     
     
 class PostCreateStates(StatesGroup):
-    post_data = State()
+    text = State()
+    caption = State()
+    photo = State()
+    entities = State()
+    caption_entities = State()
+    city = State()
    
     
     
@@ -77,50 +83,65 @@ async def select_bot_newsletter(callback: CallbackQuery):
 @router.callback_query(F.data.startswith("create_bot_newsletter"), StateFilter(None))
 async def get_selected_newsletter(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
-    await state.set_state(PostCreateStates.post_data)
+    await state.set_state(PostCreateStates.text)
     await callback.message.answer(text=f"Создайте пост")
     
 
 # --- Обработчик для получения данных для поста ---
-@router.message(PostCreateStates.post_data)
+@router.message(PostCreateStates.text)
 async def process_post_data(message: types.Message, state: FSMContext, ):
     text = message.text
     caption = message.caption
     photo = message.photo
+    entities = message.entities
     caption_entities = message.caption_entities
+    
     logger.info(f"message: {message}")
     logger.info(f"caption: {caption}")
     logger.info(f"photo: {photo}")
+    logger.info(f"entities: {entities}")
     logger.info(f"caption_entities: {caption_entities}")
     
+    await state.update_data(text=text)
+    await state.update_data(caption=caption)
+    await state.update_data(photo=photo)
+    await state.update_data(entities=entities)
+    await state.update_data(caption_entities=caption_entities)
+    
+    # возвращаем пост
     if text:
-        
-        # custom_emoji_ids = []
-        # for entity in entities:
-        #     if entity.type == 'custom_emoji':
-        #         custom_emoji_ids.append(entity.custom_emoji_id)
-                
-        
-        sent_message = await message.answer(f"{text}", entities=message.entities, parse_mode=ParseMode.MARKDOWN_V2)
+        sent_message = await message.answer(escape_markdown_v2(f"{text}"), entities=entities, parse_mode=ParseMode.MARKDOWN_V2)
         logger.info(f"sent_message: {sent_message}")
-        await state.clear()
-        return
-    
-    
 
+    
+    
     # если фото много
     if message.media_group_id:
         # получаем фото из media_group_id
-        ...
+        await state.clear()
+        await message.answer(escape_markdown_v2(f"Добавлено более 1 фотографии. Состояние спрошено. Начните сначала"), parse_mode=ParseMode.MARKDOWN_V2)
+        return
+    # если фото одно
     else:
         if photo:
-            await message.answer_photo(photo=photo[0].file_id, caption=caption, caption_entities=message.entities, parse_mode=ParseMode.MARKDOWN_V2)
-            await state.clear()
-            return
+            await message.answer_photo(photo=photo[0].file_id, caption=escape_markdown_v2(caption), caption_entities=caption_entities, parse_mode=ParseMode.MARKDOWN_V2)
+        else:
+            pass
+
     
 
+    await state.set_state(PostCreateStates.city)
+    
+    await message.answer(
+        f"Укажи первую букву названия города, в котором планируется посещение 👇",
+        reply_markup=await first_letters()
+    )
         
-        
+   
+   
+   
+   
+   
     
     
 
@@ -144,7 +165,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     
     
     # сбрасываем состояние
-    await state.clear()
+
     
     
     
