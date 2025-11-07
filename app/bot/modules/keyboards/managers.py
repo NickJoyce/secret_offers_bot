@@ -3,6 +3,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder, ReplyKeyboardBuilder
 from app.database.queries.tg_newsletters import get_newsletters
 import logging.config
+from app.bot.modules.utils import unique_first_letters
 
 
 logger = logging.getLogger(__name__)
@@ -41,3 +42,5 @@ async def create_bot_newsletter_callback():
     builder.add(InlineKeyboardButton(text='Создать рассылку', callback_data='create_bot_newsletter'))
     builder.add(InlineKeyboardButton(text='<< Настройки', callback_data='settings'))
     return builder.adjust(1).as_markup()
+
+

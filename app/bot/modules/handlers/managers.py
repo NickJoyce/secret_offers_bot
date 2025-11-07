@@ -133,7 +133,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     await state.set_state(PostCreateStates.city)
     
     await message.answer(
-        f"Укажи первую букву названия города, в котором планируется посещение 👇",
+        f"Укажи первую букву названия города, в котором будет проходить рассылка 👇",
         reply_markup=await first_letters()
     )
         
