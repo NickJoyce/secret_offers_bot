@@ -101,6 +101,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     photo = message.photo
     entities = message.entities
     caption_entities = message.caption_entities
+    media_group_id = message.media_group_id
     
     # logger.info(f"message: {message}")
     # logger.info(f"caption: {caption}")
@@ -113,6 +114,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     await state.update_data(photo=photo)
     await state.update_data(entities=entities)
     await state.update_data(caption_entities=caption_entities)
+    await state.update_data(media_group_id=media_group_id)
     
     # возвращаем пост
     if text:
@@ -183,23 +185,46 @@ async def process_yes_or_no(callback: CallbackQuery, state: FSMContext):
         clients = await get_client_by_city_active(city)
         logger.info(f"clients: {clients}")
         
-        sends = len(clients)
-        successful_sends = 0
-        failed_sends = 0
+        
+        
+        
+        clients_count = len(clients)
+        success_count = 0
+        failed_count = 0
         for client in clients:
+            await asyncio.sleep(0.05)
             if data.get('text'):
                 try:
                     await bot.send_message(chat_id=client.tg_id,
                                            text=f"{data.get('text')}")
-                    successful_sends += 1
+                    success_count += 1
                 except Exception as e:
                     logger.error(f"Ошибка при отправке сообщения пользователю {client.tg_id}: {e}")
-                    failed_sends += 1
+                    failed_count += 1
+                    
+
+            if data.get('photo'):
+                try:
+                    await bot.send_photo(chat_id=client.tg_id, 
+                                     photo=data.get('photo')[0].file_id, 
+                                     caption=escape_markdown_v2(data.get('caption')), 
+                                     caption_entities=data.get('caption_entities'), 
+                                     parse_mode=ParseMode.MARKDOWN_V2)
+                    success_count += 1
+                except Exception as e:
+                    logger.error(f"Ошибка при отправке фото пользователю {client.tg_id}: {e}")
+                    failed_count += 1
+            else:
+                pass
+                    
+                    
+                    
+                    
         await state.clear()
         result = {
-            'sends': sends,
-            'successful_sends': successful_sends,
-            'failed_sends': failed_sends
+            'all_clients': clients_count,
+            'success': success_count,
+            'fail': failed_count
         }
         await callback.message.answer(text=f"Рассылка в городе {city} проиведена успешно\n ```json {result}```")
         return
