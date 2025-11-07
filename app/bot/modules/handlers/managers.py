@@ -156,13 +156,8 @@ async def process_first_letter(callback: CallbackQuery):
    
 @router.callback_query(F.data.startswith('selected_city_'), PostCreateStates.city)
 async def process_selected_city(callback: CallbackQuery, state: FSMContext):
-    
     city = callback.data.split('_')[2]
-    logger.info(f"city: {city}")
     await state.update_data(city=city)
-    data = await state.get_data()
-    logger.info(f"data: {data}")
-    
     await callback.message.edit_text(
     f"Запустить рассылку ☝️ в городе {city}?",
         reply_markup=await yes_or_no_callback()
@@ -177,15 +172,18 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
 @router.callback_query(F.data.startswith('yes_or_no_'), PostCreateStates.yes_or_no)
 async def process_yes_no(callback: CallbackQuery, state: FSMContext):
     yes_or_no = callback.data.split('_')[3]
+    await state.update_data(yes_or_no=yes_or_no)
+    data = await state.get_data()
+    city = data.get('city')
+    logger.info(f"data: {data}")
 
-    logger.info(f"yes_or_no: {yes_or_no}")
     if yes_or_no == 'yes':
         await state.clear()
-        await callback.message.answer(text=f"Рассылка запущена")
+        await callback.message.answer(text=f"Рассылка в городе {city} запущена")
         return
     else:
         await state.clear()
-        await callback.message.answer(text=f"Рассылка не запущена")
+        await callback.message.answer(text=f"Рассылкав городе {city} не запущена")
         return
 
     
