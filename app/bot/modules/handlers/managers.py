@@ -169,7 +169,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     ) 
     
     
-    await state.set_state(PostCreateStates.yes_no)
+    await state.set_state(PostCreateStates.yes_or_no)
     
     state.clear()
     
