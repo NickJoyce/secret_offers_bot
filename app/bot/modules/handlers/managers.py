@@ -162,7 +162,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     logger.info(f"data: {data}")
     
     await callback.message.edit_text(
-    "Запустить рассылку?",
+    f"Запустить рассылку в городе {city}?",
         reply_markup=await yes_no_callback()
     ) 
     
