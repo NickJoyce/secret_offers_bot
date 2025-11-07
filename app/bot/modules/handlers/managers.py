@@ -87,10 +87,11 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     text = message.text
     caption = message.caption
     photo = message.photo
+    caption_entities = message.caption_entities
     logger.info(f"message: {message}")
     logger.info(f"caption: {caption}")
     logger.info(f"photo: {photo}")
-    
+    logger.info(f"caption_entities: {caption_entities}")
     
     if text:
         
@@ -100,7 +101,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
         #         custom_emoji_ids.append(entity.custom_emoji_id)
                 
         
-        sent_message = await message.answer(escape_markdown_v2(f"{text} ![😉](tg://emoji?id=5377305978079288312)"), entities=message.entities, parse_mode=ParseMode.MARKDOWN_V2)
+        sent_message = await message.answer(f"{text}", entities=message.entities, parse_mode=ParseMode.MARKDOWN_V2)
         logger.info(f"sent_message: {sent_message}")
         await state.clear()
         return
@@ -113,7 +114,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
         ...
     else:
         if photo:
-            await message.answer_photo(photo=photo[0].file_id, caption=caption)
+            await message.answer_photo(photo=photo[0].file_id, caption=caption, caption_entities=message.entities, parse_mode=ParseMode.MARKDOWN_V2)
             await state.clear()
             return
     
