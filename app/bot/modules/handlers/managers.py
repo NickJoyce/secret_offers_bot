@@ -15,7 +15,8 @@ import asyncio
 from app.bot.modules.utils import escape_markdown_v2
 import pandas as pd
 from aiogram.types.message_entity import MessageEntity
-from app.bot.modules.keyboards.registration import first_letters
+from app.bot.modules.keyboards.registration import first_letters, cities_list
+from app.bot.modules.utils import CITIES, unique_first_letters
 
 
 
@@ -96,11 +97,11 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     entities = message.entities
     caption_entities = message.caption_entities
     
-    logger.info(f"message: {message}")
-    logger.info(f"caption: {caption}")
-    logger.info(f"photo: {photo}")
-    logger.info(f"entities: {entities}")
-    logger.info(f"caption_entities: {caption_entities}")
+    # logger.info(f"message: {message}")
+    # logger.info(f"caption: {caption}")
+    # logger.info(f"photo: {photo}")
+    # logger.info(f"entities: {entities}")
+    # logger.info(f"caption_entities: {caption_entities}")
     
     await state.update_data(text=text)
     await state.update_data(caption=caption)
@@ -138,10 +139,27 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     )
         
    
+@router.callback_query(F.data.startswith('first_letter_'))
+async def process_first_letter(callback: CallbackQuery):
+    letter = callback.data.split('_')[2]
+    # получим список городов начинающихся на букву letter
+    cities = [city for city in CITIES if city.startswith(letter)]
+    
+    await callback.answer()
+    await callback.message.edit_text(text=f"Выбери город из списка:",
+                                     reply_markup = await cities_list(cities))
    
    
    
-   
+@router.callback_query(F.data.startswith('selected_city_'), PostCreateStates.city)
+async def process_selected_city(callback: CallbackQuery, state: FSMContext):
+    city = callback.data.split('_')[2]
+    await state.update_data(city=city)
+    data = await state.get_data()
+    logger.info(f"data: {data}")
+    state.clear()
+    
+    
     
     
 
