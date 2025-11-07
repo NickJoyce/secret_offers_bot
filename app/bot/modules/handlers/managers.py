@@ -168,10 +168,24 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     ) 
     
     
+    await state.set_state(PostCreateStates.yes_no)
+    
     state.clear()
     
     
-    
+@router.callback_query(F.data.startswith('yes_or_no_'), PostCreateStates.yes_no)
+async def process_yes_no(callback: CallbackQuery, state: FSMContext):
+    yes_or_no = callback.data.split('_')[3]
+    logger.info(f"yes_or_no: {yes_or_no}")
+    if yes_or_no == 'yes':
+        await state.clear()
+        await callback.message.answer(text=f"Рассылка запущена")
+        return
+    else:
+        await state.clear()
+        await callback.message.answer(text=f"Рассылка не запущена")
+        return
+
     
 
     # формируем медиа группу
