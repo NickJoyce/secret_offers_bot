@@ -153,7 +153,9 @@ async def process_first_letter(callback: CallbackQuery):
    
 @router.callback_query(F.data.startswith('selected_city_'), PostCreateStates.city)
 async def process_selected_city(callback: CallbackQuery, state: FSMContext):
+    
     city = callback.data.split('_')[2]
+    logger.info(f"city: {city}")
     await state.update_data(city=city)
     data = await state.get_data()
     logger.info(f"data: {data}")
