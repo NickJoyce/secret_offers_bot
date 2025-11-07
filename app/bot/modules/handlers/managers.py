@@ -84,6 +84,7 @@ async def select_bot_newsletter(callback: CallbackQuery):
 
 @router.callback_query(F.data.startswith("create_bot_newsletter"), StateFilter(None))
 async def get_selected_newsletter(callback: CallbackQuery, state: FSMContext):
+    state.clear()
     await callback.answer()
     await state.set_state(PostCreateStates.text)
     await callback.message.answer(text=f"Создайте пост")
@@ -162,7 +163,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     logger.info(f"data: {data}")
     
     await callback.message.edit_text(
-    f"Запустить рассылку в городе {city}?",
+    f"Запустить рассылку ☝️ в городе {city}?",
         reply_markup=await yes_no_callback()
     ) 
     
