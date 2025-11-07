@@ -172,7 +172,12 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     
     state.clear()
     
-    
+
+
+
+
+
+
 @router.callback_query(F.data.startswith('yes_or_no_'), PostCreateStates.yes_or_no)
 async def process_yes_or_no(callback: CallbackQuery, state: FSMContext):
     yes_or_no = callback.data.split('_')[3]
@@ -193,16 +198,19 @@ async def process_yes_or_no(callback: CallbackQuery, state: FSMContext):
         failed_count = 0
         for client in clients:
             await asyncio.sleep(0.05)
+            
+            # только текст
             if data.get('text'):
                 try:
                     await bot.send_message(chat_id=client.tg_id,
-                                           text=f"{data.get('text')}")
+                                           text=escape_markdown_v2(data.get('text')),
+                                           parse_mode=ParseMode.MARKDOWN_V2)
                     success_count += 1
                 except Exception as e:
                     logger.error(f"Ошибка при отправке сообщения пользователю {client.tg_id}: {e}")
                     failed_count += 1
                     
-
+            # 1 фото + текст
             if data.get('photo'):
                 try:
                     await bot.send_photo(chat_id=client.tg_id, 
