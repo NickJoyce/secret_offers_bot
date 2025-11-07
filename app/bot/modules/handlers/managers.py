@@ -18,6 +18,7 @@ from aiogram.types.message_entity import MessageEntity
 from app.bot.modules.keyboards.registration import first_letters, cities_list
 from app.bot.modules.keyboards.managers import yes_or_no_callback
 from app.bot.modules.utils import CITIES, unique_first_letters
+from app.database.queries.tg_clients import get_client_by_city_active
 
 
 
@@ -171,7 +172,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     
     
 @router.callback_query(F.data.startswith('yes_or_no_'), PostCreateStates.yes_or_no)
-async def process_yes_no(callback: CallbackQuery, state: FSMContext):
+async def process_yes_or_no(callback: CallbackQuery, state: FSMContext):
     yes_or_no = callback.data.split('_')[3]
     await state.update_data(yes_or_no=yes_or_no)
     data = await state.get_data()
@@ -181,8 +182,26 @@ async def process_yes_no(callback: CallbackQuery, state: FSMContext):
     if yes_or_no == 'yes':
         clients = await get_client_by_city_active(city)
         logger.info(f"clients: {clients}")
+        
+        sends = len(clients)
+        successful_sends = 0
+        failed_sends = 0
+        for client in clients:
+            if data.get('text'):
+                try:
+                    await bot.send_message(chat_id=client.tg_id,
+                                           text=f"{data.get('text')}")
+                    successful_sends += 1
+                except Exception as e:
+                    logger.error(f"Ошибка при отправке сообщения пользователю {client.tg_id}: {e}")
+                    failed_sends += 1
         await state.clear()
-        await callback.message.answer(text=f"Рассылка в городе {city} запущена")
+        result = {
+            'sends': sends,
+            'successful_sends': successful_sends,
+            'failed_sends': failed_sends
+        }
+        await callback.message.answer(text=f"Рассылка в городе {city} проиведена успешно\n ```json {result}```")
         return
     else:
         await state.clear()
