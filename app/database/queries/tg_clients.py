@@ -8,6 +8,15 @@ async def get_client(tg_id):
         user = await session.scalar(select(TgClient).where(TgClient.tg_id == tg_id))
         return user
 
+async def get_client_by_city_active(city):
+    async with AsyncSessionLocal() as session:
+        users = await session.execute(select(TgClient).where(TgClient.city == city, TgClient.is_active == True))
+        return users.scalars().all()
+    
+    
+
+
+
 async def update_client(client):
     async with AsyncSessionLocal() as session:
         session.add(client)

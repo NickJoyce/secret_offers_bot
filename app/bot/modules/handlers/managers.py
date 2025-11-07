@@ -4,7 +4,7 @@ from aiogram.filters import Command, CommandStart, StateFilter
 import logging.config
 from app.bot.modules.middlewares.managers import AuthMiddleware
 from app.database.queries.tg_managers import get_managers, update_manager, create_managers
-from app.database.queries.tg_clients import get_clients
+from app.database.queries.tg_clients import get_clients, get_client_by_city_active
 from app.database.queries.tg_newsletters import get_newsletter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.enums import ParseMode, ContentType
@@ -18,6 +18,7 @@ from aiogram.types.message_entity import MessageEntity
 from app.bot.modules.keyboards.registration import first_letters, cities_list
 from app.bot.modules.keyboards.managers import yes_or_no_callback
 from app.bot.modules.utils import CITIES, unique_first_letters
+
 
 
 
@@ -178,6 +179,8 @@ async def process_yes_no(callback: CallbackQuery, state: FSMContext):
     logger.info(f"data: {data}")
 
     if yes_or_no == 'yes':
+        clients = await get_client_by_city_active(city)
+        logger.info(f"clients: {clients}")
         await state.clear()
         await callback.message.answer(text=f"Рассылка в городе {city} запущена")
         return
@@ -186,7 +189,7 @@ async def process_yes_no(callback: CallbackQuery, state: FSMContext):
         await callback.message.answer(text=f"Рассылкав городе {city} не запущена")
         return
 
-    
+
 
     # формируем медиа группу
     # media_group = []
