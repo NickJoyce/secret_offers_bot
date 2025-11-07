@@ -49,6 +49,7 @@ class PostCreateStates(StatesGroup):
     entities = State()
     caption_entities = State()
     city = State()
+    yes_or_no = State()
    
     
     
@@ -164,7 +165,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     
     await callback.message.edit_text(
     f"Запустить рассылку ☝️ в городе {city}?",
-        reply_markup=await yes_no_callback()
+        reply_markup=await yes_or_no_callback()
     ) 
     
     
@@ -173,9 +174,10 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     state.clear()
     
     
-@router.callback_query(F.data.startswith('yes_or_no_'), PostCreateStates.yes_no)
+@router.callback_query(F.data.startswith('yes_or_no_'), PostCreateStates.yes_or_no)
 async def process_yes_no(callback: CallbackQuery, state: FSMContext):
     yes_or_no = callback.data.split('_')[3]
+
     logger.info(f"yes_or_no: {yes_or_no}")
     if yes_or_no == 'yes':
         await state.clear()
