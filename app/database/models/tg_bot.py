@@ -280,6 +280,6 @@ class DeepLink(Base):
                                                  comment='Дата обновления')
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     payload: Mapped[JSON] = mapped_column(JSON, comment="Payload")
-    link: Mapped[str] = mapped_column(String(1000), comment="Ссылка")
+    link: Mapped[str] = mapped_column(String(1000), comment="Ссылка", nullable=True, default=None)
     
  
