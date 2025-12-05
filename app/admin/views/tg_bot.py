@@ -316,12 +316,10 @@ class DeepLinkView(ModelView):
     
     
     async def after_create(self, request, obj):
-        async with AsyncSessionLocal() as session:
-            obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
-            session.add(obj)
-            await session.commit()
-        logger.info(f"after_create: {obj.id}")
+        session = request.state.session
         obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
+        await session.commit()
+        logger.info(f"after_create: {obj.id}")
         return await super().after_create(request, obj)
 
        
