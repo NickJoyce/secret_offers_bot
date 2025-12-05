@@ -127,7 +127,7 @@ async def process_post_data(message: types.Message, state: FSMContext, ):
     if message.media_group_id:
         # получаем фото из media_group_id
         await state.clear()
-        await message.answer(escape_markdown_v2(f"Добавлено более 1 фотографии. Состояние спрошено. Начните сначала"), parse_mode=ParseMode.MARKDOWN_V2)
+        await message.answer(escape_markdown_v2(f"Добавлено более 1 фотографии. Состояние сброшено. Начните сначала"), parse_mode=ParseMode.MARKDOWN_V2)
         return
     # если фото одно
     else:

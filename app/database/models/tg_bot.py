@@ -263,3 +263,21 @@ class BlackList(Base):
     tg_username: Mapped[str] = mapped_column(String(255), default=None, nullable=True, comment="Имя пользователя в Telegram")
     reason: Mapped[str] = mapped_column(String(1000), default="", nullable=True, comment="Причина добавления в черный список")
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, comment="Добавлен в черный список?")
+
+
+class DeepLink(Base):
+    __tablename__ = "deep_links"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.timezone('Europe/Moscow', func.now()),
+                                                 nullable=False,
+                                                 comment='Дата создания')
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.timezone('Europe/Moscow', func.now()),
+                                                 onupdate=func.now(),
+                                                 nullable=False,
+                                                 comment='Дата обновления')
+    name: Mapped[str] = mapped_column(String(255), comment="Имя")
+    payload: Mapped[JSON] = mapped_column(JSON, comment="Payload")
+    link: Mapped[str] = mapped_column(String(1000), comment="Ссылка")
