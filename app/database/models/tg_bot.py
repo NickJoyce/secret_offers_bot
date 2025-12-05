@@ -289,4 +289,4 @@ class DeepLink(Base):
        
     async def after_edit(self, request, obj):
        self.link = f"https://t.me/secret_offers_bot?start={self.id}"
-       await obj.save()
+       await self.save()
