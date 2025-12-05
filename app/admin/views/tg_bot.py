@@ -1,7 +1,7 @@
 from starlette_admin.contrib.sqla import ModelView
 from starlette_admin.fields import StringField, BooleanField, IntegerField, DateTimeField, DecimalField, HasOne, HasMany, FileField, ImageField, TextAreaField
 from starlette_admin.fields import FloatField, JSONField
-from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost, Promocode, BlackList
+from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost, Promocode, BlackList, DeepLink
 from fastapi import Request
 from typing import Any
 from fastapi.templating import Jinja2Templates
@@ -14,6 +14,8 @@ from starlette.responses import Response
 from app.database.queries.tg_clients import get_clients
 from settings.base import BASE_DIR
 import logging
+from starlette.requests import Request
+from app.database.conn import AsyncSessionLocal
 
 logger = logging.getLogger(__name__)
 
@@ -307,7 +309,17 @@ class DeepLinkView(ModelView):
     # Добавляем сортировку
     sortable_fields = ["name", "link"] 
     
+    
+  
+        
+        
+    
+    
     async def after_create(self, request, obj):
+        async with AsyncSessionLocal() as session:
+            obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
+            session.add(obj)
+            await session.commit()
         logger.info(f"after_create: {obj.id}")
         obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
         return await super().after_create(request, obj)
