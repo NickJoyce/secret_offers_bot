@@ -298,7 +298,7 @@ class DeepLinkView(ModelView):
         JSONField("payload", label="Payload"),
         StringField("link", label="Ссылка"),
     ]
-    exclude_fields_from_list = ["id", "created_at", "updated_at"]
+    exclude_fields_from_list = ["id", "created_at", "updated_at", "payload"]
     exclude_fields_from_create = ["id", "created_at", "updated_at"]
     exclude_fields_from_edit = ["id", "created_at", "updated_at"]
     exclude_fields_from_detail = []
@@ -310,20 +310,11 @@ class DeepLinkView(ModelView):
     sortable_fields = ["name", "link"] 
     
     
-  
-        
-        
-    
-    
+
     async def after_create(self, request, obj):
         session = request.state.session
         obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
         await session.commit()
-        logger.info(f"after_create: {obj.id}")
         return await super().after_create(request, obj)
 
-       
-    async def after_edit(self, request, obj):
-        logger.info(f"after_edit: {obj.id}")
-        obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
-        return await super().after_edit(request, obj)
+
