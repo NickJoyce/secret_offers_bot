@@ -297,8 +297,9 @@ class DeepLinkView(ModelView):
         StringField("name", label="Имя"),
         JSONField("payload", label="Payload"),
         StringField("link", label="Ссылка"),
+        TextAreaField("comment", label="Комментарий"),
     ]
-    exclude_fields_from_list = ["id", "created_at", "updated_at", "payload"]
+    exclude_fields_from_list = ["id", "created_at", "updated_at", "payload", "comment"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "link"]
     exclude_fields_from_edit = ["id", "created_at", "updated_at", "link"]
     exclude_fields_from_detail = []
