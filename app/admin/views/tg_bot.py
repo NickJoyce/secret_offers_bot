@@ -299,8 +299,8 @@ class DeepLinkView(ModelView):
         StringField("link", label="Ссылка"),
     ]
     exclude_fields_from_list = ["id", "created_at", "updated_at", "payload"]
-    exclude_fields_from_create = ["id", "created_at", "updated_at"]
-    exclude_fields_from_edit = ["id", "created_at", "updated_at"]
+    exclude_fields_from_create = ["id", "created_at", "updated_at", "link"]
+    exclude_fields_from_edit = ["id", "created_at", "updated_at", "link"]
     exclude_fields_from_detail = []
     # Ограничиваем количество записей на странице
     list_per_page = 50  
