@@ -283,10 +283,3 @@ class DeepLink(Base):
     link: Mapped[str] = mapped_column(String(1000), comment="Ссылка")
     
  
-    async def after_create(self, request, obj):
-       self.link = f"https://t.me/secret_offers_bot?start={obj.id}"
-       await obj.save()
-       
-    async def after_edit(self, request, obj):
-       self.link = f"https://t.me/secret_offers_bot?start={self.id}"
-       await self.save()
