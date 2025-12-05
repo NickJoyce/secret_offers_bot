@@ -1,5 +1,5 @@
 from starlette_admin.contrib.sqla import ModelView
-from starlette_admin.fields import StringField, BooleanField, IntegerField, DateTimeField, DecimalField, HasOne, HasMany, FileField, ImageField, TextAreaField
+from starlette_admin.fields import StringField, BooleanField, IntegerField, DateTimeField, DecimalField, HasOne, HasMany, FileField, ImageField, TextAreaField, JSONField
 from starlette_admin.fields import FloatField, JSONField
 from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, ChannelPost, Promocode, BlackList
 from fastapi import Request
@@ -284,3 +284,25 @@ class BlackListView(ModelView):
     exclude_fields_from_list = ["id", "created_at", "updated_at"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "is_active"]
     exclude_fields_from_edit = ["id", "created_at", "updated_at"]
+    
+class DeepLinkView(ModelView):
+    label = 'Deep Links'
+    name = 'Deep Link'
+    fields = [
+        IntegerField("id", label="id"),
+        DateTimeField("created_at", label="Дата создания"),
+        DateTimeField("updated_at", label="Дата обновления"),
+        StringField("name", label="Имя"),
+        JSONField("payload", label="Payload"),
+        StringField("link", label="Ссылка"),
+    ]
+    exclude_fields_from_list = ["id", "created_at", "updated_at"]
+    exclude_fields_from_create = ["id", "created_at", "updated_at"]
+    exclude_fields_from_edit = ["id", "created_at", "updated_at"]
+    exclude_fields_from_detail = []
+    # Ограничиваем количество записей на странице
+    list_per_page = 50  
+    # Добавляем поиск
+    searchable_fields = ["name", "link"]  
+    # Добавляем сортировку
+    sortable_fields = ["name", "link"] 
