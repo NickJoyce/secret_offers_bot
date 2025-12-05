@@ -281,3 +281,10 @@ class DeepLink(Base):
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     payload: Mapped[JSON] = mapped_column(JSON, comment="Payload")
     link: Mapped[str] = mapped_column(String(1000), comment="Ссылка")
+    
+ 
+    async def after_create(request, obj):
+       obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
+       
+    async def after_edit(request, obj):
+       obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
