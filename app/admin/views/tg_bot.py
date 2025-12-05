@@ -309,7 +309,10 @@ class DeepLinkView(ModelView):
     
     async def after_create(self, request, obj):
        obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
+       
+       return await super().after_create(request, obj)
 
        
     async def after_edit(self, request, obj):
        obj.link = f"https://t.me/secret_offers_bot?start={obj.id}"
+       return await super().after_edit(request, obj)
