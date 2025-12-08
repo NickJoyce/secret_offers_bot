@@ -282,5 +282,21 @@ class DeepLink(Base):
     payload: Mapped[JSON] = mapped_column(JSON, comment="Payload")
     link: Mapped[str] = mapped_column(String(1000), comment="Ссылка", nullable=True, default=None)
     comment: Mapped[str] = mapped_column(String(1000), comment="Комментарий", nullable=True, default=None)
+    deeplink_requests: Mapped[List["DeeplinkRequest"]] = relationship(back_populates="deeplink")
     
+    
+class DeeplinkRequest(Base):
+    __tablename__ = "deeplink_requests"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True),
+                                                 server_default=func.timezone('Europe/Moscow', func.now()),
+                                                 nullable=False,
+                                                 comment='Дата создания')
+
+    deeplink_id: Mapped[int] = mapped_column(ForeignKey(DeepLink.id, ondelete="CASCADE"))
+    deeplink: Mapped["DeepLink"] = relationship(back_populates="deeplink_requests")
+    tg_id: Mapped[int] = mapped_column(BigInteger, comment="ID пользователя в Telegram")
+
+
  

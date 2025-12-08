@@ -75,6 +75,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
         deeplink = await get_deeplink(id_=deeplink_id)
         if deeplink:
             logger.info(f"Deeplink: {deeplink.name} {deeplink.comment} {deeplink.payload} {deeplink.link}")
+            
         
 
     
