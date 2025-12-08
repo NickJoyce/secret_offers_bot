@@ -6,6 +6,7 @@ import requests
 from asyncio import sleep
 from app.database.queries.tg_channels_post import get_last_channel_post
 from app.database.queries.tg_deeplink_requests import create_deeplink_request
+from app.database.conn import SyncSession
 
 
 logger = logging.getLogger(__name__)
