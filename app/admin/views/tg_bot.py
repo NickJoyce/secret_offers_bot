@@ -319,3 +319,22 @@ class DeepLinkView(ModelView):
         return await super().after_create(request, obj)
 
 
+class DeeplinkRequestView(ModelView):
+    label = 'Запросы по диплинкам'
+    name = 'Запрос по диплинку'
+    fields = [
+        IntegerField("id", label="id"),
+        DateTimeField("created_at", label="Дата создания"),
+        IntegerField("deeplink_id", label="ID Deep Link"),
+        IntegerField("tg_id", label="ID пользователя в Telegram"),
+    ]
+    exclude_fields_from_list = ["id"]
+    exclude_fields_from_create = ["id", "created_at", "deeplink_id", "tg_id"]
+    exclude_fields_from_edit = ["id", "created_at", "deeplink_id", "tg_id"]
+    exclude_fields_from_detail = []
+    # Ограничиваем количество записей на странице
+    list_per_page = 50  
+    # Добавляем поиск
+    searchable_fields = ["deeplink_id", "tg_id"]  
+    # Добавляем сортировку
+    sortable_fields = ["deeplink_id", "tg_id"] 
