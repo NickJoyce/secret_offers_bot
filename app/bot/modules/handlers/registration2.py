@@ -24,6 +24,7 @@ from app.bot.modules.utils import escape_markdown_v2
 
 
 
+
 from app.conns.es.accounts import es
 from datetime import datetime, timezone, date, time
 
@@ -61,6 +62,8 @@ class RegistrationStates(StatesGroup):
 async def start_command_handler(msg: Message, state: FSMContext):
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
+    text = msg.text
+    logger.info(f"text: {text}")
     if user:
         if user.is_active:
             await msg.answer(
