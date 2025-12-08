@@ -325,6 +325,7 @@ class DeeplinkRequestView(ModelView):
     fields = [
         IntegerField("id", label="id"),
         DateTimeField("created_at", label="Дата создания"),
+        DateTimeField("received_at", label="Дата получения запроса"),
         IntegerField("deeplink_id", label="ID Deep Link"),
         IntegerField("tg_id", label="ID пользователя в Telegram"),
     ]

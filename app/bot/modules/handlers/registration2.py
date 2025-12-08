@@ -19,6 +19,7 @@ from app.bot.modules.utils import unique_first_letters, CITIES
 from aiogram.utils.markdown import link, hlink
 from app.bot.modules.utils import escape_markdown_v2
 from app.database.queries.tg_deeplinks import get_deeplink
+from app.tasks.monitoring import create_deeplink_request_task
 
 
 
@@ -61,6 +62,7 @@ class RegistrationStates(StatesGroup):
 
 @router.message(CommandStart(), StateFilter(None))
 async def start_command_handler(msg: Message, state: FSMContext):
+    received_at = datetime.now()
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
     
@@ -75,6 +77,8 @@ async def start_command_handler(msg: Message, state: FSMContext):
         deeplink = await get_deeplink(id_=deeplink_id)
         if deeplink:
             logger.info(f"Deeplink: {deeplink.name} {deeplink.comment} {deeplink.payload} {deeplink.link}")
+            # создаем объект DeeplinkRequest в фоновой задаче celery
+            create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
             
         
 
