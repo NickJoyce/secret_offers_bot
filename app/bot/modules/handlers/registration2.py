@@ -18,6 +18,7 @@ from app.tasks.monitoring import is_subscriber
 from app.bot.modules.utils import unique_first_letters, CITIES
 from aiogram.utils.markdown import link, hlink
 from app.bot.modules.utils import escape_markdown_v2
+from app.database.queries.tg_deeplinks import get_deeplink
 
 
 
@@ -62,7 +63,24 @@ class RegistrationStates(StatesGroup):
 async def start_command_handler(msg: Message, state: FSMContext):
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
+    
+    # подтягиваем соответсвуюй диплинк
     text = msg.text
+    try:
+        deeplink_id = msg.text.split(' ')[1]
+    except IndexError:
+        deeplink_id = None
+        
+    if deeplink_id:
+        deeplink = await get_deeplink(id_=deeplink_id)
+        if deeplink:
+            logger.info(f"Deeplink: {deeplink.name} {deeplink.comment} {deeplink.payload} {deeplink.link}")
+        
+
+    
+    
+    
+    
     logger.info(f"text: {text}")
     if user:
         if user.is_active:
