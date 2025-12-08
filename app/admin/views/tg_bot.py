@@ -289,7 +289,7 @@ class BlackListView(ModelView):
     
 class DeepLinkView(ModelView):
     label = 'Шаблоны диплинков'
-    name = 'Шаблон диплинка
+    name = 'Шаблон диплинка'
     fields = [
         IntegerField("id", label="id"),
         DateTimeField("created_at", label="Дата создания"),
