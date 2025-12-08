@@ -67,7 +67,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
     # подтягиваем соответсвуюй диплинк
     text = msg.text
     try:
-        deeplink_id = msg.text.split(' ')[1]
+        deeplink_id = int(msg.text.split(' ')[1])
     except IndexError:
         deeplink_id = None
         
