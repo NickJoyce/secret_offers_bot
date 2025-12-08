@@ -288,8 +288,8 @@ class BlackListView(ModelView):
     exclude_fields_from_edit = ["id", "created_at", "updated_at"]
     
 class DeepLinkView(ModelView):
-    label = 'Deep Links'
-    name = 'Deep Link'
+    label = 'Шаблоны диплинков'
+    name = 'Шаблон диплинка
     fields = [
         IntegerField("id", label="id"),
         DateTimeField("created_at", label="Дата создания"),
