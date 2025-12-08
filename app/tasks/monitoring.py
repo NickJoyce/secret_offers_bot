@@ -29,4 +29,9 @@ def delete_buttons(self):
 
 
 
+@celery_app.task(bind=True,
+                 max_retries=1,
+                 default_retry_delay=5)
+def create_deeplink_request(self):
+    ...
 

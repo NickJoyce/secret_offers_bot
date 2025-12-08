@@ -293,7 +293,7 @@ class DeeplinkRequest(Base):
                                                  server_default=func.timezone('Europe/Moscow', func.now()),
                                                  nullable=False,
                                                  comment='Дата создания')
-
+    received_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), comment='Дата получения запроса')
     deeplink_id: Mapped[int] = mapped_column(ForeignKey(DeepLink.id, ondelete="CASCADE"))
     deeplink: Mapped["DeepLink"] = relationship(back_populates="deeplink_requests")
     tg_id: Mapped[int] = mapped_column(BigInteger, comment="ID пользователя в Telegram")
