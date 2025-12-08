@@ -41,5 +41,5 @@ def create_deeplink_request_task(self, deeplink_id, tg_id, received_at):
             "received_at": received_at
         }
     ]
-    await create_deeplink_request(items=items)
+    create_deeplink_request(items=items)
 
