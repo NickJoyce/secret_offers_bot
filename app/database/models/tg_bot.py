@@ -377,6 +377,8 @@ class DeeplinkRequest(Base):
     tg_id: Mapped[int] = mapped_column(BigInteger, comment="ID пользователя в Telegram")
     
     
+    
+    
 
 
  

@@ -131,6 +131,7 @@ admin.add_view(DeepLinkFlowView(DeepLinkFlow, identity="deep_link_flow"))
 admin.add_view(DeepLinkExtraView(DeepLinkExtra, identity="deep_link_extra"))
 admin.add_view(DeeplinkRequestView(DeeplinkRequest, identity="deeplink_request"))
 
+
 admin.add_view(TgManagerView(TgManager, identity="tg_manager"))
 admin.add_view(TgNewsletterView(Newsletter, identity="tg_newsletter"))
 admin.add_view(GreetingOfferView(GreetingOffer, identity="greeting_offer"))
