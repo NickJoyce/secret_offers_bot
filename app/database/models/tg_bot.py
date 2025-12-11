@@ -274,7 +274,7 @@ class DeepLinkSource(Base):
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="source")
 
-    def __str__(self) -> str:
+    async def __admin_repr__(self, request):
         return self.name
     
 class DeepLinkCampaign(Base):
@@ -288,9 +288,6 @@ class DeepLinkCampaign(Base):
     async def __admin_repr__(self, request):
         return self.name
 
-    def __str__(self) -> str:
-        return self.name
-
 
 class DeepLinkAdvertisement(Base):
     __tablename__ = "deeplink_advertisements"
@@ -300,8 +297,9 @@ class DeepLinkAdvertisement(Base):
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="advertisement")
     
     
-    def __str__(self) -> str:
+    async def __admin_repr__(self, request):
         return self.name
+
 
 class DeepLinkFlow(Base):
     __tablename__ = "deeplink_flows"
@@ -310,9 +308,10 @@ class DeepLinkFlow(Base):
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="flow")
 
-    def __str__(self) -> str:
+    async def __admin_repr__(self, request):
         return self.name
-
+    
+    
 class DeepLinkExtra(Base):
     __tablename__ = "deeplink_extras"
     
@@ -320,7 +319,7 @@ class DeepLinkExtra(Base):
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="extra")
 
-    def __str__(self) -> str:
+    async def __admin_str__(self, request):
         return self.name
 
 
