@@ -71,7 +71,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
     try:
         deeplink_id = int(msg.text.split(' ')[1])
     except IndexError:
-        DEEPLINK_WITHOUT_PARAMS_ID = 9
+        DEEPLINK_WITHOUT_PARAMS_ID = 16
         # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) в фоновой задаче celery
         create_deeplink_request_task.delay(received_at=received_at, deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id)
         deeplink_id = None
