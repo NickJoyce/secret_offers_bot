@@ -339,3 +339,20 @@ class DeeplinkRequestView(ModelView):
     searchable_fields = ["deeplink_id", "tg_id"]  
     # Добавляем сортировку
     sortable_fields = ["deeplink_id", "tg_id"] 
+    
+    
+class DeepLinkSourceView(ModelView):
+    label = '• Источники'
+    name = 'Источник диплинка'
+    fields = [
+        StringField("name", label="Имя"),
+    ]
+    exclude_fields_from_list = ["id"]
+    exclude_fields_from_create = ["id"]
+    exclude_fields_from_edit = ["id"]
+    
+    list_per_page = 50  
+    # Добавляем поиск
+    searchable_fields = ["name"]  
+    # Добавляем сортировку
+    sortable_fields = ["name"] 

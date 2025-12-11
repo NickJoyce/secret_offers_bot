@@ -17,7 +17,9 @@ from starlette.middleware import Middleware
 from app.database.models.test import Test
 from app.admin.views.test_views import TestView
 from app.database.models.tg_bot import TgClient, TgManager, Newsletter, Assignment, GreetingOffer, TalkMeMessageFromClient, ChannelPost, Promocode, BlackList, DeepLink, DeeplinkRequest
+from app.database.models.tg_bot import DeepLinkSource, DeepLinkCampaign, DeepLinkAdvertisement, DeepLinkFlow, DeepLinkExtra
 from app.admin.views.tg_bot import TgClientView, TgManagerView, TgNewsletterView, AssignmentView, MyCustomView, GreetingOfferView, TalkMeMessageFromClientView, ChannelPostView, PromocodeView, BlackListView, DeepLinkView, DeeplinkRequestView
+from app.admin.views.tg_bot import DeepLinkSourceView
 from app.admin.auth import auth_router
 from app.bot.main import bot, dp, start_bot, stop_bot
 from contextlib import asynccontextmanager
@@ -122,6 +124,8 @@ admin.add_view(PromocodeView(Promocode, identity="promocode"))
 admin.add_view(TgClientView(TgClient, identity="tg_client"))
 admin.add_view(BlackListView(BlackList, identity="black_list"))
 admin.add_view(DeepLinkView(DeepLink, identity="deep_link"))
+admin.add_view(DeepLinkSourceView(DeepLinkSource, identity="deep_link_source"))
+
 admin.add_view(DeeplinkRequestView(DeeplinkRequest, identity="deeplink_request"))
 
 admin.add_view(TgManagerView(TgManager, identity="tg_manager"))
