@@ -283,6 +283,10 @@ class DeepLinkCampaign(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="campaign")
+    
+    
+    async def __admin_repr__(self, request):
+        return self.name
 
     def __str__(self) -> str:
         return self.name
