@@ -342,7 +342,7 @@ class DeeplinkRequestView(ModelView):
     
     
 class DeepLinkSourceView(ModelView):
-    label = '• Sources'
+    label = '•• Sources'
     name = 'Source'
     fields = [
         StringField("name", label="Имя"),
@@ -359,7 +359,7 @@ class DeepLinkSourceView(ModelView):
     
     
 class DeepLinkCampaignView(ModelView):
-    label = '• Campaigns'
+    label = '•• Campaigns'
     name = 'Campaign'
     fields = [
         StringField("name", label="Имя"),
@@ -376,7 +376,7 @@ class DeepLinkCampaignView(ModelView):
     
     
 class DeepLinkAdvertisementView(ModelView):
-    label = '• Advertisements'
+    label = '•• Advertisements'
     name = 'Advertisement'    
     fields = [
         StringField("name", label="Имя"),
@@ -393,7 +393,7 @@ class DeepLinkAdvertisementView(ModelView):
     
     
 class DeepLinkFlowView(ModelView):
-    label = '• Flows'
+    label = '•• Flows'
     name = 'Flow'
     fields = [
         StringField("name", label="Имя"),
@@ -410,7 +410,7 @@ class DeepLinkFlowView(ModelView):
     
     
 class DeepLinkExtraView(ModelView):
-    label = '• Extras'
+    label = '•• Extras'
     name = 'Extra'
     fields = [
         StringField("name", label="Имя"),
