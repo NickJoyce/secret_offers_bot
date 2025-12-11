@@ -319,7 +319,7 @@ class DeepLinkExtra(Base):
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="extra")
 
-    async def __admin_str__(self, request):
+    async def __admin_repr__(self, request):
         return self.name
 
 
