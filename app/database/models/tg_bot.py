@@ -358,6 +358,9 @@ class DeepLink(Base):
     comment: Mapped[str] = mapped_column(String(1000), comment="Комментарий", nullable=True, default=None)
     deeplink_requests: Mapped[List["DeeplinkRequest"]] = relationship(back_populates="deeplink")
     
+    async def __admin_repr__(self, request):
+        return self.name
+    
     
     
 class DeeplinkRequest(Base):
@@ -372,6 +375,8 @@ class DeeplinkRequest(Base):
     deeplink_id: Mapped[int] = mapped_column(ForeignKey(DeepLink.id, ondelete="CASCADE"))
     deeplink: Mapped["DeepLink"] = relationship(back_populates="deeplink_requests")
     tg_id: Mapped[int] = mapped_column(BigInteger, comment="ID пользователя в Telegram")
+    
+    
 
 
  
