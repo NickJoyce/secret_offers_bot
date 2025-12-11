@@ -83,7 +83,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
             create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
             
 
-    logger.info(f"text: {text}")
+
     if user:
         if user.is_active:
             await msg.answer(
