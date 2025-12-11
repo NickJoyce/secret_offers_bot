@@ -296,7 +296,6 @@ class DeepLinkView(ModelView):
         DateTimeField("updated_at", label="Дата обновления"),
         StringField("name", label="Имя"),
         TextAreaField("comment", label="Описание"),
-        JSONField("payload", label="JSON data"),
         StringField("link", label="Ссылка"),
         HasOne("source", label="Source", identity='deep_link_source'),
         HasOne("campaign", label="Campaign", identity='deep_link_campaign'),
@@ -304,7 +303,7 @@ class DeepLinkView(ModelView):
         HasOne("flow", label="Flow", identity='deep_link_flow'),
         HasOne("extra", label="Extra", identity='deep_link_extra')
     ]
-    exclude_fields_from_list = ["id", "created_at", "updated_at", "payload", "comment"]
+    exclude_fields_from_list = ["id", "created_at", "updated_at", "comment"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "link"]
     exclude_fields_from_edit = ["id", "created_at", "updated_at", "link"]
     exclude_fields_from_detail = []

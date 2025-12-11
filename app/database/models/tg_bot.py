@@ -319,7 +319,7 @@ class DeepLink(Base):
                                                  nullable=False,
                                                  comment='Дата обновления')
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
-    payload: Mapped[JSON] = mapped_column(JSON, comment="Payload")
+    # payload: Mapped[JSON] = mapped_column(JSON, comment="Payload")
     
     source_id: Mapped[int] = mapped_column(ForeignKey(DeepLinkSource.id, ondelete="CASCADE"))
     source: Mapped["DeepLinkSource"] = relationship(back_populates="deep_links")
