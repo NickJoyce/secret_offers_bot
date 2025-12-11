@@ -342,8 +342,8 @@ class DeeplinkRequestView(ModelView):
     
     
 class DeepLinkSourceView(ModelView):
-    label = '• Источники'
-    name = 'Источник диплинка'
+    label = '• Sources'
+    name = 'Source'
     fields = [
         StringField("name", label="Имя"),
     ]
@@ -359,8 +359,8 @@ class DeepLinkSourceView(ModelView):
     
     
 class DeepLinkCampaignView(ModelView):
-    label = '• Кампании'
-    name = 'Кампания диплинка'
+    label = '• Campaigns'
+    name = 'Campaign'
     fields = [
         StringField("name", label="Имя"),
     ]
@@ -376,8 +376,8 @@ class DeepLinkCampaignView(ModelView):
     
     
 class DeepLinkAdvertisementView(ModelView):
-    label = '• Рекламные кампании'
-    name = 'Рекламная кампания диплинка'    
+    label = '• Advertisements'
+    name = 'Advertisement'    
     fields = [
         StringField("name", label="Имя"),
     ]
@@ -393,8 +393,8 @@ class DeepLinkAdvertisementView(ModelView):
     
     
 class DeepLinkFlowView(ModelView):
-    label = '• Потоки'
-    name = 'Поток диплинка'
+    label = '• Flows'
+    name = 'Flow'
     fields = [
         StringField("name", label="Имя"),
     ]
@@ -410,8 +410,8 @@ class DeepLinkFlowView(ModelView):
     
     
 class DeepLinkExtraView(ModelView):
-    label = '• Дополнительные'
-    name = 'Дополнительный диплинк'
+    label = '• Extras'
+    name = 'Extra'
     fields = [
         StringField("name", label="Имя"),
     ]   
