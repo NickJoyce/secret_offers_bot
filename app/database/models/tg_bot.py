@@ -273,6 +273,9 @@ class DeepLinkSource(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="source")
+
+    def __str__(self) -> str:
+        return self.name
     
 class DeepLinkCampaign(Base):
     __tablename__ = "deeplink_campaigns"
@@ -280,6 +283,9 @@ class DeepLinkCampaign(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="campaign")
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class DeepLinkAdvertisement(Base):
@@ -290,6 +296,9 @@ class DeepLinkAdvertisement(Base):
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="advertisement")
     
     
+    def __str__(self) -> str:
+        return self.name
+
 class DeepLinkFlow(Base):
     __tablename__ = "deeplink_flows"
     
@@ -297,12 +306,18 @@ class DeepLinkFlow(Base):
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="flow")
 
+    def __str__(self) -> str:
+        return self.name
+
 class DeepLinkExtra(Base):
     __tablename__ = "deeplink_extras"
     
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="extra")
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class DeepLink(Base):
