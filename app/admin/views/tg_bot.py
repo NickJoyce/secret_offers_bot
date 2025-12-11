@@ -333,7 +333,7 @@ class DeeplinkRequestView(ModelView):
         HasOne("deeplink", label="Deep Link", identity='deep_link'),
         IntegerField("tg_id", label="ID пользователя в Telegram"),
     ]
-    exclude_fields_from_list = ["id", "deeplink"]
+    exclude_fields_from_list = ["id"]
     exclude_fields_from_create = ["id", "created_at", "deeplink_id", "tg_id"]
     exclude_fields_from_edit = ["id", "created_at", "deeplink_id", "tg_id"]
     exclude_fields_from_detail = []
