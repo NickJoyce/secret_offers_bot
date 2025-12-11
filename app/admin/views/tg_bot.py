@@ -297,12 +297,11 @@ class DeepLinkView(ModelView):
         StringField("name", label="Имя"),
         TextAreaField("comment", label="Описание"),
         StringField("link", label="Ссылка"),
-        # Показываем имя связанных объектов, а не их id
-        HasOne("source", label="Source", identity="name"),
-        HasOne("campaign", label="Campaign", identity="name"),
-        HasOne("advertisement", label="Advertisement", identity="name"),
-        HasOne("flow", label="Flow", identity="name"),
-        HasOne("extra", label="Extra", identity="name")
+        HasOne("source", label="Source", identity='deep_link_source'),
+        HasOne("campaign", label="Campaign", identity='deep_link_campaign'),
+        HasOne("advertisement", label="Advertisement", identity='deep_link_advertisement'),
+        HasOne("flow", label="Flow", identity='deep_link_flow'),
+        HasOne("extra", label="Extra", identity='deep_link_extra')
     ]
     exclude_fields_from_list = ["id", "created_at", "updated_at", "comment"]
     exclude_fields_from_create = ["id", "created_at", "updated_at", "link"]
