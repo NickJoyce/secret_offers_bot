@@ -265,6 +265,46 @@ class BlackList(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, comment="Добавлен в черный список?")
 
 
+
+
+class DeepLinkSource(Base):
+    __tablename__ = "deeplink_sources"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), comment="Имя")
+    deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="source")
+    
+class DeepLinkCampaign(Base):
+    __tablename__ = "deeplink_campaigns"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), comment="Имя")
+    deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="campaign")
+
+
+class DeepLinkAdvertisement(Base):
+    __tablename__ = "deeplink_advertisements"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), comment="Имя")
+    deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="advertisement")
+    
+    
+class DeepLinkFlow(Base):
+    __tablename__ = "deeplink_flows"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), comment="Имя")
+    deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="flow")
+
+class DeepLinkExtra(Base):
+    __tablename__ = "deeplink_extras"
+    
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255), comment="Имя")
+    deep_links: Mapped[List["DeepLink"]] = relationship(back_populates="extra")
+
+
 class DeepLink(Base):
     __tablename__ = "deep_links"
 
@@ -280,9 +320,26 @@ class DeepLink(Base):
                                                  comment='Дата обновления')
     name: Mapped[str] = mapped_column(String(255), comment="Имя")
     payload: Mapped[JSON] = mapped_column(JSON, comment="Payload")
+    
+    source_id: Mapped[int] = mapped_column(ForeignKey(DeepLinkSource.id, ondelete="CASCADE"))
+    source: Mapped["DeepLinkSource"] = relationship(back_populates="deep_links")
+    
+    campaign_id: Mapped[int] = mapped_column(ForeignKey(DeepLinkCampaign.id, ondelete="CASCADE"))
+    campaign: Mapped["DeepLinkCampaign"] = relationship(back_populates="deep_links")
+    
+    advertisement_id: Mapped[int] = mapped_column(ForeignKey(DeepLinkAdvertisement.id, ondelete="CASCADE"))
+    advertisement: Mapped["DeepLinkAdvertisement"] = relationship(back_populates="deep_links")
+    
+    flow_id: Mapped[int] = mapped_column(ForeignKey(DeepLinkFlow.id, ondelete="CASCADE"))
+    flow: Mapped["DeepLinkFlow"] = relationship(back_populates="deep_links")
+    
+    extra_id: Mapped[int] = mapped_column(ForeignKey(DeepLinkExtra.id, ondelete="CASCADE"))
+    extra: Mapped["DeepLinkExtra"] = relationship(back_populates="deep_links")
+    
     link: Mapped[str] = mapped_column(String(1000), comment="Ссылка", nullable=True, default=None)
     comment: Mapped[str] = mapped_column(String(1000), comment="Комментарий", nullable=True, default=None)
     deeplink_requests: Mapped[List["DeeplinkRequest"]] = relationship(back_populates="deeplink")
+    
     
     
 class DeeplinkRequest(Base):

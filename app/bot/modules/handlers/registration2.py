@@ -66,29 +66,23 @@ async def start_command_handler(msg: Message, state: FSMContext):
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
     
+    
     # подтягиваем соответсвуюй диплинк
-    text = msg.text
     try:
         deeplink_id = int(msg.text.split(' ')[1])
     except IndexError:
         DEEPLINK_WITHOUT_PARAMS_ID = 9
-        # создаем объект DeeplinkRequest без параметров (должен быть в базе с эти id) в фоновой задаче celery
+        # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) в фоновой задаче celery
         create_deeplink_request_task.delay(received_at=received_at, deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id)
         deeplink_id = None
         
     if deeplink_id:
         deeplink = await get_deeplink(id_=deeplink_id)
         if deeplink:
-            logger.info(f"Deeplink: {deeplink.name} {deeplink.comment} {deeplink.payload} {deeplink.link}")
             # создаем объект DeeplinkRequest в фоновой задаче celery
             create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
             
-        
 
-    
-    
-    
-    
     logger.info(f"text: {text}")
     if user:
         if user.is_active:
