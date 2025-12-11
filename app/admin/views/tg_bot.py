@@ -356,3 +356,71 @@ class DeepLinkSourceView(ModelView):
     searchable_fields = ["name"]  
     # Добавляем сортировку
     sortable_fields = ["name"] 
+    
+    
+class DeepLinkCampaignView(ModelView):
+    label = '• Кампании'
+    name = 'Кампания диплинка'
+    fields = [
+        StringField("name", label="Имя"),
+    ]
+    exclude_fields_from_list = ["id"]
+    exclude_fields_from_create = ["id"]
+    exclude_fields_from_edit = ["id"]
+    
+    list_per_page = 50  
+    # Добавляем поиск
+    searchable_fields = ["name"]  
+    # Добавляем сортировку
+    sortable_fields = ["name"] 
+    
+    
+class DeepLinkAdvertisementView(ModelView):
+    label = '• Рекламные кампании'
+    name = 'Рекламная кампания диплинка'    
+    fields = [
+        StringField("name", label="Имя"),
+    ]
+    exclude_fields_from_list = ["id"]
+    exclude_fields_from_create = ["id"]
+    exclude_fields_from_edit = ["id"]
+    
+    list_per_page = 50  
+    # Добавляем поиск
+    searchable_fields = ["name"]  
+    # Добавляем сортировку
+    sortable_fields = ["name"] 
+    
+    
+class DeepLinkFlowView(ModelView):
+    label = '• Потоки'
+    name = 'Поток диплинка'
+    fields = [
+        StringField("name", label="Имя"),
+    ]
+    exclude_fields_from_list = ["id"]
+    exclude_fields_from_create = ["id"]
+    exclude_fields_from_edit = ["id"]
+    
+    list_per_page = 50  
+    # Добавляем поиск
+    searchable_fields = ["name"]  
+    # Добавляем сортировку
+    sortable_fields = ["name"] 
+    
+    
+class DeepLinkExtraView(ModelView):
+    label = '• Дополнительные'
+    name = 'Дополнительный диплинк'
+    fields = [
+        StringField("name", label="Имя"),
+    ]   
+    exclude_fields_from_list = ["id"]
+    exclude_fields_from_create = ["id"]
+    exclude_fields_from_edit = ["id"]
+    
+    list_per_page = 50  
+    # Добавляем поиск
+    searchable_fields = ["name"]  
+    # Добавляем сортировку
+    sortable_fields = ["name"] 
