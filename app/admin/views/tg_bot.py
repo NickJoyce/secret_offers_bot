@@ -334,7 +334,7 @@ class DeeplinkRequestView(ModelView):
         IntegerField("tg_id", label="ID пользователя в Telegram"),
         JSONField("registration_steps", label="Шаги регистрации"),
     ]
-    exclude_fields_from_list = ["id", "registration_steps"]
+    exclude_fields_from_list = ["registration_steps"]
     exclude_fields_from_create = ["id", "created_at", "deeplink_id", "tg_id", "registration_steps"]
     exclude_fields_from_edit = ["id", "created_at", "deeplink_id", "tg_id", "registration_steps"]
     exclude_fields_from_detail = []
