@@ -4,15 +4,9 @@ from app.database.models.tg_bot import DeeplinkRequest
 from sqlalchemy import select, update, delete, insert
 
 
-def create_deeplink_request(item: dict) -> None:
+def create_deeplink_request(items: list[dict]):
     with SyncSession.begin() as session:
-        session.execute(insert(DeeplinkRequest), item)
-
-
-async def acreate_deeplink_request(item: dict) -> None:
-    async with AsyncSessionLocal() as session:
-        await session.execute(insert(DeeplinkRequest), item)
-        await session.commit()
+        session.execute(insert(DeeplinkRequest), items)
 
         
         
