@@ -335,8 +335,8 @@ class DeeplinkRequestView(ModelView):
         JSONField("registration_steps", label="Шаги регистрации"),
     ]
     exclude_fields_from_list = ["id", "registration_steps"]
-    exclude_fields_from_create = ["id", "created_at", "deeplink_id", "tg_id"]
-    exclude_fields_from_edit = ["id", "created_at", "deeplink_id", "tg_id"]
+    exclude_fields_from_create = ["id", "created_at", "deeplink_id", "tg_id", "registration_steps"]
+    exclude_fields_from_edit = ["id", "created_at", "deeplink_id", "tg_id", "registration_steps"]
     exclude_fields_from_detail = []
     # Ограничиваем количество записей на странице
     list_per_page = 50  
