@@ -380,7 +380,7 @@ class DeeplinkRequest(Base):
     tg_id: Mapped[int] = mapped_column(BigInteger, comment="ID пользователя в Telegram")
     
     # шаги регистрации: list[str], str - код шага
-    # registration_steps: Mapped[JSON] = mapped_column(JSON, comment="Шаги регистрации", nullable=True, default=None)
+    registration_steps: Mapped[JSON] = mapped_column(JSON, comment="Шаги регистрации", nullable=True, default=None)
     
     
     
