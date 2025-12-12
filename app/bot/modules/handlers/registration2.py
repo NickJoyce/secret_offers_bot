@@ -66,6 +66,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
     
     
     received_at = datetime.now()
+    deeplink_request = None
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
     
@@ -78,7 +79,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
         # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) БЕЗ celery, в синхронном режиме
         # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id)
         logger.info(f"create_deeplink_request data: {DEEPLINK_WITHOUT_PARAMS_ID}, {msg.from_user.id}, {received_at}")
-        await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
+        deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
         deeplink_id = None
         
     if deeplink_id:
@@ -86,9 +87,9 @@ async def start_command_handler(msg: Message, state: FSMContext):
         if deeplink:
             # создаем объект DeeplinkRequest в фоновой задаче celery
             # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
-            await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
+            deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
             
-
+    logger.info(f"deeplink_request {deeplink_request}")
 
     if user:
         if user.is_active:
