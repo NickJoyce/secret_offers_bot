@@ -77,7 +77,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
         DEEPLINK_WITHOUT_PARAMS_ID = 16
         # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) БЕЗ celery, в синхронном режиме
         # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id)
-        create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
+        await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
         deeplink_id = None
         
     if deeplink_id:
@@ -85,7 +85,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
         if deeplink:
             # создаем объект DeeplinkRequest в фоновой задаче celery
             # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
-            create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
+            await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
             
 
 

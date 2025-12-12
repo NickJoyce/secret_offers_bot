@@ -1,7 +1,7 @@
 import logging.config
 from datetime import datetime, timezone, date
 from enum import Enum
-from app.database.queries.tg_deeplink_requests import create_deeplink_request as create_deeplink_request_query
+from app.database.queries.tg_deeplink_requests import acreate_deeplink_request
 
 
 
@@ -39,7 +39,7 @@ class RegistrationSteps(Enum):
     LINK_SENT = 'LINK_SENT', 'Ссылка отправлена'
 
 
-def create_deeplink_request(deeplink_id, tg_id, received_at):
+async def create_deeplink_request(deeplink_id, tg_id, received_at):
     items = [
         {
             "deeplink_id": deeplink_id,
@@ -48,7 +48,7 @@ def create_deeplink_request(deeplink_id, tg_id, received_at):
             "registration_steps": [RegistrationSteps.START_COMMAND.value]
         }
     ]
-    create_deeplink_request_query(items=items)   
+    acreate_deeplink_request(items=items)   
 
     
 
