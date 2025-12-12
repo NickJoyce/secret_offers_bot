@@ -10,6 +10,8 @@ from sqlalchemy import select, update, delete, insert
 async def acreate_deeplink_request(items: list[dict]) -> None:
     async with AsyncSessionLocal() as session:
         await session.execute(insert(DeeplinkRequest), items)
+        await session.commit()
+
 
 
 
