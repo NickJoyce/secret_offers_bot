@@ -358,6 +358,9 @@ class DeepLink(Base):
     comment: Mapped[str] = mapped_column(String(1000), comment="Комментарий", nullable=True, default=None)
     deeplink_requests: Mapped[List["DeeplinkRequest"]] = relationship(back_populates="deeplink")
     
+    # шаги регистрации: list[str], str - код шага
+    registration_steps: Mapped[JSON] = mapped_column(JSON, comment="Шаги регистрации", nullable=True, default=None)
+    
     async def __admin_repr__(self, request):
         return self.name
     
