@@ -7,11 +7,14 @@ from sqlalchemy import select, update, delete, insert
 
 
 
-async def acreate_deeplink_request(item: dict) -> None:
+async def acreate_deeplink_request(item: dict) -> DeeplinkRequest:
     async with AsyncSessionLocal() as session:
         stmt = insert(DeeplinkRequest).values(**item).returning(DeeplinkRequest)
         deeplink_request = await session.scalar(stmt)
         await session.commit()
+        await session.refresh(deeplink_request) 
+        
+
         return deeplink_request
         
         
