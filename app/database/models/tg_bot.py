@@ -359,7 +359,7 @@ class DeepLink(Base):
     deeplink_requests: Mapped[List["DeeplinkRequest"]] = relationship(back_populates="deeplink")
     
     # шаги регистрации: list[str], str - код шага
-    registration_steps: Mapped[JSON] = mapped_column(JSON, comment="Шаги регистрации", nullable=True, default=None)
+    # registration_steps: Mapped[JSON] = mapped_column(JSON, comment="Шаги регистрации", nullable=True, default=None)
     
     async def __admin_repr__(self, request):
         return self.name
@@ -378,6 +378,9 @@ class DeeplinkRequest(Base):
     deeplink_id: Mapped[int] = mapped_column(ForeignKey(DeepLink.id, ondelete="CASCADE"))
     deeplink: Mapped["DeepLink"] = relationship(back_populates="deeplink_requests")
     tg_id: Mapped[int] = mapped_column(BigInteger, comment="ID пользователя в Telegram")
+    
+    # шаги регистрации: list[str], str - код шага
+    # registration_steps: Mapped[JSON] = mapped_column(JSON, comment="Шаги регистрации", nullable=True, default=None)
     
     
     
