@@ -13,8 +13,6 @@ async def acreate_deeplink_request(items: list[dict]) -> None:
         await session.commit()
 
 
-
-
 def create_deeplink_request(items: list[dict]):
     with SyncSession.begin() as session:
         session.execute(insert(DeeplinkRequest), items)
