@@ -20,6 +20,7 @@ from aiogram.utils.markdown import link, hlink
 from app.bot.modules.utils import escape_markdown_v2
 from app.database.queries.tg_deeplinks import get_deeplink
 from app.tasks.monitoring import create_deeplink_request_task
+from app.bot.modules.utils import create_deeplink_request
 
 
 
@@ -62,6 +63,8 @@ class RegistrationStates(StatesGroup):
 
 @router.message(CommandStart(), StateFilter(None))
 async def start_command_handler(msg: Message, state: FSMContext):
+    
+    
     received_at = datetime.now()
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
@@ -72,15 +75,17 @@ async def start_command_handler(msg: Message, state: FSMContext):
         deeplink_id = int(msg.text.split(' ')[1])
     except IndexError:
         DEEPLINK_WITHOUT_PARAMS_ID = 16
-        # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) в фоновой задаче celery
-        create_deeplink_request_task.delay(received_at=received_at, deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id)
+        # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) БЕЗ celery, в синхронном режиме
+        # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id)
+        create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
         deeplink_id = None
         
     if deeplink_id:
         deeplink = await get_deeplink(id_=deeplink_id)
         if deeplink:
             # создаем объект DeeplinkRequest в фоновой задаче celery
-            create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
+            # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
+            create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
             
 
 
