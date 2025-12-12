@@ -49,6 +49,7 @@ async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_
             "registration_steps": registration_steps
         }
     ]
+    logger.info(f"create_deeplink_request: {items}")
     acreate_deeplink_request(items=items)   
 
     
