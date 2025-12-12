@@ -35,12 +35,10 @@ def delete_buttons(self):
                  max_retries=1,
                  default_retry_delay=5)
 def create_deeplink_request_task(self, deeplink_id, tg_id, received_at):
-    items = [
-        {
-            "deeplink_id": deeplink_id,
-            "tg_id": tg_id,
-            "received_at": received_at
-        }
-    ]
-    create_deeplink_request(items=items)
+    item = {
+        "deeplink_id": deeplink_id,
+        "tg_id": tg_id,
+        "received_at": received_at
+    }
+    create_deeplink_request(item=item)
 
