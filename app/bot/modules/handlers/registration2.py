@@ -89,7 +89,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
             # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
             deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
             
-    logger.info(f"deeplink_request {deeplink_request}")
+    logger.info(f"deeplink_request {deeplink_request.id}")
 
     if user:
         if user.is_active:

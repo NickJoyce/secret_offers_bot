@@ -47,7 +47,6 @@ async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_
             "received_at": received_at,
             "registration_steps": registration_steps
             }
-    
     return await acreate_deeplink_request(item=item)   
 
     
