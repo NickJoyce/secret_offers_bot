@@ -9,19 +9,26 @@ from sqlalchemy import select, update, delete, insert
 
 async def acreate_deeplink_request(item: dict) -> None:
     async with AsyncSessionLocal() as session:
-        # 1. Создаем экземпляр модели из словаря
-        new_request = DeeplinkRequest(**item)
-        
-        # 2. Добавляем в сессию
-        session.add(new_request)
-        
-        # 3. Фиксируем изменения в БД
+        stmt = insert(DeeplinkRequest).values(**item).returning(DeeplinkRequest)
+        deeplink_request = await session.scalar(stmt)
         await session.commit()
+        return deeplink_request
         
-        # 4. Обновляем объект, чтобы подтянуть ID и другие поля, созданные БД
-        await session.refresh(new_request)
         
-        return new_request
+        
+        # # 1. Создаем экземпляр модели из словаря
+        # new_request = DeeplinkRequest(**item)
+        
+        # # 2. Добавляем в сессию
+        # session.add(new_request)
+        
+        # # 3. Фиксируем изменения в БД
+        # await session.commit()
+        
+        # # 4. Обновляем объект, чтобы подтянуть ID и другие поля, созданные БД
+        # await session.refresh(new_request)
+        
+        # return new_request
 
 
 def create_deeplink_request(items: list[dict]):
