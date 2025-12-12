@@ -41,6 +41,7 @@ class RegistrationSteps(Enum):
 
 
 async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_steps: list[str] = json.dumps([RegistrationSteps.START_COMMAND.value])):
+    logger.info(f"create_deeplink_request func START")
     items = [
         {
             "deeplink_id": deeplink_id,
@@ -50,7 +51,7 @@ async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_
         }
     ]
     logger.info(f"create_deeplink_request: {items}")
-    acreate_deeplink_request(items=items)   
+    await acreate_deeplink_request(items=items)   
 
     
 
