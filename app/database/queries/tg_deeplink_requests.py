@@ -12,9 +12,6 @@ async def acreate_deeplink_request(item: dict) -> DeeplinkRequest:
         stmt = insert(DeeplinkRequest).values(**item).returning(DeeplinkRequest)
         deeplink_request = await session.scalar(stmt)
         await session.commit()
-        await session.refresh(deeplink_request) 
-        
-
         return deeplink_request
         
         
