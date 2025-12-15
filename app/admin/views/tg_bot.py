@@ -333,7 +333,7 @@ class DeeplinkRequestView(ModelView):
         HasOne("deeplink", label="Deep Link", identity='deep_link'),
         IntegerField("tg_id", label="ID пользователя в Telegram"),
         JSONField("registration_steps", label="Шаги регистрации"),
-        BooleanField("is_registered", label="Зарегистрирован?"),
+        BooleanField("is_registred", label="Зарегистрирован?"),
         
     ]
     exclude_fields_from_list = ["registration_steps"]
