@@ -75,7 +75,8 @@ async def start_command_handler(msg: Message, state: FSMContext):
     user = await get_client(tg_id=msg.from_user.id)
     
     # Сохраняем is_registred в контекст FSM
-    await state.update_data(is_registred=True if user else False)
+    is_registred = True if user else False
+    await state.update_data(is_registred=is_registred)
     
     
     # подтягиваем соответсвуюй диплинк и записываем deeplink_request
@@ -91,7 +92,8 @@ async def start_command_handler(msg: Message, state: FSMContext):
         deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID,
                                                          tg_id=msg.from_user.id, 
                                                          received_at=received_at,
-                                                         registration_steps=registration_steps)
+                                                         registration_steps=registration_steps,
+                                                         is_registred=is_registred)
         deeplink_id = None
         
     if deeplink_id:
@@ -102,7 +104,8 @@ async def start_command_handler(msg: Message, state: FSMContext):
             deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, 
                                                              tg_id=msg.from_user.id, 
                                                              received_at=received_at,
-                                                             registration_steps=registration_steps)
+                                                             registration_steps=registration_steps,
+                                                             is_registred=is_registred)
     
     # Сохраняем deeplink_request_id в контекст FSM
     await state.update_data(deeplink_request_id=deeplink_request.id if deeplink_request else None)

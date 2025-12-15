@@ -40,12 +40,13 @@ class RegistrationSteps(Enum):
     LINK_SENT = 'LINK_SENT', 'Ссылка отправлена'
 
 
-async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_steps: dict):
+async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_steps: dict, is_registred: bool):
     item = {
             "deeplink_id": deeplink_id,
             "tg_id": tg_id,
             "received_at": received_at,
-            "registration_steps": registration_steps
+            "registration_steps": registration_steps,
+            "is_registred": is_registred
             }
     return await acreate_deeplink_request(item=item)   
 
