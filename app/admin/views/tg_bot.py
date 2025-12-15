@@ -333,7 +333,7 @@ class DeeplinkRequestView(ModelView):
         HasOne("deeplink", label="Deep Link", identity='deep_link'),
         IntegerField("tg_id", label="ID пользователя в Telegram"),
         JSONField("registration_steps", label="Шаги регистрации"),
-        BooleanField("is_registered", label="Флаг удаления кнопок"),
+        BooleanField("is_registered", label="Зарегистрирован?"),
         
     ]
     exclude_fields_from_list = ["registration_steps"]
@@ -343,7 +343,7 @@ class DeeplinkRequestView(ModelView):
     # Ограничиваем количество записей на странице
     list_per_page = 50  
     # Добавляем поиск
-    searchable_fields = ["tg_id"]  
+    searchable_fields = ["tg_id", "is_registered"]  
     # Добавляем сортировку
     sortable_fields = ["tg_id"] 
     
