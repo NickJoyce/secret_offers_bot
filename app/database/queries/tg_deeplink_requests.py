@@ -13,6 +13,15 @@ async def acreate_deeplink_request(item: dict) -> DeeplinkRequest:
         deeplink_request = await session.scalar(stmt)
         await session.commit()
         return deeplink_request
+    
+async def add_step_to_deeplink_request(id_: int, step: str):
+    async with AsyncSessionLocal() as session:
+        deeplink_request = await session.get(DeeplinkRequest, id_)
+        if deeplink_request:
+            deeplink_request.registration_steps["data"].append(step)
+
+        
+    
         
         
         

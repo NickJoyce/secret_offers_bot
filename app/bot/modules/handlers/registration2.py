@@ -22,6 +22,7 @@ from app.database.queries.tg_deeplinks import get_deeplink
 from app.tasks.monitoring import create_deeplink_request_task
 from app.bot.modules.utils import create_deeplink_request, RegistrationSteps
 import json
+from app.database.queries.tg_deeplink_requests import add_step_to_deeplink_request
 
 
 
@@ -161,13 +162,29 @@ async def process_name(message: types.Message, state: FSMContext):
     user_name = message.text
     # Сохраняем имя в контекст FSM
     await state.update_data(reg_name=user_name)
+    
+    # добавим статус к диплинку
+    # Получаем все собранные данные
+    user_data = await state.get_data()
+    
+    if  user_data.get('deeplink_request_id'):
+        # Запишем статус NAME_INPUT_RECEIVED
+        await add_step_to_deeplink_request(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.NAME_INPUT.value)
+
     # Переходим к следующему состоянию
     await state.set_state(RegistrationStates.reg_phone)
+    
+
+        
+    
+    
     
     await message.answer(
         f"Отлично, {user_name}! Теперь, пожалуйста, поделись своим номером телефона, нажав на кнопку ниже 👇",
         reply_markup=request_contact_keyboard
     )
+    
+    
     
 
 @router.message(RegistrationStates.reg_phone)
@@ -213,7 +230,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     city = callback.data.split('_')[2]
     await state.update_data(city=city)
     # await callback.answer(text=f"data {await state.get_data()}", show_alert=False)
-                # Получаем все собранные данные
+    # Получаем все собранные данные
     user_data = await state.get_data()
     user = {
         "timestamp": datetime.now(ZoneInfo("Europe/Moscow")).isoformat(timespec='seconds'),
