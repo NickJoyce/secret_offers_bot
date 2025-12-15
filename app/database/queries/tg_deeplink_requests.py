@@ -2,6 +2,7 @@ from app.database.conn import AsyncSessionLocal
 from app.database.conn import SyncSession
 from app.database.models.tg_bot import DeeplinkRequest
 from sqlalchemy import select, update, delete, insert
+import json
 
 
 
@@ -18,6 +19,7 @@ async def add_step_to_deeplink_request(id_: int, step: str):
     async with AsyncSessionLocal() as session:
         deeplink_request = await session.get(DeeplinkRequest, id_)
         if deeplink_request:
+            registration_steps = deeplink_request.registration_steps["data"]
             deeplink_request.registration_steps["data"].append(step)
 
         

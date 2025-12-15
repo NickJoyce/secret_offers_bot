@@ -168,8 +168,9 @@ async def process_name(message: types.Message, state: FSMContext):
     user_data = await state.get_data()
     
     if  user_data.get('deeplink_request_id'):
+        ...
         # Запишем статус NAME_INPUT_RECEIVED
-        await add_step_to_deeplink_request(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.NAME_INPUT.value)
+        # await add_step_to_deeplink_request(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.NAME_INPUT.value)
 
     # Переходим к следующему состоянию
     await state.set_state(RegistrationStates.reg_phone)
