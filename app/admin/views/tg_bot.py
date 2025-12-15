@@ -343,7 +343,7 @@ class DeeplinkRequestView(ModelView):
     # Ограничиваем количество записей на странице
     list_per_page = 50  
     # Добавляем поиск
-    searchable_fields = ["tg_id", "is_registered"]  
+    searchable_fields = ["tg_id"]  
     # Добавляем сортировку
     sortable_fields = ["tg_id"] 
     
