@@ -103,7 +103,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
         if deeplink:
             # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) БЕЗ celery, в синхронном режиме
             # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
-            deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, 
+            deeplink_request = await create_deeplink_request(deeplink_id=deeplink.id, 
                                                              tg_id=msg.from_user.id, 
                                                              received_at=received_at,
                                                              registration_steps=registration_steps,
