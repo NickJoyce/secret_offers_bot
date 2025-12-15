@@ -19,7 +19,7 @@ from app.bot.modules.utils import unique_first_letters, CITIES
 from aiogram.utils.markdown import link, hlink
 from app.bot.modules.utils import escape_markdown_v2
 from app.database.queries.tg_deeplinks import get_deeplink
-from app.tasks.monitoring import create_deeplink_request_task
+from app.tasks.monitoring import add_step_to_deeplink_request_task
 from app.bot.modules.utils import create_deeplink_request, RegistrationSteps
 import json
 from app.database.queries.tg_deeplink_requests import add_step_to_deeplink_request
@@ -168,7 +168,7 @@ async def process_name(message: types.Message, state: FSMContext):
     user_data = await state.get_data()
     
     if  user_data.get('deeplink_request_id'):
-        ...
+        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.NAME_INPUT.value)
         # Запишем статус NAME_INPUT_RECEIVED
         # await add_step_to_deeplink_request(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.NAME_INPUT.value)
 

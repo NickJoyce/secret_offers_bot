@@ -5,7 +5,7 @@ from app.bot.main import bot
 import requests
 from asyncio import sleep
 from app.database.queries.tg_channels_post import get_last_channel_post
-from app.database.queries.tg_deeplink_requests import create_deeplink_request
+from app.database.queries.tg_deeplink_requests import create_deeplink_request, add_step_to_deeplink_request
 from app.database.conn import SyncSession
 
 
@@ -43,4 +43,11 @@ def create_deeplink_request_task(self, deeplink_id, tg_id, received_at):
         }
     ]
     create_deeplink_request(items=items)
+    
+    
+@celery_app.task(bind=True,
+                 max_retries=1,
+                 default_retry_delay=5)
+def add_step_to_deeplink_request_task(self, id_: int, step: str):
+    add_step_to_deeplink_request(id_=id_, step=step)
 
