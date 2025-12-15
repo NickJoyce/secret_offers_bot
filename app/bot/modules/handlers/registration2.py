@@ -20,7 +20,8 @@ from aiogram.utils.markdown import link, hlink
 from app.bot.modules.utils import escape_markdown_v2
 from app.database.queries.tg_deeplinks import get_deeplink
 from app.tasks.monitoring import create_deeplink_request_task
-from app.bot.modules.utils import create_deeplink_request
+from app.bot.modules.utils import create_deeplink_request, RegistrationSteps
+import json
 
 
 
@@ -45,8 +46,6 @@ router = Router(name=__name__)
 
 
 
-
-
 class RegistrationStates(StatesGroup):
     tg_id = State()
     reg_name = State()  
@@ -55,6 +54,8 @@ class RegistrationStates(StatesGroup):
     tg_first_name = State()
     tg_last_name = State()
     city = State()
+    deeplink_request_id = State()
+    is_registred = State()
     
     
 
@@ -63,15 +64,23 @@ class RegistrationStates(StatesGroup):
 
 @router.message(CommandStart(), StateFilter(None))
 async def start_command_handler(msg: Message, state: FSMContext):
+    # сбрасываем состояние
+    await state.clear()
     
-    
+    # получаем текущую дату и время поступления данных
     received_at = datetime.now()
-    deeplink_request = None
+
+    
     # проверяем есть ли пользователь в базе данных
     user = await get_client(tg_id=msg.from_user.id)
     
+    # Сохраняем is_registred в контекст FSM
+    await state.update_data(is_registred=True if user else False)
     
-    # подтягиваем соответсвуюй диплинк
+    
+    # подтягиваем соответсвуюй диплинк и записываем deeplink_request
+    deeplink_request = None
+    registration_steps = json.dumps({"data": [RegistrationSteps.START_COMMAND.value]}, ensure_ascii=False)
     try:
         deeplink_id = int(msg.text.split(' ')[1])
     except IndexError:
@@ -79,17 +88,26 @@ async def start_command_handler(msg: Message, state: FSMContext):
         # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) БЕЗ celery, в синхронном режиме
         # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id)
         logger.info(f"create_deeplink_request data: {DEEPLINK_WITHOUT_PARAMS_ID}, {msg.from_user.id}, {received_at}")
-        deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
+        deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID,
+                                                         tg_id=msg.from_user.id, 
+                                                         received_at=received_at,
+                                                         registration_steps=registration_steps)
         deeplink_id = None
         
     if deeplink_id:
         deeplink = await get_deeplink(id_=deeplink_id)
         if deeplink:
-            # создаем объект DeeplinkRequest в фоновой задаче celery
+            # создаем объект DeeplinkRequest без параметров (должен быть в базе с этим id) БЕЗ celery, в синхронном режиме
             # create_deeplink_request_task.delay(received_at=received_at, deeplink_id=deeplink.id, tg_id=msg.from_user.id)
-            deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, tg_id=msg.from_user.id, received_at=received_at)
-            
-    logger.info(f"deeplink_request {deeplink_request.id}")
+            deeplink_request = await create_deeplink_request(deeplink_id=DEEPLINK_WITHOUT_PARAMS_ID, 
+                                                             tg_id=msg.from_user.id, 
+                                                             received_at=received_at,
+                                                             registration_steps=registration_steps)
+    
+    # Сохраняем deeplink_request_id в контекст FSM
+    await state.update_data(deeplink_request_id=deeplink_request.id if deeplink_request else None)
+
+    
 
     if user:
         if user.is_active:

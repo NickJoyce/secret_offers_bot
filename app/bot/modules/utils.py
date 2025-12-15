@@ -40,7 +40,7 @@ class RegistrationSteps(Enum):
     LINK_SENT = 'LINK_SENT', 'Ссылка отправлена'
 
 
-async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_steps: list[str] = json.dumps([RegistrationSteps.START_COMMAND.value])):
+async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_steps: dict):
     item = {
             "deeplink_id": deeplink_id,
             "tg_id": tg_id,
