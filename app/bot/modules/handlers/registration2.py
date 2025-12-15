@@ -253,7 +253,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     user_data = await state.get_data()
     if  user_data.get('deeplink_request_id'):
         # Запишем статус (фоновая задача celery)
-        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_RECEIVED.value)
+        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_SELECTED.value)
     # await callback.answer(text=f"data {await state.get_data()}", show_alert=False)
     # Получаем все собранные данные
     user_data = await state.get_data()
