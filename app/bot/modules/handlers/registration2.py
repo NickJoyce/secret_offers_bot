@@ -23,6 +23,7 @@ from app.tasks.monitoring import add_step_to_deeplink_request_task
 from app.bot.modules.utils import create_deeplink_request, RegistrationSteps
 import json
 from app.database.queries.tg_deeplink_requests import add_step_to_deeplink_request
+from copy import deepcopy
 
 
 
@@ -166,11 +167,10 @@ async def process_name(message: types.Message, state: FSMContext):
     # добавим статус к диплинку
     # Получаем все собранные данные
     user_data = await state.get_data()
-    
     if  user_data.get('deeplink_request_id'):
+        # Запишем статус NAME_INPUT_RECEIVED (фоновая задача celery)
         add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.NAME_INPUT.value)
-        # Запишем статус NAME_INPUT_RECEIVED
-        # await add_step_to_deeplink_request(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.NAME_INPUT.value)
+
 
     # Переходим к следующему состоянию
     await state.set_state(RegistrationStates.reg_phone)
@@ -207,6 +207,15 @@ async def process_phone(message: types.Message, state: FSMContext):
         await message.answer("Не удалось получить номер телефона. Пожалуйста, используйте кнопку ниже")
         return      
 
+    # добавим статус к диплинку
+    # Получаем все собранные данные
+    user_data = await state.get_data()
+    if  user_data.get('deeplink_request_id'):
+        # Запишем статус (фоновая задача celery)
+        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.PHONE_INPUT.value)
+
+
+
     await state.set_state(RegistrationStates.city)
     
     await message.answer(
@@ -216,10 +225,18 @@ async def process_phone(message: types.Message, state: FSMContext):
 
 
 @router.callback_query(F.data.startswith('first_letter_'))
-async def process_first_letter(callback: CallbackQuery):
+async def process_first_letter(callback: CallbackQuery, state: FSMContext):
     letter = callback.data.split('_')[2]
     # получим список городов начинающихся на букву letter
     cities = [city for city in CITIES if city.startswith(letter)]
+    
+    # добавим статус к диплинку
+    # Получаем все собранные данные
+    user_data = await state.get_data()
+    if  user_data.get('deeplink_request_id'):
+        # Запишем статус (фоновая задача celery)
+        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_FIRST_LETTER_SELECTED.value)
+    
     
     await callback.answer()
     await callback.message.edit_text(text=f"Выбери город из списка:",
@@ -230,6 +247,13 @@ async def process_first_letter(callback: CallbackQuery):
 async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     city = callback.data.split('_')[2]
     await state.update_data(city=city)
+    
+    # добавим статус к диплинку
+    # Получаем все собранные данные
+    user_data = await state.get_data()
+    if  user_data.get('deeplink_request_id'):
+        # Запишем статус (фоновая задача celery)
+        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_RECEIVED.value)
     # await callback.answer(text=f"data {await state.get_data()}", show_alert=False)
     # Получаем все собранные данные
     user_data = await state.get_data()
@@ -245,6 +269,11 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     }
     # Записываем в базу данных
     await create_clients([user])
+    deeplink_request_id = deepcopy(user_data.get('deeplink_request_id'))
+    if  deeplink_request_id:
+        # Запишем статус  (фоновая задача celery)
+        add_step_to_deeplink_request_task.delay(id_=deeplink_request_id, step=RegistrationSteps.WRITTEN_TO_DB.value)
+    
     # сбрасываем состояние
     await state.clear()
         
@@ -255,6 +284,12 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
 
 Подписывайся, не пропускай публикации и добро пожаловать в КЛУБ 💘"""
                                 , reply_markup=link_kb)
+    
+    if deeplink_request_id:
+        # Запишем статус (фоновая задача celery)
+        add_step_to_deeplink_request_task.delay(id_=deeplink_request_id, step=RegistrationSteps.LINK_SENT.value)
+        
+    
     
     
 
