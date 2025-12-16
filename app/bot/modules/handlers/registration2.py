@@ -83,7 +83,7 @@ async def start_command_handler(msg: Message, state: FSMContext):
     
     # подтягиваем соответсвуюй диплинк и записываем deeplink_request
     deeplink_request = None
-    registration_steps = json.dumps({"data": [RegistrationSteps.START_COMMAND.value]}, ensure_ascii=False)
+    registration_steps = json.dumps({"data": [RegistrationSteps.START_COMMAND_RECEIVED.value]}, ensure_ascii=False)
     try:
         deeplink_id = int(msg.text.split(' ')[1])
     except IndexError:
@@ -235,7 +235,7 @@ async def process_first_letter(callback: CallbackQuery, state: FSMContext):
     user_data = await state.get_data()
     if  user_data.get('deeplink_request_id'):
         # Запишем статус (фоновая задача celery)
-        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_FIRST_LETTER_SELECTED.value)
+        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_FIRST_LETTER_RECEIVED.value)
     
     
     await callback.answer()
@@ -253,7 +253,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
     user_data = await state.get_data()
     if  user_data.get('deeplink_request_id'):
         # Запишем статус (фоновая задача celery)
-        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_SELECTED.value)
+        add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_RECEIVED.value)
     # await callback.answer(text=f"data {await state.get_data()}", show_alert=False)
     # Получаем все собранные данные
     user_data = await state.get_data()

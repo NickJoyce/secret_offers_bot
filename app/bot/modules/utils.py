@@ -31,11 +31,11 @@ class RegistrationSteps(Enum):
         obj.description = description
         return obj
     
-    START_COMMAND = 'START_COMMAND_RECEIVED', 'Выполена команда /start'
+    START_COMMAND_RECEIVED = 'START_COMMAND_RECEIVED', 'Выполена команда /start'
     NAME_INPUT = 'NAME_INPUT_RECEIVED', 'Имя получено'
     PHONE_INPUT = 'PHONE_INPUT_RECEIVED', 'Номер телефона получен'
-    CITY_FIRST_LETTER_SELECTED = 'CITY_FIRST_LETTER_RECEIVED', 'Первая буква города выбрана'
-    CITY_SELECTED = 'CITY_RECEIVED', 'Город выбран'
+    CITY_FIRST_LETTER_RECEIVED = 'CITY_FIRST_LETTER_RECEIVED', 'Первая буква города выбрана'
+    CITY_RECEIVED = 'CITY_RECEIVED', 'Город выбран'
     WRITTEN_TO_DB = 'WRITTEN_TO_DB', 'Данные записаны в базу'
     LINK_SENT = 'LINK_SENT', 'Ссылка отправлена'
 
