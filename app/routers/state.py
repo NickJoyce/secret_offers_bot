@@ -22,7 +22,7 @@ import string
 from app.utils.main import get_unique_promocode
 from fastapi.responses import RedirectResponse
 from app.database.queries.balck_list import get_black_list
-from fastapi import FastAPI, WebSocket
+from fastapi import WebSocket
 from fastapi.responses import HTMLResponse
 
 
@@ -50,7 +50,7 @@ html = """
         <ul id='messages'>
         </ul>
         <script>
-            var ws = new WebSocket("ws://localhost:8000/ws");
+            var ws = new WebSocket("ws://localhost:8080/ws");
             ws.onmessage = function(event) {
                 var messages = document.getElementById('messages')
                 var message = document.createElement('li')
