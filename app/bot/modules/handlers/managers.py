@@ -22,6 +22,7 @@ from app.bot.modules.keyboards.registration import first_letters, cities_list
 from app.bot.modules.keyboards.managers import yes_or_no_callback
 from app.bot.modules.utils import CITIES, unique_first_letters
 from app.database.queries.tg_clients import get_client_by_city_active
+from settings import TG_CHANNEL_ID
 
 
 
@@ -112,7 +113,33 @@ async def download_clients_db(callback: CallbackQuery):
                      'tg_first_name': client.tg_first_name, 
                      'tg_last_name': client.tg_last_name, 
                      'city': client.city, 
-                     'is_active': client.is_active} for client in clients]
+                     'is_active': client.is_active,
+                     'is_member': await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)} for client in clients]
+    
+    for client in clients:
+        member = await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)
+        if member.status in ['member', 'administrator', 'creator']:
+            is_member = 'Да'
+        else:
+            is_member = 'Нет'
+        row = {
+                'created_at': client.created_at.strftime('%d.%m.%Y %H:%M:%S'),
+                'updated_at': client.updated_at.strftime('%d.%m.%Y %H:%M:%S'),
+                'id': client.id, 
+                'tg_id': client.tg_id, 
+                'reg_name': client.reg_name, 
+                'reg_phone': client.reg_phone, 
+                'tg_username': client.tg_username, 
+                'tg_first_name': client.tg_first_name, 
+                'tg_last_name': client.tg_last_name, 
+                'city': client.city, 
+                'is_active': client.is_active,
+                'is_member': is_member
+            }
+
+    
+    
+    
     df = pd.DataFrame(clients_dict)
     
     df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", index=False, sheet_name='Клиенты', engine='openpyxl')
