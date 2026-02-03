@@ -85,6 +85,18 @@ async def select_bot_newsletter(callback: CallbackQuery):
                                      reply_markup = await create_bot_newsletter_callback())
 
 
+# Настройки пользователя -> Выгрузка из БД
+@router.callback_query(F.data == 'download_db')
+async def select_download_db(callback: CallbackQuery):
+    await callback.answer()
+    await callback.message.edit_text(text=f"Выберете выгрузку",
+                                     reply_markup = await create_bot_newsletter_callback())
+
+
+
+
+
+
 @router.callback_query(F.data.startswith("create_bot_newsletter"), StateFilter(None))
 async def get_selected_newsletter(callback: CallbackQuery, state: FSMContext):
     state.clear()

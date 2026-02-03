@@ -63,15 +63,16 @@ async def lifespan(app: FastAPI):
     if IS_BLACK_LIST:
         dp.message.middleware(BlackListMiddleware())
 
-        
-
-    
     await start_bot()
     await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
                           secret_token=WEBHOOK_SECRET, 
                           allowed_updates=["message", "callback_query", "channel_post", "chat_member"],
                           drop_pending_updates=True)
     logging.info(f"Webhook set to {BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
+    
+    # запускаем прослушивание канала postgres
+
+    
     yield
     logging.info("Shutting down bot...")
     await bot.delete_webhook()

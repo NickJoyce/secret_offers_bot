@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 settings_menu = [
     ('Рассылка в канале', 'newsletters'),
     ('Рассылка в боте', 'bot_newsletters'),
+    ('Выгрузка из БД', 'download_db' )
 ]
 
 
@@ -43,9 +44,15 @@ async def create_bot_newsletter_callback():
     builder.add(InlineKeyboardButton(text='<< Настройки', callback_data='settings'))
     return builder.adjust(1).as_markup()
 
-
 async def yes_or_no_callback():
     builder = InlineKeyboardBuilder()
     builder.add(InlineKeyboardButton(text='Да', callback_data='yes_or_no_yes'))
     builder.add(InlineKeyboardButton(text='Нет', callback_data='yes_or_no_no'))
+    return builder.adjust(1).as_markup()
+
+
+async def download_db_callback():
+    builder = InlineKeyboardBuilder()
+    builder.add(InlineKeyboardButton(text='Клиенты', callback_data='download_clients_db'))
+    builder.add(InlineKeyboardButton(text='<< Настройки', callback_data='settings'))
     return builder.adjust(1).as_markup()

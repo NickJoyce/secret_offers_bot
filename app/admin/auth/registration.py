@@ -19,7 +19,7 @@ if __name__ == "__main__":
 
 
     print(register_superuser(email='smirnov.nikita@podruge.ru',
-                             password='tLyT3wWh',
+                             password='By9Hj3x8',
                              config={"name": "nikita",
                                      "avatar": "admin/avatar.jpeg",
                                      "company_logo_url": None,
