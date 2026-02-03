@@ -40,6 +40,8 @@ ADMIN_TOKEN = os.getenv('ADMIN_TOKEN')
 # tg
 TG_BOT_TOKEN = os.getenv('TG_BOT_TOKEN')
 TG_ADMIN_ID = os.getenv('TG_ADMIN_ID')
+# tg id администраторов через запятую без пробелов
+TG_ADMIN_IDS = os.getenv('TG_ADMIN_IDS').split(',')
 WEBHOOK_SECRET = os.getenv('WEBHOOK_SECRET')
 
 # Канал Закрытый клуб "Подружки"
