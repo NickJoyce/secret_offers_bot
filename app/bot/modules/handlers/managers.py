@@ -117,7 +117,7 @@ async def download_clients_db(callback: CallbackQuery):
     #                  'is_member': await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)} for client in clients]
     
     clients_dict = []
-    for client in clients[:10]:
+    for client in clients:
         member = await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)
         if member.status in ['member', 'administrator', 'creator']:
             is_member = 'Да'
@@ -138,6 +138,7 @@ async def download_clients_db(callback: CallbackQuery):
                 'is_member': is_member
             }
         clients_dict.append(row)
+        await asyncio.sleep(0.05) 
 
     
     
