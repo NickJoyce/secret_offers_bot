@@ -105,12 +105,12 @@ async def download_clients_db(callback: CallbackQuery):
     # создаем файл excel с данными о клиентах
     df = pd.DataFrame(clients)
     df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", index=False)
-    # await callback.message.answer(text=f"Выгрузка клиентов создана")
-    # # отправляем файл пользователю
-    # await bot.send_document(chat_id=callback.message.chat.id, document=FSInputFile(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx"))
-    # # удаляем файл
-    # os.remove(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx")
-    # return
+    await callback.message.answer(text=f"Выгрузка клиентов создана")
+    # отправляем файл пользователю
+    await bot.send_document(chat_id=callback.message.chat.id, document=FSInputFile(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx"))
+    # удаляем файл
+    os.remove(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx")
+    return
 
 
 
