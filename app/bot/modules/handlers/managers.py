@@ -115,7 +115,7 @@ async def download_clients_db(callback: CallbackQuery):
                      'is_active': client.is_active} for client in clients]
     df = pd.DataFrame(clients_dict)
     
-    df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", sheet_name='Клиенты')
+    df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", index=False, sheet_name='Клиенты', engine='openpyxl')
     await callback.message.answer(text=f"Выгрузка клиентов создана: {len(clients)} строк")
     # отправляем файл пользователю
     await bot.send_document(chat_id=callback.message.chat.id, document=FSInputFile(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx"))
