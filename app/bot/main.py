@@ -15,14 +15,16 @@ dp = Dispatcher()
 
 
 async def start_bot():
-    try:
-        await bot.send_message(TG_ADMIN_ID, f'Бот запущен {TG_ADMIN_IDS}')
-    except Exception as e:
-        await bot.send_message(TG_ADMIN_ID, f'{e}')
+    for admin_id in TG_ADMIN_IDS:
+        try:
+            await bot.send_message(admin_id, f'Бот запущен')
+        except Exception as e:
+            await bot.send_message(admin_id, f'{e}')
 
 
 async def stop_bot():
-    try:
-        await bot.send_message(TG_ADMIN_ID, f'Бот остановлен {TG_ADMIN_IDS}')
-    except Exception as e:
-        await bot.send_message(TG_ADMIN_ID, f'{e}')
+    for admin_id in TG_ADMIN_IDS:
+        try:
+            await bot.send_message(admin_id, f'Бот остановлен')
+        except Exception as e:
+            await bot.send_message(admin_id, f'{e}')
