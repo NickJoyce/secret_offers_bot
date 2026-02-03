@@ -103,19 +103,20 @@ async def download_clients_db(callback: CallbackQuery):
     # создаем выгрузку из бд
     clients = await get_clients()
     # создаем файл excel с данными о клиентах
-    clients_dict = [{'created_at': client.created_at.strftime('%d.%m.%Y %H:%M:%S'),
-                     'updated_at': client.updated_at.strftime('%d.%m.%Y %H:%M:%S'),
-                     'id': client.id, 
-                     'tg_id': client.tg_id, 
-                     'reg_name': client.reg_name, 
-                     'reg_phone': client.reg_phone, 
-                     'tg_username': client.tg_username, 
-                     'tg_first_name': client.tg_first_name, 
-                     'tg_last_name': client.tg_last_name, 
-                     'city': client.city, 
-                     'is_active': client.is_active,
-                     'is_member': await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)} for client in clients]
+    # clients_dict = [{'created_at': client.created_at.strftime('%d.%m.%Y %H:%M:%S'),
+    #                  'updated_at': client.updated_at.strftime('%d.%m.%Y %H:%M:%S'),
+    #                  'id': client.id, 
+    #                  'tg_id': client.tg_id, 
+    #                  'reg_name': client.reg_name, 
+    #                  'reg_phone': client.reg_phone, 
+    #                  'tg_username': client.tg_username, 
+    #                  'tg_first_name': client.tg_first_name, 
+    #                  'tg_last_name': client.tg_last_name, 
+    #                  'city': client.city, 
+    #                  'is_active': client.is_active,
+    #                  'is_member': await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)} for client in clients]
     
+    clients_dict = []
     for client in clients:
         member = await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)
         if member.status in ['member', 'administrator', 'creator']:
@@ -136,6 +137,7 @@ async def download_clients_db(callback: CallbackQuery):
                 'is_active': client.is_active,
                 'is_member': is_member
             }
+        clients_dict.append(row)
 
     
     
