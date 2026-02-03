@@ -103,7 +103,17 @@ async def download_clients_db(callback: CallbackQuery):
     clients = await get_clients()
     await callback.answer(f'clients: {len(clients)}')
     # создаем файл excel с данными о клиентах
-    clients_dict = [{c.name: getattr(obj, c.name) for c in obj.__table__.columns} for obj in clients]
+    clients_dict = [{'id': client.id, 
+                     'tg_id': client.tg_id, 
+                     'reg_name': client.reg_name, 
+                     'reg_phone': client.reg_phone, 
+                     'tg_username': client.tg_username, 
+                     'tg_first_name': client.tg_first_name, 
+                     'tg_last_name': client.tg_last_name, 
+                     'city': client.city, 
+                     'is_active': client.is_active
+                     'created_at': client.created_at.strftime('%d.%m.%Y %H:%M:%S'),
+                     'updated_at': client.updated_at.strftime('%d.%m.%Y %H:%M:%S')} for client in clients]
     df = pd.DataFrame(clients_dict)
     
     df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", index=False)
