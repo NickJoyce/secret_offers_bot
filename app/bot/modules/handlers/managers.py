@@ -111,7 +111,7 @@ async def download_clients_db(callback: CallbackQuery):
                      'tg_first_name': client.tg_first_name, 
                      'tg_last_name': client.tg_last_name, 
                      'city': client.city, 
-                     'is_active': client.is_active
+                     'is_active': client.is_active,
                      'created_at': client.created_at.strftime('%d.%m.%Y %H:%M:%S'),
                      'updated_at': client.updated_at.strftime('%d.%m.%Y %H:%M:%S')} for client in clients]
     df = pd.DataFrame(clients_dict)
