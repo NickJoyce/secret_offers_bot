@@ -94,7 +94,13 @@ async def select_download_db(callback: CallbackQuery):
     await callback.answer()
     await callback.message.edit_text(text=f"Выберете выгрузку",
                                      reply_markup = await download_db_callback())
+    
 
+# Настройки пользователя -> Выгрузки из БД -> Клиенты
+@router.callback_query(F.data == "download_clients_db")
+async def download_clients_db(callback: CallbackQuery):
+    await callback.answer('its works')
+    
 
 
 
@@ -170,6 +176,7 @@ async def process_first_letter(callback: CallbackQuery):
     await callback.answer()
     await callback.message.edit_text(text=f"Выбери город из списка:",
                                      reply_markup = await cities_list(cities))
+   
    
    
    
@@ -287,6 +294,9 @@ async def process_yes_or_no(callback: CallbackQuery, state: FSMContext):
 
 
 
+    
+    
+    
 
 
 
