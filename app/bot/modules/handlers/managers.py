@@ -101,9 +101,10 @@ async def select_download_db(callback: CallbackQuery):
 async def download_clients_db(callback: CallbackQuery):
     # создаем выгрузку из бд
     clients = await get_clients()
-    await callback.answer(f'clients: {len(clients)}')
     # создаем файл excel с данными о клиентах
-    clients_dict = [{'id': client.id, 
+    clients_dict = [{'created_at': client.created_at.strftime('%d.%m.%Y %H:%M:%S'),
+                     'updated_at': client.updated_at.strftime('%d.%m.%Y %H:%M:%S'),
+                     'id': client.id, 
                      'tg_id': client.tg_id, 
                      'reg_name': client.reg_name, 
                      'reg_phone': client.reg_phone, 
@@ -111,13 +112,11 @@ async def download_clients_db(callback: CallbackQuery):
                      'tg_first_name': client.tg_first_name, 
                      'tg_last_name': client.tg_last_name, 
                      'city': client.city, 
-                     'is_active': client.is_active,
-                     'created_at': client.created_at.strftime('%d.%m.%Y %H:%M:%S'),
-                     'updated_at': client.updated_at.strftime('%d.%m.%Y %H:%M:%S')} for client in clients]
+                     'is_active': client.is_active} for client in clients]
     df = pd.DataFrame(clients_dict)
     
-    df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", index=False)
-    await callback.message.answer(text=f"Выгрузка клиентов создана")
+    df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", sheet_name='Клиенты')
+    await callback.message.answer(text=f"Выгрузка клиентов создана: {len(clients)} строк")
     # отправляем файл пользователю
     await bot.send_document(chat_id=callback.message.chat.id, document=FSInputFile(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx"))
     # удаляем файл
