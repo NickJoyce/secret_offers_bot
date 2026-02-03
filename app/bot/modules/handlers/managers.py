@@ -97,10 +97,20 @@ async def select_download_db(callback: CallbackQuery):
     
 
 # Настройки пользователя -> Выгрузки из БД -> Клиенты
-@router.callback_query(F.data == "download_clients_db")
+@router.callback_query(F.data == "download_clients_table")
 async def download_clients_db(callback: CallbackQuery):
-    await callback.answer('its works')
-    
+    # создаем выгрузку из бд
+    clients = await get_clients()
+    await callback.answer(f'clients: {len(clients)}')
+    # создаем файл excel с данными о клиентах
+    # df = pd.DataFrame(clients)
+    # df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", index=False)
+    # await callback.message.answer(text=f"Выгрузка клиентов создана")
+    # # отправляем файл пользователю
+    # await bot.send_document(chat_id=callback.message.chat.id, document=FSInputFile(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx"))
+    # # удаляем файл
+    # os.remove(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx")
+    # return
 
 
 

@@ -48,7 +48,7 @@ async def create_bot_newsletter_callback():
 
 async def download_db_callback():
     builder = InlineKeyboardBuilder()
-    builder.add(InlineKeyboardButton(text='Клиенты', callback_data='download_clients_db'))
+    builder.add(InlineKeyboardButton(text='Клиенты', callback_data='download_clients_table'))
     builder.add(InlineKeyboardButton(text='<< Настройки', callback_data='settings'))
     return builder.adjust(1).as_markup()
 
