@@ -9,7 +9,10 @@ from app.database.queries.tg_newsletters import get_newsletter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.enums import ParseMode, ContentType
 from aiogram.fsm.context import FSMContext
-from app.bot.modules.keyboards.managers import settings_menu_callback, select_newsletter_callback, create_bot_newsletter_callback
+from app.bot.modules.keyboards.managers import (settings_menu_callback, 
+                                                select_newsletter_callback, 
+                                                create_bot_newsletter_callback,
+                                                download_db_callback)
 from aiogram.exceptions import TelegramBadRequest
 import asyncio
 from app.bot.modules.utils import escape_markdown_v2
@@ -90,7 +93,7 @@ async def select_bot_newsletter(callback: CallbackQuery):
 async def select_download_db(callback: CallbackQuery):
     await callback.answer()
     await callback.message.edit_text(text=f"Выберете выгрузку",
-                                     reply_markup = await create_bot_newsletter_callback())
+                                     reply_markup = await download_db_callback())
 
 
 

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 settings_menu = [
     ('Рассылка в канале', 'newsletters'),
     ('Рассылка в боте', 'bot_newsletters'),
-    ('Выгрузка из БД', 'download_db' )
+    ('Выгрузки из БД', 'download_db' )
 ]
 
 
