@@ -101,9 +101,10 @@ async def select_download_db(callback: CallbackQuery):
 async def download_clients_db(callback: CallbackQuery):
     # создаем выгрузку из бд
     clients = await get_clients()
+    clients_dict = [client.to_dict() for client in clients]
     await callback.answer(f'clients: {len(clients)}')
     # создаем файл excel с данными о клиентах
-    df = pd.DataFrame(clients)
+    df = pd.DataFrame(clients_dict)
     df.to_excel(f"{BASE_DIR}/app/uploads/attachment/clients.xlsx", index=False)
     await callback.message.answer(text=f"Выгрузка клиентов создана")
     # отправляем файл пользователю
