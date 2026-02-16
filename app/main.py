@@ -1,6 +1,6 @@
 import uvicorn
-from app.routers import state, monitoring
-from app.routers.tg_bot import webhook
+from app.routers import state
+from app.routers.tg_bot import webhook, monitoring
 from app.routers.talk_me import webhooks
 from fastapi import FastAPI, Request
 import logging.config
