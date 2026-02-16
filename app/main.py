@@ -1,5 +1,5 @@
 import uvicorn
-from app.routers import state
+from app.routers import state, monitoring
 from app.routers.tg_bot import webhook
 from app.routers.talk_me import webhooks
 from fastapi import FastAPI, Request
@@ -157,6 +157,7 @@ admin.mount_to(app)
 
 # Add routers
 app.include_router(state.router)
+app.include_router(monitoring.router)
 app.include_router(webhook.router)
 app.include_router(webhooks.router)
 

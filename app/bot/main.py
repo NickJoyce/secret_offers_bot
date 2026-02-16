@@ -2,7 +2,7 @@ import logging.config
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
-from settings import TG_BOT_TOKEN, LOGGING, TG_ADMIN_ID, TG_ADMIN_IDS
+from settings import TG_BOT_TOKEN, LOGGING, TG_ADMIN_IDS
 
 
 

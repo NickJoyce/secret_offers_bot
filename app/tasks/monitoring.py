@@ -21,6 +21,15 @@ def is_subscriber(self):
     logger.info(f"response: {str(response.json())}")
     
     
+@celery_app.task(bind=True, max_retries=3, default_retry_delay=60)
+def check_subscriptions(self):
+    """Ежедневная проверка подписки всех пользователей на канал"""
+    response = requests.get(
+        'https://secret-offers-bot.podrugeapi.ru/check-all-subscriptions'
+    )
+    logger.info(f"check_subscriptions response: {response.json()}")   
+    
+    
     
 @celery_app.task(bind=True,
                  max_retries=3,

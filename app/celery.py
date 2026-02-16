@@ -26,6 +26,11 @@ celery_app.conf.beat_schedule = {
     #     "task": "app.tasks.monitoring.is_subscriber",
     #     "schedule": crontab(minute="*/1")
     # },
+    # "check_subscriptions": {
+    #     "task": "app.tasks.monitoring.check_subscriptions",
+    #     # every day at 10:00
+    #     "schedule": crontab(hour=10, minute=0)  
+    # },
     "delete_buttons": {
         "task": "app.tasks.monitoring.delete_buttons",
         "schedule": crontab(minute="*/5")
