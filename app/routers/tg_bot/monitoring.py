@@ -9,6 +9,7 @@ import traceback
 from app.bot.main import bot
 from app.database.queries.tg_clients import get_clients, get_client
 from asyncio import sleep
+from settings import TG_ADMIN_IDS
 
 
 
@@ -26,7 +27,18 @@ async def check_all_subscriptions(request: Request):
     """Проверяет подписку всех клиентов на канал и отправляет напоминание отписавшимся"""
     try:
         clients = [await get_client(tg_id=520704135)]
+        # Не подписан
+        not_subscribed = []
+        # Отписался
         unsubscribed = []
+        # Отправлено уведомление
+        notified = []
+        # Пользователь заблокировал бота
+        bot_blocked = []
+        # Подписан
+        subscribed = []
+        
+        
         errors = []
 
         for client in clients:
@@ -38,32 +50,56 @@ async def check_all_subscriptions(request: Request):
                 
                 logger.info(f"status: {status}")
                 
-                # if status == 'left':
-                #     # Пользователь отписался — шлём напоминание
-                #     try:
-                #         await sleep(0.05) 
-                #         await bot.send_message(
-                #             chat_id=client.tg_id,
-                #             text=(
-                #                 "👋 Привет! Мы заметили, что ты покинул(а) наш закрытый канал "
-                #                 "«Подружки».\n\n"
-                #                 "Там мы регулярно публикуем секретные скидки до 70% "
-                #                 "на самые популярные услуги! 💎\n\n"
-                #                 "Вернись, чтобы не пропустить выгодные предложения! 🔥"
-                #             )
-                #         )
-                #         unsubscribed.append(client.tg_id)
-                    # except Exception as e:
-                    #     # Пользователь заблокировал бота
-                    #     errors.append({"tg_id": client.tg_id, "error": str(e)})
+                if status == 'left':
+                    # добавляем список отписавшихся
+                    unsubscribed.append(client.tg_id)
+                    # Пользователь отписался — шлём напоминание
+                    try:
+                        await sleep(0.05) 
+                        await bot.send_message(
+                            chat_id=client.tg_id,
+                            text=(
+                                "👋 Привет! Мы заметили, что ты покинул(а) наш закрытый канал "
+                                "«Подружки».\n\n"
+                                "Там мы регулярно публикуем секретные скидки до 70% "
+                                "на самые популярные услуги! 💎\n\n"
+                                "Вернись, чтобы не пропустить выгодные предложения! 🔥"
+                            )
+                        )
+                        notified.append(client.tg_id)
+                    except Exception as e:
+                        # Пользователь заблокировал бота
+                        errors.append({"tg_id": client.tg_id, "error": str(e)})
+                        bot_blocked.append(client.tg_id)
+                elif status in ['member', 'administrator', 'creator']:
+                    subscribed.append(client.tg_id)
+                else:
+                    errors.append({"tg_id": client.tg_id, "error": f"Неизвестный статус пользователя в канале: {status}"})
             except Exception as e:
                 # Ошибка при проверке (например, пользователь никогда не был в канале)
+                not_subscribed.append(client.tg_id) 
                 errors.append({"tg_id": client.tg_id, "error": str(e)})
 
+        for admin_id in TG_ADMIN_IDS:
+            try:
+                await bot.send_message(admin_id, (f"Проверка подписки всех клиентов на канал завершена." 
+                                                  f"Отправлено уведомлений: {len(notified)}. "
+                                                  f"Отписавшихся: {len(unsubscribed)}. "
+                                                  f"Блокировавших бота: {len(bot_blocked)}. "
+                                                  f"Подписанных: {len(subscribed)}. "
+                                                  f"Неподписанных: {len(not_subscribed)}. "
+                                                  f"erors: {errors}"))
+            except Exception as e:
+                await bot.send_message(admin_id, f'{e}')
+                
         return JSONResponse({
-            "notified": len(unsubscribed),
+            "notified": len(notified),
+            "unsubscribed": len(unsubscribed),
+            "bot_blocked": len(bot_blocked),
+            "subscribed": len(subscribed),
+            "not_subscribed": len(not_subscribed),
             "errors": len(errors),
-            "unsubscribed_ids": unsubscribed
         })
+        
     except Exception as e:
         return JSONResponse({"error": traceback.format_exc()})
