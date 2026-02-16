@@ -22,11 +22,11 @@ router = APIRouter()
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 
-@router.get("/check-all-subscriptions", include_in_schema=False)
-async def check_all_subscriptions(request: Request):
+@router.get("/check-all-subscriptions/{tg_id}", include_in_schema=False)
+async def check_all_subscriptions(tg_id: int, request: Request):
     """Проверяет подписку всех клиентов на канал и отправляет напоминание отписавшимся"""
     try:
-        clients = [await get_client(tg_id=520704135)]
+        clients = [await get_client(tg_id=tg_id)]
         # Не подписан
         not_subscribed = []
         # Отписался
@@ -82,13 +82,13 @@ async def check_all_subscriptions(request: Request):
 
         for admin_id in TG_ADMIN_IDS:
             try:
-                await bot.send_message(admin_id, (f"Проверка подписки всех клиентов на канал завершена." 
-                                                  f"Отправлено уведомлений: {len(notified)}. "
-                                                  f"Отписавшихся: {len(unsubscribed)}. "
-                                                  f"Блокировавших бота: {len(bot_blocked)}. "
-                                                  f"Подписанных: {len(subscribed)}. "
-                                                  f"Неподписанных: {len(not_subscribed)}. "
-                                                  f"erors: {errors}"))
+                await bot.send_message(admin_id, (f"Проверка подписки всех клиентов на канал завершена.\n" 
+                                                  f"Отправлено уведомлений: {len(notified)}.\n"
+                                                  f"Отписавшихся: {len(unsubscribed)}.\n"
+                                                  f"Блокировавших бота: {len(bot_blocked)}.\n"
+                                                  f"Подписанных: {len(subscribed)}.\n"
+                                                  f"Неподписанных: {len(not_subscribed)}.\n"
+                                                  f"Ошибки: {errors}"))
             except Exception as e:
                 await bot.send_message(admin_id, f'{e}')
                 
