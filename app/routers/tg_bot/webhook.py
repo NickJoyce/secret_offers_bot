@@ -16,6 +16,7 @@ from app.database.queries.first_start_messages import create_first_start_message
 import asyncio
 from app.bot.main import send_message_to_admin
 from traceback import format_exc
+from app.bot.modules.utils import escape_markdown_v2
 
 
 logger = logging.getLogger(__name__)
@@ -42,10 +43,10 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
         except KeyError:
             invite_link = None
         
-        await send_message_to_admin(f"chat_id: {chat_id}\n"
+        await send_message_to_admin(escape_markdown_v2(f"chat_id: {chat_id}\n"
                                     f"user_id: {user_id}\n"
                                     f"{old_status} -> {new_status} \n"
-                                    f"invite_link: {invite_link}\n")
+                                    f"invite_link: {invite_link}\n"))
           
     except KeyError as e:
         logger.error(f"KeyError {format_exc()}")
