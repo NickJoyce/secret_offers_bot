@@ -39,7 +39,6 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
         old_status = request_data["chat_member"]["old_chat_member"]["status"]
         new_status = request_data["chat_member"]["new_chat_member"]["status"]
         try:
-            invite_link = request_data["chat_member"]["invite_link"]["invite_link"]
             full_invite_link = await bot.export_chat_invite_link(chat_id=chat_id)
         except KeyError:
             full_invite_link = None
@@ -50,7 +49,7 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
                                     f"invite_link: {full_invite_link}\n")
           
     except KeyError as e:
-        logger.error(f"KeyError {format_exc()}")
+        pass
 
         
     
