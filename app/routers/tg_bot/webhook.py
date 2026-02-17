@@ -15,6 +15,7 @@ import json
 from app.database.queries.first_start_messages import create_first_start_messages, get_first_start_message, update_first_start_message
 import asyncio
 from app.bot.main import send_message_to_admin
+from traceback import format_exc
 
 
 logger = logging.getLogger(__name__)
@@ -43,8 +44,8 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
                                     f"{old_status} -> {new_status} \n"
                                     f"invite_link: {invite_link}\n")
           
-    except KeyError:
-        logger.error(f"KeyError: {request_data}")
+    except KeyError as e:
+        logger.error(f"KeyError {format_exc()}")
 
         
     
