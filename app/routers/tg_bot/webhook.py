@@ -37,12 +37,10 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
         user_id = request_data["chat_member"]["from"]["id"]
         old_status = request_data["chat_member"]["old_chat_member"]["status"]
         new_status = request_data["chat_member"]["new_chat_member"]["status"]
-        invite_link = request_data["chat_member"]["invite_link"]["invite_link"]  
         
         await send_message_to_admin(f"chat_id: {chat_id}\n"
                                     f"user_id: {user_id}\n"
-                                    f"{old_status} -> {new_status} \n"
-                                    f"invite_link: {invite_link}\n")
+                                    f"{old_status} -> {new_status} \n")
           
     except KeyError as e:
         logger.error(f"KeyError {format_exc()}")
