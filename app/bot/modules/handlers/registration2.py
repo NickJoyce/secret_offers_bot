@@ -295,7 +295,10 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
         creates_join_request=False      
     )
     
-    await send_message_to_admin(f"Промо ссылка (expire_hours: {expire_hours}, member_limit: {member_limit}): {link.invite_link}")
+    await send_message_to_admin(f"Промо ссылка\n"
+                                f"expire_hours: {expire_hours}\n"
+                                f"member_limit: {member_limit}\n"
+                                f"link: {link.invite_link}")
     
     await callback.message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
 
