@@ -14,6 +14,7 @@ from app.database.queries.tg_clients import get_client
 import json
 from app.database.queries.first_start_messages import create_first_start_messages, get_first_start_message, update_first_start_message
 import asyncio
+from app.bot.main import send_message_to_admin
 
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,26 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 async def bot_webhook(request: Request, session: ClientSession = Depends(get_http_session)) -> None:
     request_data = await request.json()
     logger.info(f"request_data: {request_data}")
+    
+    # обработка обнавления статуса пользователя в канале
+    try:
+        chat_id = request_data["chat_member"]["chat"]["id"]
+        user_id = request_data["chat_member"]["from"]["id"]
+        old_status = request_data["chat_member"]["old_chat_member"]["status"]
+        new_status = request_data["chat_member"]["new_chat_member"]["status"]
+        invite_link = request_data["chat_member"]["invite_link"]["invite_link"]  
+        
+        await send_message_to_admin(f"chat_id: {chat_id}\n"
+                                    f"user_id: {user_id}\n"
+                                    f"{old_status} -> {new_status} \n"
+                                    f"invite_link: {invite_link}\n")
+          
+    except KeyError:
+        logger.error(f"KeyError: {request_data}")
+
+        
+    
+    
     update = Update.model_validate(await request.json(), context={"bot": bot})
     await dp.feed_update(bot, update)
     logging.info("Update processed")

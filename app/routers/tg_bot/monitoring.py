@@ -42,6 +42,8 @@ async def check_all_subscriptions(tg_id: int, request: Request):
         errors = []
 
         for client in clients:
+            
+            
             try:
                 await sleep(0.05) 
                 chat_member = await bot.get_chat_member(chat_id=TG_CHANNEL_ID, user_id=client.tg_id)
@@ -67,10 +69,13 @@ async def check_all_subscriptions(tg_id: int, request: Request):
                             )
                         )
                         notified.append(client.tg_id)
+                        
                     except Exception as e:
                         # Пользователь заблокировал бота
-                        errors.append({"tg_id": client.tg_id, "error": str(e)})
-                        bot_blocked.append(client.tg_id)
+                        if str(e) == "Telegram server says - Forbidden: bot was blocked by the use":
+                            bot_blocked.append(client.tg_id)
+                        else:
+                            errors.append({"tg_id": client.tg_id, "error": str(e)})
                 elif status in ['member', 'administrator', 'creator']:
                     subscribed.append(client.tg_id)
                 else:
@@ -78,7 +83,6 @@ async def check_all_subscriptions(tg_id: int, request: Request):
             except Exception as e:
                 # Ошибка при проверке (например, пользователь никогда не был в канале)
                 not_subscribed.append(client.tg_id) 
-                errors.append({"tg_id": client.tg_id, "error": str(e)})
 
         for admin_id in TG_ADMIN_IDS:
             try:
@@ -87,10 +91,10 @@ async def check_all_subscriptions(tg_id: int, request: Request):
                                                   f"Отписавшихся: {len(unsubscribed)}.\n"
                                                   f"Блокировавших бота: {len(bot_blocked)}.\n"
                                                   f"Подписанных: {len(subscribed)}.\n"
-                                                  f"Неподписанных: {len(not_subscribed)}.\n"
-                                                  f"Ошибки: {errors}"))
+                                                  f"Неподписанных: {len(not_subscribed)}.\n"))
             except Exception as e:
                 await bot.send_message(admin_id, f'{e}')
+                
                 
         return JSONResponse({
             "notified": len(notified),

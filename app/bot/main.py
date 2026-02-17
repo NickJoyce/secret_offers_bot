@@ -14,17 +14,18 @@ bot = Bot(token=TG_BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.
 dp = Dispatcher()
 
 
-async def start_bot():
+async def send_message_to_admin(message: str):
     for admin_id in TG_ADMIN_IDS:
         try:
-            await bot.send_message(admin_id, f'Бот запущен')
+            await bot.send_message(admin_id, message)
         except Exception as e:
             await bot.send_message(admin_id, f'{e}')
+
+
+async def start_bot():
+    await send_message_to_admin(f'Бот запущен')
+
 
 
 async def stop_bot():
-    for admin_id in TG_ADMIN_IDS:
-        try:
-            await bot.send_message(admin_id, f'Бот остановлен')
-        except Exception as e:
-            await bot.send_message(admin_id, f'{e}')
+    await send_message_to_admin(f'Бот остановлен')
