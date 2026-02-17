@@ -16,6 +16,8 @@ router = Router()
 @router.chat_member()
 async def on_chat_member(event: ChatMemberUpdated):
     logger.info("on_chat_member")
+    logger.info(event)
+    
     if event.invite_link:
         logger.info(event.invite_link, 'INVITE LINK')
         # Сравниваем с вашей ссылкой
