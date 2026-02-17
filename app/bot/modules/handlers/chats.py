@@ -21,7 +21,7 @@ async def on_chat_member(event: ChatMemberUpdated):
     new_status = event.new_chat_member.status
     try:
         invite_link = event.invite_link.invite_link
-    except KeyError:
+    except AttributeError:
         invite_link = None
     logger.info(f"on_chat_member: chat_id: {chat_id}, user_id: {user_id},  {old_status} -> {new_status}, invite_link: {invite_link}")
     send_message_to_admin(f"on_chat_member: chat_id: {chat_id}, user_id: {user_id},  {old_status} -> {new_status}, invite_link: {invite_link}")
