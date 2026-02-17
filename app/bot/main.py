@@ -5,6 +5,7 @@ from aiogram.client.default import DefaultBotProperties
 from settings import TG_BOT_TOKEN, LOGGING, TG_ADMIN_IDS
 from app.bot.modules.utils import ParseModes
 from app.bot.modules.utils import escape_markdown_v2
+from aiogram.types import LinkPreviewOptions
 
 
 
@@ -21,9 +22,9 @@ async def send_message_to_admin(message: str):
     message = escape_markdown_v2(message)
     for admin_id in TG_ADMIN_IDS:
         try:
-            await bot.send_message(admin_id, message, parse_mode=parse_mode)
+            await bot.send_message(admin_id, message, parse_mode=parse_mode, link_preview_options=LinkPreviewOptions(is_disabled=True))
         except Exception as e:
-            await bot.send_message(admin_id, f'{e}', parse_mode=parse_mode)
+            await bot.send_message(admin_id, f'{e}', parse_mode=parse_mode, link_preview_options=LinkPreviewOptions(is_disabled=True))
 
 
 async def start_bot():
