@@ -13,10 +13,22 @@ logger = logging.getLogger(__name__)
 
 router = Router()
 
+@router.chat_member()
+async def on_chat_member(event: ChatMemberUpdated):
+    if event.invite_link:
+        logger.info(event.invite_link, 'INVITE LINK')
+        # Сравниваем с вашей ссылкой
+        if event.invite_link.invite_link == "https://t.me/+ZSdspl-9-whmY2Ri":
+            print("Пришёл по промо ссылке!")
+        
 
-@router.chat_member(ChatMemberUpdatedFilter(IS_NOT_MEMBER >> IS_MEMBER))
-async def admin_promoted(event: ChatMemberUpdated):
-    logger.info(event, 'ADD NEW')
+
+
+
+
+# @router.chat_member(ChatMemberUpdatedFilter(IS_NOT_MEMBER >> IS_MEMBER))
+# async def admin_promoted(event: ChatMemberUpdated):
+#     logger.info(event, 'ADD NEW')
 
 
 
