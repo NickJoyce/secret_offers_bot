@@ -25,6 +25,8 @@ def escape_markdown_v2(text: str) -> str:
     return text
 
 
+
+
 class RegistrationSteps(Enum):
     def __new__(cls, code: str, description: str):
         obj = object.__new__(cls)
