@@ -6,7 +6,7 @@ from aiogram.types import ChatJoinRequest, ChatMemberUpdated
 from aiogram import F, Router
 from aiogram.filters.chat_member_updated import ChatMemberUpdatedFilter, KICKED, LEFT, RESTRICTED, MEMBER, ADMINISTRATOR, CREATOR, IS_MEMBER, IS_NOT_MEMBER
 from aiogram.types import ChatMemberUpdated
-
+from app.bot.main import send_message_to_admin
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +20,8 @@ async def on_chat_member(event: ChatMemberUpdated):
     old_status = event.old_chat_member.status
     new_status = event.new_chat_member.status
     invite_link = event.invite_link.invite_link
-    logger.info(f"on_chat_member: chat_id: {chat_id}, user_id: {user_id}, old_status: {old_status} -> {new_status}, invite_link: {invite_link}")
+    logger.info(f"on_chat_member: chat_id: {chat_id}, user_id: {user_id},  {old_status} -> {new_status}, invite_link: {invite_link}")
+    send_message_to_admin(f"on_chat_member: chat_id: {chat_id}, user_id: {user_id},  {old_status} -> {new_status}, invite_link: {invite_link}")
     
     
   
