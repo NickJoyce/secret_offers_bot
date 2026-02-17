@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from aiogram import types, Router, F
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove
 from aiogram.filters import Command, CommandStart, StateFilter
@@ -24,7 +25,10 @@ from app.bot.modules.utils import create_deeplink_request, RegistrationSteps
 import json
 from app.database.queries.tg_deeplink_requests import add_step_to_deeplink_request
 from copy import deepcopy
+from app.bot.main import send_message_to_admin
 
+
+from settings import TG_CHANNEL_ID
 
 
 
@@ -279,6 +283,19 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
         
     await callback.message.answer(text=f"🩷 Регистрация прошла успешно!",
                                   reply_markup = types.ReplyKeyboardRemove())
+    
+    
+    expire_hours = 24
+    member_limit = 1
+    link = await bot.create_chat_invite_link(
+        chat_id=TG_CHANNEL_ID,
+        name="Промо ссылка",           
+        expire_date=datetime.now() + timedelta(hours=expire_hours), 
+        member_limit=member_limit,            
+        creates_join_request=False      
+    )
+    
+    send_message_to_admin(f"Промо ссылка (expire_hours: {expire_hours}, member_limit: {member_limit}): {link.invite_link}")
     
     await callback.message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
 
