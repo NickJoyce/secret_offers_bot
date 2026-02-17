@@ -15,15 +15,15 @@ router = Router()
 
 @router.chat_member()
 async def on_chat_member(event: ChatMemberUpdated):
-    logger.info("on_chat_member")
-    logger.info(event)
+    chat_id = event.chat.id
+    user_id = event.from_user.id
+    old_status = event.old_chat_member.status
+    new_status = event.new_chat_member.status
+    invite_link = event.invite_link.invite_link
+    logger.info(f"on_chat_member: chat_id: {chat_id}, user_id: {user_id}, old_status: {old_status} -> {new_status}, invite_link: {invite_link}")
     
-    if event.invite_link:
-        logger.info(event.invite_link, 'INVITE LINK')
-        # Сравниваем с вашей ссылкой
-        if event.invite_link.invite_link == "https://t.me/+ZSdspl-9-whmY2Ri":
-            print("Пришёл по промо ссылке!")
-        
+    
+  
 
 
 
