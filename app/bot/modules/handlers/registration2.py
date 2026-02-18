@@ -312,7 +312,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
 Подписывайся, не пропускай публикации и добро пожаловать в КЛУБ 💘
 
 Ссылка действительна 24 часа для 1 пользователя"""
-                                , reply_markup=link_kb)
+                                , reply_markup=await link_kb(invite_link=link.invite_link))
     
     if deeplink_request_id:
         # Запишем статус (фоновая задача celery)

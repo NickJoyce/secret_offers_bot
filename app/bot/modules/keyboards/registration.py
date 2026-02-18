@@ -35,11 +35,23 @@ async def select_greeting_offer_callback():
 
 
 
-link_kb = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [InlineKeyboardButton(text="👉 Подписаться", url="https://t.me/+SenF2mv1a8ZhOTgy")],
+# link_kb = InlineKeyboardMarkup(
+#     inline_keyboard=[
+#         [InlineKeyboardButton(text="👉 Подписаться", url="https://t.me/+SenF2mv1a8ZhOTgy")],
 
-])
+# ])
+
+
+
+async def link_kb(invite_link: str):
+    link_kb = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="👉 Подписаться", url=invite_link)],
+
+    ])
+    return link_kb
+
+
 
 # Клавиатура для записи в Telegram и WhatsApp
 registration_keyboard = InlineKeyboardMarkup(
