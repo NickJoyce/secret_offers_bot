@@ -24,6 +24,7 @@ from app.tasks.monitoring import add_step_to_deeplink_request_task
 from app.bot.modules.utils import create_deeplink_request, RegistrationSteps
 import json
 from app.database.queries.tg_deeplink_requests import add_step_to_deeplink_request
+from app.database.queries.tg_deeplink_requests import aupdate_deeplink_request
 from copy import deepcopy
 from app.bot.main import send_message_to_admin
 
@@ -295,11 +296,15 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
         member_limit=member_limit,            
         creates_join_request=False      
     )
+    
+    await aupdate_deeplink_request(deeplink_request_id=deeplink_request_id, update_data={"invite_link": link.invite_link})
+    
     await send_message_to_admin(f"Промо ссылка\n"
-                                f"deeplink_request_id: {deeplink_request_id}\n"
                                 f"expire_hours: {expire_hours}\n"
                                 f"member_limit: {member_limit}\n"
-                                f"link: {link.invite_link}")
+                                f"link: {link.invite_link}\n"
+                                f"invite link is updated for deeplink_request_id: {deeplink_request_id}"
+                                )
     
     await callback.message.answer("""Вот твоя персональная ссылка-приглашение в канал: 
 

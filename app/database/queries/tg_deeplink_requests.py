@@ -15,6 +15,16 @@ async def acreate_deeplink_request(item: dict) -> DeeplinkRequest:
         await session.commit()
         return deeplink_request
     
+async def aupdate_deeplink_request(deeplink_request_id: int, update_data: dict):
+    """
+    Обновляет запрос по диплинку.
+    """
+    async with AsyncSessionLocal.begin() as session:
+        stmt = update(DeeplinkRequest).where(DeeplinkRequest.id == deeplink_request_id).values(**update_data)
+        await session.execute(stmt)    
+    
+    
+    
 def add_step_to_deeplink_request(id_: int, step: str):
     with SyncSession() as session:
         deeplink_request = session.get(DeeplinkRequest, id_)
