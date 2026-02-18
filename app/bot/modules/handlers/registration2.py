@@ -285,6 +285,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
                                   reply_markup = types.ReplyKeyboardRemove())
     
     
+    # генерируем ссылку на закрытый канал
     expire_hours = 24
     member_limit = 1
     link = await bot.create_chat_invite_link(
@@ -294,8 +295,8 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
         member_limit=member_limit,            
         creates_join_request=False      
     )
-    
     await send_message_to_admin(f"Промо ссылка\n"
+                                f"deeplink_request_id: {deeplink_request_id}\n"
                                 f"expire_hours: {expire_hours}\n"
                                 f"member_limit: {member_limit}\n"
                                 f"link: {link.invite_link}")
