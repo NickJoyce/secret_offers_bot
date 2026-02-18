@@ -41,6 +41,7 @@ class RegistrationSteps(Enum):
     CITY_RECEIVED = 'CITY_RECEIVED', 'Город выбран'
     WRITTEN_TO_DB = 'WRITTEN_TO_DB', 'Данные записаны в базу'
     LINK_SENT = 'LINK_SENT', 'Ссылка отправлена'
+    SUBSCRIBED_TO_CHANNEL = 'SUBSCRIBED_TO_CHANNEL', 'Подписан на канал'
 
 
 async def create_deeplink_request(deeplink_id, tg_id, received_at, registration_steps: dict, is_registred: bool):

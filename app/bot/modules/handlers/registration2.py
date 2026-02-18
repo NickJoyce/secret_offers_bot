@@ -297,6 +297,7 @@ async def process_selected_city(callback: CallbackQuery, state: FSMContext):
         creates_join_request=False      
     )
     
+    # записываем ссылку на приглашение в закрытый канал в бд
     await aupdate_deeplink_request(deeplink_request_id=deeplink_request_id, update_data={"invite_link": link.invite_link})
     
     await send_message_to_admin(f"Промо ссылка\n"
