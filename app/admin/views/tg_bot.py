@@ -331,6 +331,7 @@ class DeeplinkRequestView(ModelView):
         DateTimeField("created_at", label="Дата создания"),
         DateTimeField("received_at", label="Дата получения запроса"),
         HasOne("deeplink", label="Deep Link", identity='deep_link'),
+        StringField("invite_link", label="Ссылка на канал"),
         IntegerField("tg_id", label="ID пользователя в Telegram"),
         JSONField("registration_steps", label="Шаги регистрации"),
         BooleanField("is_registred", label="Зарегистрирован?"),
