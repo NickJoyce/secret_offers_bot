@@ -383,6 +383,8 @@ class DeeplinkRequest(Base):
     # шаги регистрации: list[str], str - код шага
     registration_steps: Mapped[JSON] = mapped_column(JSON, comment="Шаги регистрации", nullable=True, default=None)
     
+    invite_link: Mapped[str] = mapped_column(String(1000), comment="Ссылка на приглашение в закрытый канал", nullable=True, default=None)
+    
     
     
     
