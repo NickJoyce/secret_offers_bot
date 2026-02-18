@@ -6,6 +6,12 @@ import json
 
 
 
+async def aget_deeplink_request_by_invite_link(invite_link: str) -> DeeplinkRequest:
+    async with AsyncSessionLocal() as session:
+        deeplink_request = await session.scalar(select(DeeplinkRequest).where(DeeplinkRequest.invite_link == invite_link))
+        return deeplink_request
+
+
 
 
 async def acreate_deeplink_request(item: dict) -> DeeplinkRequest:
