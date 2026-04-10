@@ -15,7 +15,7 @@ logging.config.dictConfig(LOGGING)
 logger = logging.getLogger(__name__)
 
 
-session = AiohttpSession(base_url=HTTP_PROXY)
+session = AiohttpSession(proxy=HTTP_PROXY)
 
 bot = Bot(token=TG_BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN), session=session)
 dp = Dispatcher()
