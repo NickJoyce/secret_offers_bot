@@ -6,6 +6,8 @@ from settings import TG_BOT_TOKEN, LOGGING, TG_ADMIN_IDS
 from app.bot.modules.utils import ParseModes
 from app.bot.modules.utils import escape_markdown_v2
 from aiogram.types import LinkPreviewOptions
+from aiogram.client.session.aiohttp import AiohttpSession
+from settings import HTTP_PROXY
 
 
 
@@ -13,7 +15,9 @@ logging.config.dictConfig(LOGGING)
 logger = logging.getLogger(__name__)
 
 
-bot = Bot(token=TG_BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN))
+session = AiohttpSession(base_url=HTTP_PROXY)
+
+bot = Bot(token=TG_BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN), session=session)
 dp = Dispatcher()
 
 

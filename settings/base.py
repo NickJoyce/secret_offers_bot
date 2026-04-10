@@ -89,3 +89,6 @@ TALK_ME_API_KEY = os.getenv('TALK_ME_API_KEY')
 
 # privacy policy
 PRIVACY_POLICY_URL = "https://podruge.ru/polzovatelskoe-soglashenie/"
+
+# HTTP/HTTPS прокси
+HTTP_PROXY = os.getenv('HTTP_PROXY')
