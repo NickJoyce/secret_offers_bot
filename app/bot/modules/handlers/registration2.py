@@ -241,6 +241,8 @@ async def process_first_letter(callback: CallbackQuery, state: FSMContext):
     if  user_data.get('deeplink_request_id'):
         # Запишем статус (фоновая задача celery)
         add_step_to_deeplink_request_task.delay(id_=user_data.get('deeplink_request_id'), step=RegistrationSteps.CITY_FIRST_LETTER_RECEIVED.value)
+
+        
     
     
     await callback.answer()

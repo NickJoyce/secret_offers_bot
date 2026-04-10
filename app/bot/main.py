@@ -25,7 +25,7 @@ async def send_message_to_admin(message: str):
             await bot.send_message(admin_id, message, parse_mode=parse_mode, link_preview_options=LinkPreviewOptions(is_disabled=True))
         except Exception as e:
             logger.error(f"send_message_to_admin: {e}")
-            await bot.send_message(admin_id, f'{e}', parse_mode=parse_mode, link_preview_options=LinkPreviewOptions(is_disabled=True))
+            # await bot.send_message(admin_id, f'{e}', parse_mode=parse_mode, link_preview_options=LinkPreviewOptions(is_disabled=True))
 
 
 async def start_bot():
