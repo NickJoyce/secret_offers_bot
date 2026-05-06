@@ -64,10 +64,10 @@ async def lifespan(app: FastAPI):
         dp.message.middleware(BlackListMiddleware())
 
     await start_bot()
-    # res = await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
-    #                       secret_token=WEBHOOK_SECRET, 
-    #                       allowed_updates=["message", "callback_query", "channel_post", "chat_member"],
-    #                       drop_pending_updates=True)
+    res = await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
+                          secret_token=WEBHOOK_SECRET, 
+                          allowed_updates=["message", "callback_query", "channel_post", "chat_member"],
+                          drop_pending_updates=True)
     logging.info(f"Webhook set to {BASE_WEBHOOK_URL}{WEBHOOK_PATH} - {res}")
     
 
