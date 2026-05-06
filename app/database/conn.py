@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from settings import SQLALCHEMY_URL_ASYNC, SQLALCHEMY_URL_SYNC
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
+from uuid import uuid4
 
 # Оптимизированные настройки для производительности
 async_engine = create_async_engine(
@@ -13,7 +14,9 @@ async_engine = create_async_engine(
     pool_pre_ping=True,  # Проверка соединений перед использованием
     pool_recycle=3600,  # Пересоздание соединений каждый час
     connect_args={
-        "statement_cache_size": 0
+        "statement_cache_size": 0,
+        "prepared_statement_cache_size": 0,
+        "prepared_statement_name_func": lambda: f"__asyncpg_{uuid4()}__",
     }
 )
 
@@ -33,7 +36,10 @@ engine = create_engine(
     pool_pre_ping=True,  # Проверка соединений перед использованием
     pool_recycle=3600,  # Пересоздание соединений каждый час
     connect_args={
-        "statement_cache_size": 0
+        "statement_cache_size": 0,
+        "prepared_statement_cache_size": 0,
+        "prepared_statement_name_func": lambda: f"__asyncpg_{uuid4()}__",
+        
     }
 )
 
