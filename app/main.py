@@ -61,16 +61,16 @@ async def lifespan(app: FastAPI):
     
     # Black List Middleware
     if IS_BLACK_LIST:
-        dp.message.middleware(BlackListMiddleware())
+        dp.message.middleware(BlackListMiddleware())s
 
     await start_bot()
-    await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
+   res = await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
                           secret_token=WEBHOOK_SECRET, 
                           allowed_updates=["message", "callback_query", "channel_post", "chat_member"],
                           drop_pending_updates=True)
-    logging.info(f"Webhook set to {BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
+    logging.info(f"Webhook set to {BASE_WEBHOOK_URL}{WEBHOOK_PATH} - {res}")
     
-    logging.info(f"secret_token: {WEBHOOK_SECRET}")
+
     
     
     
