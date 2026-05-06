@@ -23,7 +23,7 @@ from app.admin.views.tg_bot import DeepLinkSourceView, DeepLinkCampaignView, Dee
 from app.admin.auth import auth_router
 from app.bot.main import bot, dp, start_bot, stop_bot
 from contextlib import asynccontextmanager
-import asyncio
+
 
 from app.bot.modules.handlers.registration2 import router as reg_router
 from app.bot.modules.handlers.managers import router as manager_router
@@ -64,12 +64,10 @@ async def lifespan(app: FastAPI):
         dp.message.middleware(BlackListMiddleware())
 
     await start_bot()
-    await bot.delete_webhook(drop_pending_updates=False)
-    await asyncio.sleep(5)
     res = await bot.set_webhook(f"{BASE_WEBHOOK_URL}{WEBHOOK_PATH}", 
                           secret_token=WEBHOOK_SECRET, 
                           allowed_updates=["message", "callback_query", "channel_post", "chat_member"],
-                          drop_pending_updates=True)
+                          drop_pending_updates=False)
     logging.info(f"Webhook set to {BASE_WEBHOOK_URL}{WEBHOOK_PATH} - {res}")
     
 
