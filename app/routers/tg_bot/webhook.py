@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Response
 from fastapi import Request
 from fastapi.responses import HTMLResponse
 import logging
@@ -57,5 +57,7 @@ async def bot_webhook(request: Request, session: ClientSession = Depends(get_htt
     update = Update.model_validate(await request.json(), context={"bot": bot})
     await dp.feed_update(bot, update)
     logging.info("Update processed")
+    
+    return Response(status_code=200)
 
     
