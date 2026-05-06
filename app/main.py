@@ -70,6 +70,10 @@ async def lifespan(app: FastAPI):
                           drop_pending_updates=True)
     logging.info(f"Webhook set to {BASE_WEBHOOK_URL}{WEBHOOK_PATH}")
     
+    logging.info(f"secret_token: {WEBHOOK_SECRET}")
+    
+    
+    
     # запускаем прослушивание канала postgres
 
     
