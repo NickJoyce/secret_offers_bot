@@ -13,8 +13,7 @@ async_engine = create_async_engine(
     pool_pre_ping=True,  # Проверка соединений перед использованием
     pool_recycle=3600,  # Пересоздание соединений каждый час
     connect_args={
-        "statement_cache_size": 0,
-        "prepared_statement_cache_size": 0,
+        "statement_cache_size": 0
     }
 )
 
@@ -33,6 +32,9 @@ engine = create_engine(
     max_overflow=30,  # Максимальное количество дополнительных соединений
     pool_pre_ping=True,  # Проверка соединений перед использованием
     pool_recycle=3600,  # Пересоздание соединений каждый час
+    connect_args={
+        "statement_cache_size": 0
+    }
 )
 
 
