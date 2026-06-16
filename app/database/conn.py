@@ -30,11 +30,11 @@ AsyncSessionLocal = async_sessionmaker(
 
 engine = create_engine(
     f"{SQLALCHEMY_URL_SYNC}", 
-    echo=False,
-    pool_size=20,  # Размер пула соединений
-    max_overflow=30,  # Максимальное количество дополнительных соединений
-    pool_pre_ping=True,  # Проверка соединений перед использованием
-    pool_recycle=3600,  # Пересоздание соединений каждый час
+    echo=False
+    # pool_size=20,  # Размер пула соединений
+    # max_overflow=30,  # Максимальное количество дополнительных соединений
+    # pool_pre_ping=True,  # Проверка соединений перед использованием
+    # pool_recycle=3600,  # Пересоздание соединений каждый час
 )
 
 
